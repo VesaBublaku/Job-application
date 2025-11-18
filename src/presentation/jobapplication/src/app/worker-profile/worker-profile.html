@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Profile • HireBasis</title>
+  <link rel="stylesheet" href="worker-profile.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+</head>
+<body>
+
+<app-header></app-header>
+
+<main class="wrap">
+  <aside class="left">
+    <section class="card profile-card">
+      <div class="avatar">
+        <div class="avatar__img" aria-hidden="true">
+          </div>
+      </div>
+
+      <h1 class="name">{{ worker?.firstName }} {{ worker?.lastName }}.</h1>
+
+      <div class="loc">
+        <i class="fa-solid fa-location-dot"></i>
+        <span>{{ worker?.location?.name }}</span>
+      </div>
+
+      <div class="section">
+        <h3 class="section__title">Applied jobs</h3>
+        <p class="muted">You have not applied for any jobs yet.</p>
+      </div>
+    </section>
+  </aside>
+
+  <section class="right">
+    <div class="card details">
+      <header class="details__hdr">
+        <h2>Details</h2>
+        <button class="btn" [routerLink]="'/edit-worker-profile'">
+          <i class="fa-solid fa-pencil"></i>
+          Edit Profile
+        </button>
+      </header>
+
+      <div class="row">
+        <div class="label">Bio</div>
+        <div class="value" [class.muted]="!worker?.aboutYou">{{ worker?.aboutYou || 'No info provided' }}</div>
+      </div>
+      <div class="divider"></div>
+
+      <div class="row">
+        <div class="label">Compensation</div>
+        <div class="value strong">{{ worker?.compensation?.rate }}</div>
+      </div>
+      <div class="divider"></div>
+
+      <div class="row">
+        <div class="label">Professions</div>
+        <div class="value chips">
+          <span class="chip" *ngFor="let profession of worker?.professions">{{ profession.name }}</span>
+          <span class="muted" *ngIf="!worker?.professions || worker?.professions?.length === 0">No info provided</span>
+        </div>
+      </div>
+      <div class="divider"></div>
+
+      <div class="row">
+        <div class="label">Skills</div>
+        <div class="value chips">
+          <span class="chip" *ngFor="let skill of worker?.skills">{{ skill.name }}</span>
+          <span class="muted" *ngIf="!worker?.skills || worker?.skills?.length === 0">No info provided</span>
+        </div>
+      </div>
+      <div class="divider"></div>
+
+      <div class="row">
+        <div class="label">Education</div>
+        <div class="value strong">{{ worker?.education?.level }}</div>
+      </div>
+      <div class="divider"></div>
+
+      <div class="row">
+        <div class="label">Experience Level</div>
+        <div class="value strong">{{ worker?.experience?.level }}</div>
+      </div>
+      <div class="divider"></div>
+
+      <div class="row">
+        <div class="label">Availability</div>
+        <div class="value chips">
+          <span class="chip">{{ worker?.availability?.type }}</span>
+        </div>
+      </div>
+      <div class="divider"></div>
+
+      <div class="row">
+        <div class="label">Job Type</div>
+        <div class="value chips">
+          <span class="chip" *ngFor="let jobType of worker?.jobTypes">{{ jobType.type }}</span>
+          <span class="muted" *ngIf="!worker?.jobTypes || worker?.jobTypes?.length === 0">No info provided</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>
+</body>
+</html>

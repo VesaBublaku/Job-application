@@ -1,0 +1,237 @@
+* {
+  box-sizing:border-box
+}
+
+body{
+  margin:0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
+  color:var(--text);
+  background:#fff;
+  --blue:#1aa3ff;
+  --green:#10b981;
+  --red:#ef4444;
+  --ink:#0b0b0c;
+  --text:#2b3340;
+  --muted:#6b7280;
+  --border:#e6e8ee;
+  --card:#ffffff;
+  --shadow:0 10px 30px rgba(0,0,0,.06);
+  --radius:16px;
+}
+
+.container{
+  width:min(1200px, 92%);
+  margin:20px auto;
+}
+
+.worker-card{
+  display:grid;
+  grid-template-columns: 360px 1fr;
+  gap:24px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding:18px;
+  margin:16px 0;
+}
+@media (max-width: 860px){
+  .worker-card{
+    grid-template-columns:1fr;
+  }
+}
+
+.worker-card__left{
+  display:grid;
+  grid-template-columns:96px 1fr;
+  gap:14px;
+  align-items:center;
+  border-right:1px solid var(--border);
+  padding-right:18px;
+}
+@media (max-width: 860px){
+  .worker-card__left{
+    border-right:none;
+    padding-right:0;
+    border-bottom:1px solid var(--border);
+    padding-bottom:14px;
+  }
+}
+.avatar{
+  width:96px;
+  height:96px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid #eaf0ff;
+}
+.name{
+  margin:0 0 .25rem;
+  font-size:1.25rem;
+  font-weight:800;
+  color:#111
+}
+.loc{
+  margin:.05rem 0 .6rem;
+  color:var(--muted)
+}
+.badges{
+  display:flex;
+  gap:.5rem;
+  flex-wrap:wrap
+}
+.badge{
+  background:#f3f6fb;
+  color:#334155;
+  border:1px solid var(--border);
+  padding:.25rem .5rem;
+  border-radius:999px;
+  font-weight:700;
+  font-size:.85rem
+}
+
+.occupation {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+
+.occupation__title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #6b7280;
+  min-width: clamp(200px, 70%, 320px);
+}
+
+.occupation__tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  min-width: clamp(200px, 70%, 320px);
+  padding: 0 16px;
+  white-space: nowrap;
+  border-radius: 999px;
+  border: 1.5px solid #f9e3a0;
+  background: #fffbea;
+  color: #8a6c00;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+
+.worker-card__left .badges{
+  margin-bottom:.25rem;
+}
+
+.worker-card__right{
+  display:grid;
+  gap:12px;
+  align-content:start
+}
+
+.facts{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px 18px;
+  margin:0;
+  padding:0;
+}
+
+.facts div{
+  display:grid;
+  gap:4px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:.65rem .8rem;
+  background:#fafbff;
+}
+.facts dt{
+  font-size:.82rem;
+  color:#64748b;
+  font-weight:700
+}
+.facts dd{
+  margin:0;
+  font-weight:700;
+  color:#0f172a
+}
+
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.6rem;
+  align-items:center;
+  margin-top:.2rem
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:12px;
+  padding:.55rem .9rem;
+  font-weight:800;
+  background:#fff;
+  color:#111;
+  border:1.5px solid var(--border);
+  cursor:pointer;
+  text-decoration:none;
+}
+.btn[disabled]{
+  opacity:.6;
+  cursor:not-allowed
+}
+.btn--primary{
+  background:var(--blue-700);
+  color:#fff;
+  border-color:transparent
+}
+
+.status{
+  position: relative;
+  display:inline-flex;
+  gap:.5rem;
+  align-items:center;
+  margin-left:auto;
+}
+.status__label{
+  font-weight:800;
+  color:#475569
+}
+.status__select{
+  position: absolute;
+  inset: 0 0 0 70px;
+  opacity: 0;
+  cursor: pointer;
+  width: auto;
+  height: 100%;
+}
+.status__pill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:.45rem .8rem;
+  border-radius:999px;
+  font-weight:800;
+  border:1px solid #e6e8ee;
+  background:#f1f5f9;
+  color:#0f172a;
+  min-width: 6.5rem;
+  text-align:center;
+}
+
+.status[data-status="pending"]  .status__pill{
+  background:#fff8e1;
+  border-color:#ffe08a;
+  color:#8a6c00;
+}
+.status[data-status="accepted"] .status__pill{
+  background:#ecfdf5;
+  border-color:#bbf7d0;
+  color:#047857;
+}
+.status[data-status="rejected"] .status__pill{
+  background:#fef2f2;
+  border-color:#fecaca;
+  color:#b91c1c;
+}

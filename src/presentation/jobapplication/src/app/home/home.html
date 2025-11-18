@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+</head>
+<body>
+
+<app-header></app-header>
+
+<section class="introduction">
+  <div class="introduction__panel introduction--left">
+    <div class="introduction_content">
+      <span class="label">Jobseekers</span>
+      <h1 class="introduction_title">Find Jobs Remotely</h1>
+      <p class="introduction_subtitle">Discover top job opportunities in one place</p>
+
+      <div class="introduction_actions">
+        <a routerLink="/job-list" routerLinkActive="active" class="btn btn--ghost">Find Jobs</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="introduction__panel introduction--right">
+    <div class="introduction_content">
+      <span class="label">Employers</span>
+      <h2 class="introduction_title">Hire Smarter</h2>
+      <p class="introduction_subtitle">Build your Dream Team</p>
+
+      <div class="introduction_actions">
+        <a routerLink="/worker-list" routerLinkActive="active" class="btn btn--ghost">Get Free Hiring Help</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="find-work" aria-labelledby="recent-jobs-title">
+  <div class="container">
+    <h3 id="recent-jobs-title" class="section__title">Recent <span class="pill pill--blue">Job Listings</span></h3>
+
+    <div class="cards scroller" role="list">
+      <article class="card" role="listitem">
+        <header class="card__header">
+          <span class="chip chip--blue">Admin &amp; Virtual Assistant</span>
+        </header>
+        <div class="card__body">
+          <h4 class="card__title">Commercial Administrator</h4>
+          <p class="card__meta">9 hours ago</p>
+        </div>
+      </article>
+
+      <article class="card" role="listitem">
+        <header class="card__header">
+          <span class="chip chip--blue">Customer Service &amp; Support</span>
+        </header>
+        <div class="card__body">
+          <h4 class="card__title">Mobile Branch Colleague</h4>
+          <p class="card__meta">9 hours ago</p>
+        </div>
+      </article>
+
+      <article class="card" role="listitem">
+        <header class="card__header">
+          <span class="chip chip--blue">Finance &amp; Accounting</span>
+        </header>
+        <div class="card__body">
+          <h4 class="card__title">Controller</h4>
+          <p class="card__meta">9 hours ago</p>
+        </div>
+      </article>
+
+      <article class="card" role="listitem">
+        <header class="card__header">
+          <span class="chip chip--blue">Information Technology (IT)</span>
+        </header>
+        <div class="card__body">
+          <h4 class="card__title">Senior DevOps Engineer</h4>
+          <p class="card__meta">9 hours ago</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="center">
+      <a routerLink="/job-list" routerLinkActive="active" class="btn btn--rounded">Show All Jobs</a>
+    </div>
+  </div>
+</section>
+
+<section class="about-us_section" id="about-us">
+  <div class="container about-us">
+    <div class="about-us__media" aria-hidden="true">
+      <div class="mock-mac"></div>
+    </div>
+
+    <div class="about-us__content">
+      <h3>About Job Application — Find and Apply to Jobs from Anywhere</h3>
+      <p>Job Application was created to remove location barriers from the hiring process. Instead of limiting listings to “remote-only” roles, we help you <strong>discover jobs of all types</strong> and <strong>apply remotely through our website</strong>—so you can move your career forward without needing to be on site for every step.</p>
+
+      <p>What you can do with Job Application:</p>
+      <ul class="list">
+        <li><strong>Search smarter</strong> with clear categories, filters, and fresh listings from verified employers.</li>
+        <li><strong>Apply online</strong> directly through our platform—upload your CV, answer screening questions, and track progress.</li>
+        <li><strong>Show your skills</strong> via profile tags and optional assessments to stand out quickly.</li>
+        <li><strong>Stay informed</strong> with job alerts, status updates, and guidance for each application stage.</li>
+      </ul>
+
+      <p>We work with hiring teams to streamline screening and communication, so qualified candidates can be reached faster—no matter where they’re applying from.</p>
+
+      <p class="lead"><strong>Our mission:</strong> make it simple for anyone to find opportunities and complete the entire application process online—efficiently, fairly, and from anywhere.</p>
+
+      <a class="btn" routerLink="/about-us" routerLinkActive="active">Learn more</a>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="find-worker" aria-labelledby="workers-title">
+  <div class="container">
+    <h3 id="workers-title" class="section__title">Highlighted <span class="pill pill--yellow">Job Candidates</span></h3>
+
+    <div class="cards cards--workers scroller" role="list">
+      <article class="worker-card" role="listitem">
+        <div class="worker-card__top">
+          <img class="avatar" src="https://i.pravatar.cc/120?img=11" alt="Profile photo of Gabriel J." />
+          <div>
+            <h4 class="worker-card__name">Gabriel J.</h4>
+            <p class="worker-card__loc">Costa Rica, San José</p>
+          </div>
+        </div>
+        <div class="worker-card__skills">
+          <span class="tag">Finance &amp; AccountingNo skills listed.</span>
+        </div>
+      </article>
+
+      <article class="worker-card" role="listitem">
+        <div class="worker-card__top">
+          <img class="avatar" src="https://i.pravatar.cc/120?img=32" alt="Profile photo of Barbara G." />
+          <div>
+            <h4 class="worker-card__name">Barbara G.</h4>
+            <p class="worker-card__loc">Argentina, Buenos Aires</p>
+          </div>
+        </div>
+        <div class="worker-card__skills">
+          <span class="tag">Customer Service &amp; Support</span>
+        </div>
+      </article>
+
+      <article class="worker-card" role="listitem">
+        <div class="worker-card__top">
+          <img class="avatar" src="https://i.pravatar.cc/120?img=15" alt="Profile photo of Josephine M." />
+          <div>
+            <h4 class="worker-card__name">Josephine M.</h4>
+            <p class="worker-card__loc">Kenya, Nairobi</p>
+          </div>
+        </div>
+        <div class="worker-card__skills">
+          <span class="tag">Content Creation for Social Networks</span>
+        </div>
+      </article>
+
+      <article class="worker-card" role="listitem">
+        <div class="worker-card__top">
+          <img class="avatar" src="https://i.pravatar.cc/120?img=41" alt="Profile photo of Octavia D." />
+          <div>
+            <h4 class="worker-card__name">Octavia D.</h4>
+            <p class="worker-card__loc">Romania, Zărnești</p>
+          </div>
+        </div>
+        <div class="worker-card__skills">
+          <span class="tag">Article Writing</span>
+        </div>
+      </article>
+    </div>
+
+    <div class="center">
+      <a routerLink="/worker-list" routerLinkActive="active" class="btn btn--rounded btn--yellow">Show All Workers</a>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="signup" aria-labelledby="signup-title">
+  <div class="container">
+    <h3 id="signup-title" class="section__title">Find Your Dream Job or Ideal Candidate on Our Job Board</h3>
+
+    <div class="signup-grid">
+      <div class="signup-card">
+        <div class="signup-card__icon" aria-hidden="true">👤</div>
+        <h4>Job Seeker</h4>
+        <ul class="list list--bullets">
+          <li>Upload your resume</li>
+          <li>Find Jobs Remotely</li>
+        </ul>
+        <a class="btn btn--ghost" routerLink="/signup" routerLinkActive="active">Join as a Worker</a>
+      </div>
+
+      <div class="signup-card signup-card--highlight">
+        <div class="signup-card__icon" aria-hidden="true">🏢</div>
+        <h4>Employer</h4>
+        <ul class="list list--bullets">
+          <li>Share your company profile</li>
+          <li>Post job ads</li>
+          <li>Contact job candidates</li>
+        </ul>
+        <a class="btn" routerLink="/signupemployer" routerLinkActive="active">Sign up as an Employer</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Profile • HireBasis</title>
+  <link rel="stylesheet" href="employer-profile.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+</head>
+<body>
+
+<app-header></app-header>
+
+<main class="wrap">
+  <aside class="left">
+    <section class="card profile-card">
+      <div class="avatar">
+        <div class="avatar__img" aria-hidden="true"></div>
+      </div>
+
+      <h1 class="name">Buckaroo</h1>
+
+      <div class="loc">
+        <i class="fa-solid fa-location-dot"></i>
+        <span>Kosovo - Pristina</span>
+      </div>
+
+      <div class="section">
+        <h3 class="section__title">Applicants</h3>
+        <p class="muted">You have no application for any jobs yet.</p>
+      </div>
+
+
+    </section>
+  </aside>
+
+  <section class="right">
+    <div class="card details">
+      <header class="details__hdr">
+        <h2>Details</h2>
+        <button class="btn" [routerLink]="'/edit-employer-profile'">
+          <i class="fa-solid fa-pencil"></i>
+          Edit Profile
+        </button>
+      </header>
+
+      <div class="row">
+        <div class="label">Bio</div>
+        <div class="value muted">No info provided</div>
+      </div>
+      <div class="divider"></div>
+
+      <div class="row">
+        <div class="label">Location</div>
+        <div class="value strong">Prishtine</div>
+      </div>
+      <div class="divider"></div>
+
+      <div class="row">
+        <div class="label">Number of Employees</div>
+        <div class="value strong">100</div>
+      </div>
+      <div class="divider"></div>
+
+      <div class="row">
+        <div class="label">Industry</div>
+        <div class="value strong">Finance</div>
+      </div>
+      <div class="divider"></div>
+
+      <div class="row">
+        <div class="label">Employer Type</div>
+        <div class="value strong">Private</div>
+      </div>
+
+      <div class="row">
+        <div class="label">Number of Employees</div>
+        <div class="value strong">100</div>
+      </div>
+      <div class="divider"></div>
+
+      <div class="row">
+        <div class="label">Year of founding</div>
+        <div class="value strong">2000</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>
+</body>
+</html>
+

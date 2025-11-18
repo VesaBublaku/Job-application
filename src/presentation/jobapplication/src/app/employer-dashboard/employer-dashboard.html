@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Workers — Job Application</title>
+</head>
+<body>
+
+<app-header></app-header>
+
+<div class="container">
+
+  <article class="worker-card" data-status="pending">
+    <div class="worker-card__left">
+      <img class="avatar" src="https://i.pravatar.cc/96?img=12" alt="Sambit D photo">
+      <div class="id">
+        <h2 class="name">Sambit D.</h2>
+        <p class="loc">Bengaluru, India</p>
+        <div class="badges">
+          <span class="badge">$4–8 / hr</span>
+          <span class="badge">$8.3k–16.6k / yr</span>
+        </div>
+      </div>
+      <div class="occupation">
+        <p class="occupation__title">Occupational fields</p>
+        <span class="occupation__tag">Sales &amp; Marketing</span>
+      </div>
+
+    </div>
+
+    <div class="worker-card__right">
+      <dl class="facts">
+        <div><dt>Job Type</dt><dd>Full-Time</dd></div>
+        <div><dt>Availability</dt><dd>Remote: Global, National</dd></div>
+        <div><dt>Education</dt><dd>Professional Degree / PhD</dd></div>
+        <div><dt>Experience</dt><dd>Mid-Level</dd></div>
+      </dl>
+
+
+      <div class="actions">
+        <a routerLink="/worker-details" routerLinkActive="active" class="btn btn--primary" >View profile</a>
+
+        <label class="status" [attr.data-status] = "status">
+          <span>Status:</span>
+          <select class="status__select" [(ngModel)]="status">
+            <option value="pending">Pending</option>
+            <option value="accepted" selected>Accept</option>
+            <option value="rejected">Reject</option>
+          </select>
+          <span class="status__pill">{{ status === 'accepted' ? 'Accept' : (status === 'rejected' ? 'Reject' : 'Pending') }}</span>
+        </label>
+      </div>
+    </div>
+  </article>
+
+
+  <article class="worker-card" data-status="accepted">
+    <div class="worker-card__left">
+      <img class="avatar" src="https://i.pravatar.cc/96?img=24" alt="Benson K photo">
+      <div class="id">
+        <h2 class="name">Benson k.</h2>
+        <p class="loc">Lagos, Nigeria</p>
+        <div class="badges">
+          <span class="badge">$8–12 / hr</span>
+          <span class="badge">$16.6k–25k / yr</span>
+        </div>
+      </div>
+      <div class="occupation">
+        <p class="occupation__title">Occupational fields</p>
+        <span class="occupation__tag">Design &amp; Creative</span>
+      </div>
+    </div>
+
+    <div class="worker-card__right">
+      <dl class="facts">
+        <div><dt>Job Type</dt><dd>Part-Time, Full-Time</dd></div>
+        <div><dt>Availability</dt><dd>Remote: Global, National</dd></div>
+        <div><dt>Education</dt><dd>Baccalaureate</dd></div>
+        <div><dt>Experience</dt><dd>Entry-Level</dd></div>
+      </dl>
+
+      <div class="actions">
+        <a routerLink="/worker-details" routerLinkActive="active" class="btn btn--primary" >View profile</a>
+
+        <label class="status" [attr.data-status] = "status">
+          <span>Status:</span>
+          <select class="status__select" [(ngModel)]="status">
+            <option value="pending">Pending</option>
+            <option value="accepted" selected>Accept</option>
+            <option value="rejected">Reject</option>
+          </select>
+          <span class="status__pill">{{ status === 'accepted' ? 'Accept' : (status === 'rejected' ? 'Reject' : 'Pending') }}</span>
+        </label>
+      </div>
+    </div>
+  </article>
+</div>
+
+
+<app-footer></app-footer>
+</body>
+</html>
+

@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+
+<app-header></app-header>
+
+    <main class="main-content-wrapper">
+
+      <div class="filter-bar">
+        <div class="filter-row">
+          <div class="chip chip--wide">
+            <i class="fas fa-briefcase chip__icon"></i>
+            <div class="chip__body">
+              <span class="chip__label">What</span>
+              <input class="chip__field" type="text" placeholder="Job title/Company" />
+            </div>
+          </div>
+
+          <div class="chip chip--wide">
+            <i class="fas fa-suitcase chip__icon"></i>
+            <div class="chip__body">
+              <span class="chip__label">Industry</span>
+              <select class="chip__field chip__select">
+                <option value="">Select industry</option>
+                <option>Software</option>
+                <option>Design</option>
+                <option>Marketing</option>
+              </select>
+              <i class="fas fa-chevron-down chip__chev" aria-hidden="true"></i>
+            </div>
+          </div>
+
+          <div class="chip chip--comp">
+            <i class="fas fa-database chip__icon"></i>
+            <div class="chip__body">
+              <span class="chip__label">Compensation</span>
+              <div class="chip__comp">
+                <input class="chip__field" type="number" min="0" placeholder="$" />
+                <div class="unit-toggle" role="tablist" aria-label="Compensation unit">
+                  <span class="unit-toggle__swap" aria-hidden="true"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-find" type="button">
+            <i class="fas fa-search"></i> Find Jobs
+          </button>
+        </div>
+
+        <div class="filter-row filter-row--sub">
+
+          <button class="chip chip--sub" type="button">
+            <span class="chip__subtext">Job Type</span>
+            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+          </button>
+
+          <button class="chip chip--sub" type="button">
+            <span class="chip__subtext">Availability</span>
+            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+          </button>
+
+          <button class="chip chip--sub" type="button">
+            <span class="chip__subtext">Experience</span>
+            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+          </button>
+
+          <button class="chip chip--sub" type="button">
+            <span class="chip__subtext">Location</span>
+            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+
+
+        <section class="job-list-section">
+            <div class="list-header">
+                <div class="sort-options">
+                    Sort by:
+                    <select>
+                        <option>Newest</option>
+                        <option>Oldest</option>
+                        <option>Highest Wage</option>
+                        <option>Lowest Wage</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="job-card-pro">
+                <div class="job-header">
+                    <div class="company-logo"><i class="fas fa-code"></i></div>
+                    <div class="job-title-area">
+                        <h3>Python Software Engineer</h3>
+                        <p class="company-name">SoftDev Solutions</p>
+                    </div>
+                    <div class="salary-range">
+                        <i class="fas fa-dollar-sign"></i> 80,000 - 110,000 USD/year
+                    </div>
+                </div>
+                <div class="job-meta">
+                    <span class="meta-item"><i class="fas fa-clock"></i> Full-Time</span>
+                    <span class="meta-item"><i class="fas fa-level-up-alt"></i> Mid Level</span>
+                    <span class="meta-item"><i class="fas fa-globe"></i>Remote</span>
+                    <span class="meta-item"><i class="fas fa-map-marker-alt"></i>Worldwide</span>
+                </div>
+                <div class="job-description-short">
+                    We are looking for a talented Python Engineer to work on our backend services and APIs. Experience with Django/Flask is essential.
+                </div>
+                <div class="job-actions">
+                  <a routerLink="/job-details" routerLinkActive="active" class="btn-view-details" >View Details <i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+
+            <div class="job-card-pro">
+                <div class="job-header">
+                    <div class="company-logo"><i class="fas fa-pen-nib"></i></div>
+                    <div class="job-title-area">
+                        <h3>Digital Marketing Manager</h3>
+                        <p class="company-name">Creative Media Group</p>
+                    </div>
+                    <div class="salary-range">
+                        <i class="fas fa-dollar-sign"></i> 45,000 - 65,000 USD/year
+                    </div>
+                </div>
+                <div class="job-meta">
+                    <span class="meta-item"><i class="fas fa-clock"></i> Full-Time</span>
+                    <span class="meta-item"><i class="fas fa-level-up-alt"></i> Mid Level</span>
+                    <span class="meta-item"><i class="fas fa-globe"></i>Local</span>
+                    <span class="meta-item"><i class="fas fa-map-marker-alt"></i>Europe Only</span>
+                </div>
+                <div class="job-description-short">
+                    Manage our SEO, SEM, and content campaigns. Experience with Google Analytics and Ads required.
+                </div>
+                <div class="job-actions">
+                    <a routerLink="/job-details" routerLinkActive="active" class="btn-view-details">View Details <i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+
+            <div class="job-card-pro">
+                <div class="job-header">
+                    <div class="company-logo"><i class="fas fa-headset"></i></div>
+                    <div class="job-title-area">
+                        <h3>Customer Service Representative</h3>
+                        <p class="company-name">HelpDesk 24/7</p>
+                    </div>
+                    <div class="salary-range">
+                        <i class="fas fa-dollar-sign"></i> 18 - 25 USD/hour
+                    </div>
+                </div>
+                <div class="job-meta">
+                    <span class="meta-item"><i class="fas fa-clock"></i> Part-Time</span>
+                    <span class="meta-item"><i class="fas fa-level-up-alt"></i> Entry Level</span>
+                    <span class="meta-item"><i class="fas fa-globe"></i>Remote</span>
+                    <span class="meta-item"><i class="fas fa-map-marker-alt"></i>USA & Canada</span>
+                </div>
+                <div class="job-description-short">
+                    Respond to customer inquiries via chat, email, and phone. Flexible night shift available.
+                </div>
+                <div class="job-actions">
+                    <a routerLink="/job-details" routerLinkActive="active" class="btn-view-details">View Details <i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+<app-footer></app-footer>
+
+</body>
+</html>

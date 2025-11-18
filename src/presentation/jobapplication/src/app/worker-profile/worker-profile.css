@@ -1,0 +1,144 @@
+:root{
+  --ink:#0b1324;
+  --muted:#6b7a90;
+  --bg:#fff;
+  --border:#e8eef7;
+  --card:#ffffff;
+  --blue:#1e71e8;
+  --chip:#eef5ff;
+  --shadow:0 18px 48px rgba(16,24,40,.08);
+  --radius:16px;
+}
+
+*{ box-sizing:border-box }
+body{
+  margin:0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color:var(--ink);
+  background:var(--bg);
+  line-height:1.55;
+}
+
+.wrap {
+  width: min(1200px, 92%);
+  margin-inline: auto;
+  padding: 60px 0 120px;
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 32px;
+  align-items: flex-start;
+  width:100%;
+}
+
+.profile-card{
+  padding:22px;
+}
+
+.avatar{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+.avatar__img{
+  width:108px; height:108px;
+  border-radius:999px;
+  background:linear-gradient(180deg,#f1f5fb,#e7edf6);
+  border:1px solid var(--border);
+}
+
+.name{
+  margin:14px 0 6px;
+  font-size:clamp(1.4rem,1vw + 1rem,2rem);
+  line-height:1.15;
+}
+
+.loc{
+  display:flex;
+  align-items:center;
+  gap:.45rem;
+  color:#3a77ff;
+  font-weight:600;
+  margin-bottom:12px;
+}
+
+.section{ margin-top:18px }
+.section__title{
+  margin:0 0 6px;
+  font-size:.95rem;
+  color:#2a2f3a;
+}
+.muted{ color:var(--muted) }
+
+.details{
+  padding: 30px;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  background: none;
+  width: 100%;
+}
+
+.details__hdr{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0px 18px 4px;
+}
+
+.details__hdr h2{
+  margin:0;
+  font-size:1.6rem;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:.45rem;
+  padding:.5rem .8rem;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:#fff;
+  cursor:pointer;
+  font-weight:800;
+}
+.btn:hover{ box-shadow:var(--shadow) }
+
+.row{
+  display:grid;
+  grid-template-columns: 240px 1fr;
+  gap:24px;
+  padding:12px 18px;
+}
+.label{
+  color:var(--muted);
+  font-weight:700;
+}
+.value{ align-self:center }
+.strong{ font-weight:900 }
+
+.divider{
+  height:1px;
+  background:var(--border);
+  margin:0 18px;
+}
+
+.chips{ display:flex; flex-wrap:wrap; gap:8px }
+.chip{
+  display:inline-flex;
+  align-items:center;
+  padding:.35rem .65rem;
+  border-radius:999px;
+  font-weight:700;
+  font-size:.92rem;
+  background:var(--chip);
+  border:1px solid #cfe0ff;
+  color:#2662c9;
+}
+
+@media (max-width: 1100px){
+  .wrap{ grid-template-columns: 1fr; }
+  .row{ grid-template-columns: 180px 1fr; }
+}
+@media (max-width: 640px){
+  .row{ grid-template-columns: 1fr; gap:6px }
+}

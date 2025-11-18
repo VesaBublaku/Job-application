@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Workers</title>
+</head>
+<body>
+
+<app-header></app-header>
+
+<div class="container">
+
+  <section class="list">
+    <a routerLink="/job-details" routerLinkActive="active" class="row">
+      <div class="logo">
+        <img src="https://via.placeholder.com/200x200.png?text=Logo" alt="">
+      </div>
+
+      <div class="content">
+        <div class="titleline">
+          <h3 class="title">Customer Service Rep/Data Entry/Call Center</h3>
+        </div>
+        <p class="sub">CONCENTRIX</p>
+
+        <div class="chips">
+          <span class="chip">Entry Level</span>
+          <span class="chip">Remote</span>
+          <span class="chip">42k – 52k USD/y</span>
+          <span class="chip">November 06, 2025</span>
+          <span class="chip">Full Time</span>
+          <span class="chip">Information Technology (IT)</span>
+        </div>
+
+        <div class="meta">United States of America</div>
+      </div>
+
+      <label class="status" [attr.data-status] = "status">
+        <span>Status:</span>
+        <select class="status__select" [(ngModel)]="status">
+          <option value="pending">Pending</option>
+          <option value="accepted" selected>Accept</option>
+          <option value="rejected">Reject</option>
+        </select>
+        <span class="status__pill">{{ status === 'accepted' ? 'Accept' : (status === 'rejected' ? 'Reject' : 'Pending') }}</span>
+      </label>
+    </a>
+
+    <a routerLink="/job-details" routerLinkActive="active" class="row">
+      <div class="logo">
+        <img src="https://via.placeholder.com/200x200.png?text=Logo" alt="">
+      </div>
+
+      <div class="content">
+        <div class="titleline">
+          <h3 class="title">Customer Service Representative</h3>
+        </div>
+        <p class="sub">Community Choice Financial Family of Brands</p>
+
+        <div class="chips">
+          <span class="chip">Entry Level</span>
+          <span class="chip">Remote</span>
+          <span class="chip">29k USD/y</span>
+          <span class="chip">October 24, 2025</span>
+          <span class="chip">Full Time</span>
+          <span class="chip">Customer Service &amp; Support</span>
+        </div>
+
+        <div class="meta">United States of America</div>
+      </div>
+
+      <label class="status" [attr.data-status] = "status">
+        <span>Status:</span>
+        <select class="status__select" [(ngModel)]="status">
+          <option value="pending">Pending</option>
+          <option value="accepted" selected>Accept</option>
+          <option value="rejected">Reject</option>
+        </select>
+        <span class="status__pill">{{ status === 'accepted' ? 'Accept' : (status === 'rejected' ? 'Reject' : 'Pending') }}</span>
+      </label>
+    </a>
+
+    <a routerLink="/job-details" routerLinkActive="active" class="row">
+      <div class="logo">
+        <img src="https://via.placeholder.com/200x200.png?text=Logo" alt="">
+      </div>
+
+      <div class="content">
+        <div class="titleline">
+          <h3 class="title">Airport Agent - Ramp and Customer Service</h3>
+        </div>
+        <p class="sub">Envoy Air Inc.</p>
+
+        <div class="chips">
+          <span class="chip">Entry Level</span>
+          <span class="chip">Remote</span>
+          <span class="chip">33k USD/y</span>
+          <span class="chip">October 24, 2025</span>
+          <span class="chip">Part Time</span>
+          <span class="chip">Customer Service &amp; Support</span>
+        </div>
+
+        <div class="meta">United States of America</div>
+      </div>
+
+      <label class="status" [attr.data-status] = "status">
+        <span>Status:</span>
+        <select class="status__select" [(ngModel)]="status">
+          <option value="pending">Pending</option>
+          <option value="accepted" selected>Accept</option>
+          <option value="rejected">Reject</option>
+        </select>
+        <span class="status__pill">{{ status === 'accepted' ? 'Accept' : (status === 'rejected' ? 'Reject' : 'Pending') }}</span>
+      </label>
+    </a>
+  </section>
+</div>
+
+<app-footer></app-footer>
+
+</body>
+</html>

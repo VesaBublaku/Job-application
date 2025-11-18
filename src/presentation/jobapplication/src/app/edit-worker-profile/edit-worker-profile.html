@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Edit Profile • HireBasis</title>
+  <link rel="stylesheet" href="edit-worker-profile.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+<app-header></app-header>
+
+<main class="wrap">
+  <aside class="left">
+    <section class="card profile-card">
+      <div class="avatar">
+        <div class="avatar__img" aria-hidden="true"></div>
+      </div>
+
+      <h1 class="name">Vesa B.</h1>
+
+      <div class="loc">
+        <i class="fa-solid fa-location-dot"></i>
+        <span>Kosovo - Pristina</span>
+      </div>
+
+      <div class="section">
+        <h3 class="section__title">Applied jobs</h3>
+        <p class="muted">You have not applied for any jobs yet.</p>
+      </div>
+
+
+    </section>
+  </aside>
+
+  <section class="right">
+    <div class="head">
+      <h2>Edit Profile</h2>
+      <button class="btn btn--ghost" [routerLink]="'/worker-profile'">
+        <i class="fa-solid fa-backward"></i>
+        Go back</button>
+    </div>
+
+    <div class="tabs card">
+      <input type="radio" name="tab" id="t1" checked>
+      <input type="radio" name="tab" id="t2">
+      <input type="radio" name="tab" id="t3">
+      <input type="radio" name="tab" id="t4">
+
+      <nav class="tablist">
+        <label class="tab" for="t1">
+          <span class="ico"></span> Account
+        </label>
+        <label class="tab" for="t2">
+          <span class="ico"></span> Personal Details
+        </label>
+        <label class="tab" for="t3">
+          <span class="ico"></span> Professional Details
+        </label>
+        <label class="tab" for="t4">
+          <span class="ico"></span> Job Alerts
+        </label>
+      </nav>
+
+      <div class="panel" data-panel="t1">
+
+        <div class="form-row">
+          <label>Email <span class="req">*</span></label>
+            <input id="email" type="text" class="input" placeholder="Email" required>
+        </div>
+
+        <button class="link-danger">
+          <i class="fa-solid fa-trash"></i>
+          Deactivate Account</button>
+      </div>
+
+      <div class="panel" data-panel="t2">
+        <div class="grid2">
+          <div class="form-row">
+            <label>First Name <span class="req">*</span></label>
+            <input type="text" class="input" >
+          </div>
+          <div class="form-row">
+            <label>Last Name <span class="req">*</span></label>
+            <input type="text" class="input" >
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label>Location(city/town) <span class="req">*</span></label>
+          <select>
+            <option>Prishtine</option>
+          </select>
+        </div>
+
+        <div class="grid2">
+          <div class="form-row">
+            <label>Date of Birth <span class="req">*</span></label>
+            <input type="date">
+          </div>
+          <div class="form-row">
+            <label>Photo</label>
+            <input type="file" placeholder="Upload your picture">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label>About you <span class="muted">(Optional)</span></label>
+          <textarea rows="6" placeholder="Your current goals, qualifications, etc."></textarea>
+        </div>
+
+        <div>
+          <button class="btn" type="submit">Save</button>
+        </div>
+
+      </div>
+
+
+      <div class="panel" data-panel="t3">
+
+        <div class="form-row">
+          <label>Professions <span class="req">*</span></label>
+          <select>
+            <option>Entry-Level</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label>Education <span class="req">*</span></label>
+          <select>
+            <option>Baccalaureate</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label>Experience <span class="req">*</span></label>
+          <select>
+            <option>Entry-Level</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label>Skills <span class="req">*</span></label>
+          <select>
+            <option>ONE</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label>Job Type <span class="req">*</span></label>
+          <select>
+            <option>ONE</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label>Compensation <span class="req">*</span></label>
+          <select>
+            <option>ONE</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label>Availability <span class="req">*</span></label>
+          <select>
+            <option>ONE</option>
+          </select>
+        </div>
+
+        <div>
+          <button class="btn" type="submit">Save</button>
+        </div>
+      </div>
+
+      <div class="panel" data-panel="t4">
+        <p>No Job Alerts</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>
+</body>
+</html>
+
+
+

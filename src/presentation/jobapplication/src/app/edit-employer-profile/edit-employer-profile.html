@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Edit Profile • HireBasis</title>
+  <link rel="stylesheet" href="edit-employer-profile.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+<app-header></app-header>
+
+<main class="wrap">
+  <aside class="left">
+    <section class="card profile-card">
+      <div class="avatar">
+        <div class="avatar__img" aria-hidden="true"></div>
+      </div>
+
+      <h1 class="name">Buckaroo</h1>
+
+      <div class="loc">
+        <i class="fa-solid fa-location-dot"></i>
+        <span>Kosovo - Pristina</span>
+      </div>
+
+      <div class="section">
+        <h3 class="section__title">Applicants</h3>
+        <p class="muted">You have no application for any jobs yet.</p>
+      </div>
+
+
+    </section>
+  </aside>
+
+  <section class="right">
+    <div class="head">
+      <h2>Edit Profile</h2>
+      <button class="btn btn--ghost" [routerLink]="'/employer-profile'">
+        <i class="fa-solid fa-backward"></i>
+        Go back</button>
+    </div>
+
+    <div class="tabs card">
+      <input type="radio" name="tab" id="t1" checked>
+      <input type="radio" name="tab" id="t2">
+      <input type="radio" name="tab" id="t3">
+
+      <nav class="tablist">
+        <label class="tab" for="t1">
+          <span class="ico"></span> Account
+        </label>
+        <label class="tab" for="t2">
+          <span class="ico"></span> Company Info
+        </label>
+        <label class="tab" for="t3">
+          <span class="ico"></span> Job Application
+        </label>
+      </nav>
+
+      <div class="panel" data-panel="t1">
+        <div class="form-row">
+          <label>Email <span class="req">*</span></label>
+          <input id="email" type="text" class="input" placeholder="Email" required>
+        </div>
+
+        <button class="link-danger">
+          <i class="fa-solid fa-trash"></i>
+          Deactivate Account</button>
+      </div>
+
+      <div class="panel" data-panel="t2">
+
+        <div class="form-row">
+          <label>Company Name <span class="req">*</span></label>
+          <input type="text" class="input" >
+        </div>
+
+        <div class="form-row">
+          <label>Company Logo</label>
+          <input type="file" placeholder="Upload your picture">
+        </div>
+
+        <div class="form-row">
+          <label>Location(city/town) <span class="req">*</span></label>
+          <select>
+            <option>Prishtine</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label>Number of Employees <span class="req">*</span></label>
+          <select>
+            <option>ONE</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label>Industry<span class="req">*</span></label>
+          <select>
+            <option>ONE</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label>Employer Type<span class="req">*</span></label>
+          <select>
+            <option>ONE</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label>Year of founding<span class="req">*</span></label>
+          <input type="text" class="input" >
+        </div>
+
+        <div class="form-row">
+          <label>About you <span class="muted">(Optional)</span></label>
+          <textarea rows="6" placeholder="Your current goals, qualifications, etc."></textarea>
+        </div>
+
+        <div>
+          <button class="btn" type="submit">Save</button>
+        </div>
+
+      </div>
+
+      <div class="panel" data-panel="t3">
+        <p>No Job Alerts</p>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>
+</body>
+</html>
+
+
+

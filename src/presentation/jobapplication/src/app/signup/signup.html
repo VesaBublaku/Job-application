@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Join as Worker — Job Application</title>
+
+  <link rel="stylesheet" href="signup.css">
+</head>
+<body>
+
+<app-header></app-header>
+
+<main class="page">
+  <header class="page__header">
+    <h1 class="title">Join as <span class="title--accent">Worker.</span></h1>
+
+    <ol class="progress" aria-label="Signup steps">
+      <li
+        *ngFor="let step of steps; let i = index"
+        class="step"
+        [class.step--active]="isStepActive(i)"
+        [class.step--done]="isStepDone(i)"
+      >
+        <span class="step__dot" aria-hidden="true"></span>
+        <span class="step__label">{{ step }}</span>
+      </li>
+    </ol>
+  </header>
+
+  <form class="form" #form="ngForm">
+
+    <div class="form-step" *ngIf="isStepActive(0)">
+      <section class="intro">
+        <h2 class="intro__title">Find your next job with JobApplication</h2>
+        <p class="intro__subtitle">Prepare to start working. Start by creating your account.</p>
+      </section>
+
+      <div class="grid">
+        <div class="field">
+          <label class="label" for="first">First Name <span class="req">*</span></label>
+          <div class="input-append">
+            <input id="first" type="text" class="input" placeholder="Your first name" name="first" [(ngModel)]="workerData.firstName" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="last">Last Name <span class="req">*</span></label>
+          <div class="input-append">
+            <input id="last" type="text" class="input" placeholder="Your last name" name="last" [(ngModel)]="workerData.lastName" required >
+          </div>
+        </div>
+
+        <div class="field field--full">
+          <label class="label" for="photo">Photo</label>
+          <div class="file">
+            <span class="file__text">Upload your photo</span>
+            <input id="photo" type="file" (change)="onPhotoSelected($event)" name="photo" class="file__input" accept="image/*">
+          </div>
+        </div>
+
+        <div class="field field--full">
+          <label class="label" for="location">Location (city/town) <span class="req">*</span></label>
+          <div class="input-append">
+            <select id="location" class="input select" name="location" [(ngModel)]="workerData.locationId" required >
+              <option *ngFor="let loc of locations" [value]="loc.id">{{ loc.name }}</option>
+            </select>
+          </div>
+        </div>
+
+
+        <div class="field field--full">
+          <label class="label" for="dob">Date of birth</label>
+          <div class="input-append">
+            <input id="dob" type="date" class="input" name="dob" [(ngModel)]="workerData.dateOfBirth">
+          </div>
+        </div>
+      </div>
+
+      <div class="form__actions">
+        <a class="btn btn--ghost" href="/">Back to main page</a>
+        <button class="btn btn--primary" type="button" (click)="nextStep()">Continue</button>
+      </div>
+    </div>
+
+
+    <div class="form-step" *ngIf="isStepActive(1)">
+      <section class="intro">
+        <h2 class="intro__title">Add your skills and experience</h2>
+        <p class="intro__subtitle">Fill out your professional information to start working</p>
+      </section>
+
+      <div class="grid">
+
+        <div class="field field--full">
+          <label class="label">Professions <span class="req">*</span></label>
+
+          <div class="multi-select" (click)="toggleProfessionsDropdown($event)">
+            <div class="multi-select__chips">
+      <span
+        class="chip"
+        *ngFor="let pro of selectedProfessionObjects"
+        (click)="removeProfession(pro.id); $event.stopPropagation()"
+      >
+        {{ pro.profession }} ✕
+      </span>
+
+              <span class="placeholder" *ngIf="selectedProfessions.length === 0">
+        Please select
+      </span>
+            </div>
+            <span class="multi-select__arrow">▾</span>
+          </div>
+
+          <div class="multi-select__panel" *ngIf="professionsDropdownOpen">
+            <button
+              type="button"
+              class="multi-select__option"
+              *ngFor="let pro of professions"
+              [class.multi-select__option--selected]="selectedProfessions.includes(pro.id)"
+              (click)="toggleProfession(pro.id)"
+            >
+              {{ pro.profession }}
+            </button>
+          </div>
+        </div>
+
+
+        <div class="field field--full">
+          <label class="label" for="education">Education <span class="req">*</span></label>
+          <div class="input-append">
+            <select id="education" class="input select" name="education" [(ngModel)]="workerData.educationId" required>
+              <option *ngFor="let edu of education" [value]="edu.id">{{ edu.education }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field field--full">
+          <label class="label" for="experience">Experience <span class="req">*</span></label>
+          <div class="input-append">
+            <select id="experience" class="input select" name="experience" [(ngModel)]="workerData.experienceId" required>
+              <option *ngFor="let exp of experience" [value]="exp.id">{{ exp.experience }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field field--full">
+          <label class="label">Job Type <span class="req">*</span></label>
+
+          <div class="multi-select" (click)="toggleJobTypesDropdown($event)">
+            <div class="multi-select__chips">
+      <span
+        class="chip"
+        *ngFor="let jt of selectedJobTypeObjects"
+        (click)="removeJobType(jt.id); $event.stopPropagation()"
+      >
+        {{ jt.jobType }} ✕
+      </span>
+
+              <span class="placeholder" *ngIf="selectedJobTypes.length === 0">
+        Please select
+      </span>
+            </div>
+            <span class="multi-select__arrow">▾</span>
+          </div>
+
+          <div class="multi-select__panel" *ngIf="jobTypesDropdownOpen">
+            <button
+              type="button"
+              class="multi-select__option"
+              *ngFor="let jt of jobTypes"
+              [class.multi-select__option--selected]="selectedJobTypes.includes(jt.id)"
+              (click)="toggleJobType(jt.id)"
+            >
+              {{ jt.jobType }}
+            </button>
+          </div>
+        </div>
+
+
+        <div class="field field--full">
+          <label class="label">Skills <span class="req">*</span></label>
+
+          <div class="multi-select" (click)="toggleSkillsDropdown($event)">
+            <div class="multi-select__chips">
+      <span
+        class="chip"
+        *ngFor="let skill of selectedSkillObjects"
+        (click)="removeSkill(skill.id); $event.stopPropagation()"
+      >
+        {{ skill.skill }} ✕
+      </span>
+
+              <span class="placeholder" *ngIf="selectedSkills.length === 0">
+        Please select
+      </span>
+            </div>
+            <span class="multi-select__arrow">▾</span>
+          </div>
+
+          <div class="multi-select__panel" *ngIf="skillsDropdownOpen">
+            <button
+              type="button"
+              class="multi-select__option"
+              *ngFor="let skill of skillsList"
+              [class.multi-select__option--selected]="selectedSkills.includes(skill.id)"
+              (click)="toggleSkill(skill.id)"
+            >
+              {{ skill.skill }}
+            </button>
+          </div>
+        </div>
+
+
+        <div class="field field--full">
+          <label class="label" for="compensation">Compensation<span class="req">*</span></label>
+          <div class="input-append">
+            <select id="compensation" class="input select" name="compensation" [(ngModel)]="workerData.compensationId" required>
+              <option *ngFor="let comp of compensation" [value]="comp.id">{{ comp.compensation }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field field--full">
+          <label class="label" for="availability">Availability<span class="req">*</span></label>
+          <div class="input-append">
+            <select id="availability" class="input select" name="availability" [(ngModel)]="workerData.availabilityId" required>
+              <option *ngFor="let availability of availability" [value]="availability.id">{{ availability.availability }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field field--full">
+          <label class="label">About you</label>
+          <div class="input-append">
+            <textarea name="about" [(ngModel)]="workerData.aboutYou"></textarea>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="form__actions">
+        <a class="btn btn--ghost" type="button" (click)="prevStep()">Back to previous step</a>
+        <button class="btn btn--primary" type="button" (click)="nextStep()">Continue</button>
+      </div>
+    </div>
+
+    <div class="form-step" *ngIf="isStepActive(2)">
+      <section class="intro">
+        <h2 class="intro__title">Add your contact information</h2>
+        <p class="intro__subtitle">Fill out your contact information to start working</p>
+      </section>
+
+      <div class="grid">
+        <div class="field field--full">
+          <label class="label" for="email">Email<span class="req">*</span></label>
+          <div class="input-append">
+            <input id="email" type="email" class="input" placeholder="Email" name="email" required [(ngModel)]="workerData.email">
+          </div>
+        </div>
+
+        <div class="field field--full">
+          <label class="label" for="password">Password<span class="req">*</span></label>
+          <div class="input-append">
+            <input id="password" type="password" class="input" placeholder="Password" name="password" required [(ngModel)]="workerData.password">
+          </div>
+        </div>
+      </div>
+
+      <div class="form__actions">
+        <a class="btn btn--ghost" type="button" (click)="prevStep()">Back to previous step</a>
+        <button class="btn btn--primary" type="button" (click)="signUp()">Sign Up</button>
+      </div>
+    </div>
+
+  </form>
+</main>
+
+<app-footer></app-footer>
+
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Join as Employer — Job Application</title>
+
+</head>
+<body>
+
+<app-header></app-header>
+
+<main class="page">
+  <header class="page__header">
+    <h1 class="title">Join as <span class="title--accent">Employer.</span></h1>
+
+    <ol class="progress" aria-label="Signup steps">
+      <li
+        *ngFor="let step of steps; let i = index"
+        class="step"
+        [class.step--active]="isStepActive(i)"
+        [class.step--done]="isStepDone(i)"
+      >
+        <span class="step__dot" aria-hidden="true"></span>
+        <span class="step__label">{{ step }}</span>
+      </li>
+    </ol>
+  </header>
+
+  <form class="form" #form="ngForm" (ngSubmit)="nextStep()">
+
+    <div class="form-step" *ngIf="isStepActive(0)">
+
+      <section class="intro">
+        <h2 class="intro__title">Start hiring with JobApplication</h2>
+        <p class="intro__subtitle">Prepare to assemble your team. Start by creating your account.</p>
+      </section>
+
+      <div class="grid">
+
+        <div class="field field--full">
+          <label class="label" for="name">Company name<span class="req">*</span></label>
+          <div class="input-append">
+            <input id="name" type="text" class="input" placeholder="Company Name"
+                   name="companyName" [(ngModel)]="employerModel.companyName" required>
+          </div>
+        </div>
+
+        <div class="field field--full">
+          <label class="label" for="photo">Company logo</label>
+          <div class="file">
+            <span class="file__text">Upload your photo</span>
+            <input id="photo" type="file" name="photo" class="file__input" accept="image/*"
+                   (change)="onLogoChange($event)">
+          </div>
+        </div>
+
+        <div class="field field--full">
+          <label class="label" for="location">Location (city/town) <span class="req">*</span></label>
+          <div class="input-append">
+            <select id="location" class="input select" name="locationId" required [(ngModel)]="employerModel.locationId">
+              <option  *ngFor="let loc of locations" [value]="loc.id">{{ loc.name }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field field--full">
+          <label class="label" for="employees">Number of employees<span class="req">*</span></label>
+          <div class="input-append">
+            <select id="employees" class="input select" name="numberOfEmployeesId" [(ngModel)]="employerModel.numberOfEmployeesId" required>
+              <option *ngFor="let emp of numberOfEmployees" [value]="emp.id">{{ emp.numberOfEmployees }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field field--full">
+          <label class="label" for="industry">Industry<span class="req">*</span></label>
+          <div class="input-append">
+            <select id="industry" class="input select" name="industryId" [(ngModel)]="employerModel.industryId" required>
+              <option *ngFor="let ind of industry" [value]="ind.id">{{ ind.name }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field field--full">
+          <label class="label" for="employeetype">Employer type<span class="req"></span></label>
+          <div class="input-append">
+            <select id="employeetype" class="input select" name="employerTypeId" [(ngModel)]="employerModel.employerTypeId">
+              <option *ngFor="let type of employerTypes" [value]="type.id">{{ type.type }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field field--full">
+          <label class="label" for="founding">Year of founding<span class="req"></span></label>
+          <div class="input-append">
+            <input id="founding" type="text" class="input" placeholder="Year of Founding" name="yearOfFounding" [(ngModel)]="employerModel.yearOfFounding">
+          </div>
+        </div>
+
+        <div class="field field--full">
+          <label class="label">About company<span class="req"></span></label>
+          <div class="input-append">
+            <textarea name="aboutCompany" [(ngModel)]="employerModel.aboutCompany"></textarea>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="form__actions">
+        <a class="btn btn--ghost" href="/">Back to main page</a>
+        <button class="btn btn--primary" type="submit" (click)="nextStep()">Continue</button>
+      </div>
+    </div>
+
+    <div class="form-step" *ngIf="isStepActive(1)">
+
+      <section class="intro">
+        <h2 class="intro__title">Add your contact information</h2>
+        <p class="intro__subtitle">Fill out your contact information to start working</p>
+      </section>
+
+      <div class="grid">
+
+        <div class="field field--full">
+          <label class="label" for="email">Email<span class="req">*</span></label>
+          <div class="input-append">
+            <input id="email" type="text" class="input" placeholder="Email" name="email" [(ngModel)]="employerModel.email" required>
+          </div>
+        </div>
+
+        <div class="field field--full">
+          <label class="label" for="password">Password<span class="req">*</span></label>
+          <div class="input-append">
+            <input id="password" type="password" class="input" placeholder="Password" name="password" [(ngModel)]="employerModel.password" required>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="form__actions">
+        <a class="btn btn--ghost" type="button" (click)="prevStep()">Back to previous step </a>
+        <button class="btn btn--primary" type="submit"  (click)="submitEmployer()">Sign Up</button>
+      </div>
+    </div>
+  </form>
+</main>
+
+<app-footer></app-footer>
+
+</body>
+</html>
+

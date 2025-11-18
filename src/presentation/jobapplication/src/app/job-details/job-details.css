@@ -1,0 +1,177 @@
+
+:root {
+    --primary-color: #3b82f6;
+    --secondary-color: #10b981;
+    --text-color: #374151;
+    --light-bg: #f9fafb;
+    --border-color: #e5e7eb;
+}
+
+body {
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--light-bg);
+    color: var(--text-color);
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+
+.tag-featured {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.job-details-wrapper {
+    display: flex;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    gap: 30px;
+}
+
+.details-main-card {
+  flex-grow: 1;
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  width: 100%;
+}
+
+.details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.details-header > div {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.company-logo-details {
+    width: 70px;
+    height: 70px;
+    background-color: var(--light-bg);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.details-main-card h1 {
+    margin: 0;
+    font-size: 28px;
+    color: #1f2937;
+}
+
+.company-name-details {
+    margin: 5px 0 0 0;
+    font-size: 16px;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.job-meta-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 30px;
+    margin-bottom: 30px;
+}
+
+.meta-item-details {
+    font-size: 15px;
+    color: #4b5563;
+    font-weight: 500;
+}
+
+.meta-item-details i {
+    margin-right: 8px;
+    color: var(--primary-color);
+}
+
+.job-section {
+    margin-bottom: 30px;
+}
+
+.job-section h2 {
+    color: var(--primary-color);
+    font-size: 22px;
+    border-left: 4px solid var(--secondary-color);
+    padding-left: 10px;
+    margin-bottom: 15px;
+}
+
+.job-section ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.job-section ul li {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='%2310b981' d='M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z'/%3E%3C/svg%3E") no-repeat left center;
+    background-size: 14px;
+    padding-left: 25px;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.benefits-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.benefit-item {
+    flex: 1 1 45%;
+    background-color: var(--light-bg);
+    padding: 15px;
+    border-radius: 8px;
+    font-weight: 600;
+    color: #4b5563;
+}
+
+.benefit-item i {
+    margin-right: 10px;
+    color: var(--secondary-color);
+}
+
+.btn-apply-mobile {
+  display: block;
+  background-color: var(--blue);
+  color: white;
+  padding: 15px;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: 700;
+  margin-top: 0px;
+  position: static;
+  top: 10px;
+}
+
+@media (max-width: 1024px) {
+    .job-details-wrapper {
+        flex-direction: column;
+    }
+
+    .benefits-grid .benefit-item {
+        flex: 1 1 100%;
+    }
+}

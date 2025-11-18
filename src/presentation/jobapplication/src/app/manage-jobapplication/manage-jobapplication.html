@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Workers</title>
+</head>
+<body>
+
+<app-header></app-header>
+
+<div class="container">
+  <div class="toolbar">
+    <button class="btn btn--primary" type="button" (click)="openAddModal()">
+      <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </svg>
+      Add Job
+    </button>
+  </div>
+
+  <section class="list">
+    <article class="row" *ngFor="let job of jobs">
+      <div class="logo">
+        <img src="'http://localhost:8080/images/' + job.companyLogo" alt="Logo">
+      </div>
+
+      <div class="content">
+        <div class="titleline">
+          <h3 class="title">{{job.industry?.name}}</h3>
+        </div>
+        <p class="sub">{{job.companyName}}</p>
+
+        <div class="chips">
+          <span class="chip">{{job.experience?.experience}}</span>
+          <span class="chip">{{job.availability?.availability}}</span>
+          <span class="chip">{{job.compensation?.compensation}}</span>
+          <span class="chip">{{job.yearOfFounding}}</span>
+          <span class="chip" *ngFor="let jt of job.jobTypes">{{jt.jobType}}</span>
+        </div>
+
+        <div class="meta">{{job.email}}</div>
+        <div class="meta">{{job.location?.name}}</div>
+      </div>
+
+      <div class="card-actions">
+        <button class="iconbtn" type="button" aria-label="Edit job" (click)="openEditModal(job)">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" fill="currentColor"/>
+            <path d="M20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z" fill="currentColor"/>
+          </svg>
+        </button>
+        <button class="iconbtn iconbtn--danger" type="button" aria-label="Delete job" (click)="openDeleteModal(job)">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </article>
+  </section>
+</div>
+
+    <div class="modal-backdrop" *ngIf="showAddEditModal">
+      <div class="modal">
+        <h2 class="job-form__title">{{isEditMode ? 'Edit Job' : 'Add Job'}}</h2>
+
+        <form (ngSubmit)="saveJob()" #jobForm="ngForm">
+          <div class="job-form__grid">
+
+          <label class="field">
+            <span>Logo</span>
+            <input type="file" (change)="onLogoSelected($event)" />
+          </label>
+
+          <label class="field">
+            <span>Industry</span>
+            <select [(ngModel)]="formModel.industry?.id" name="industryId" required>
+              <option *ngFor="let i of industries" [value]="i.id">{{ i.name }}</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Company name</span>
+            <input type="text" [(ngModel)]="formModel.companyName" name="companyName" required/>
+          </label>
+
+          <label class="field">
+            <span>Email</span>
+            <input type="email" [(ngModel)]="formModel.email" name="email" required/>
+          </label>
+
+            <label class="field">
+              <span>Experience</span>
+              <select [(ngModel)]="formModel.experience?.id" name="experienceId" required>
+                <option *ngFor="let e of experiences" [value]="e.id">{{ e.experience }}</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Availability</span>
+              <select [(ngModel)]="formModel.availability?.id" name="availabilityId" required>
+                <option *ngFor="let a of availabilities" [value]="a.id">{{ a.availability }}</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Compensation</span>
+              <select [(ngModel)]="formModel.compensation?.id" name="compensationId" required>
+                <option *ngFor="let c of compensations" [value]="c.id">{{ c.compensation }}</option>
+              </select>
+            </label>
+
+          <label class="field">
+            <span>Year of founding</span>
+            <input type="date" [(ngModel)]="formModel.yearOfFounding" name="yearOfFounding"/>
+          </label>
+
+            <label class="field">
+              <span>Job types</span>
+              <select  formControlName="jobTypes">
+                <option *ngFor="let jt of jobTypes" [ngValue]="jt.jobType">{{ jt.jobType }}</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Location</span>
+              <select [(ngModel)]="formModel.location?.id" name="locationId">
+                <option *ngFor="let l of locations" [ngValue]="l.id">{{ l.name }}</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="modal__actions">
+            <button type="submit" class="btn btn-primary">
+              {{ isEditMode ? 'Save changes' : 'Add job'}}
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+          </div>
+          </form>
+      </div>
+    </div>
+
+    <div class="modal-backdrop" *ngIf="showDeleteModal">
+      <div class="modal">
+        <p>Are you sure you want to delete<br><strong> {{selectedJob?.companyName}}</strong>?</p>
+        <div class="modal__actions">
+          <button class="btn btn--danger" type="button" (click)="confirmDelete()">Delete</button>
+          <button class="btn" type="button" (click)="closeModal()">Cancel</button>
+        </div>
+      </div>
+    </div>
+<app-footer></app-footer>
+</body>
+</html>
