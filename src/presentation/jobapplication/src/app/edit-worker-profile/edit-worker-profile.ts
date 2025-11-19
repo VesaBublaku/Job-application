@@ -1,46 +1,49 @@
-<<<<<<< Updated upstream
-import { Component } from '@angular/core';
-import {HeaderComponent} from '../header/header';
-import {FooterComponent} from '../footer/footer';
-import {RouterLink} from '@angular/router';
-
-@Component({
-  standalone:true,
-=======
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { WorkerDTO } from '../signup/signup.service';
-import { ProfessionService, Profession } from '../profession/profession.service';
-import { SkillsService, Skills } from '../skills/skills.service';
-import { JobTypeService, JobType } from '../jobType/jobType.service';
-import { LocationService, Location } from '../location/location.service';
-import { EducationService, Education } from '../education/education.service';
-import { ExperienceService, Experience } from '../experience/experience.service';
-import { CompensationService, Compensation } from '../compensation/compensation.service';
-import { AvailabilityService, Availability } from '../availability/availability.service';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
-import {RouterLink} from '@angular/router';
+import {CommonModule} from '@angular/common';
 import {HeaderComponent} from '../header/header';
 import {FooterComponent} from '../footer/footer';
-import {CommonModule} from '@angular/common';
+
+import {Profession, ProfessionService} from '../profession/profession.service';
+import {Skills, SkillsService} from '../skills/skills.service';
+import {JobType, JobTypeService} from '../jobType/jobType.service';
+import {Location, LocationService} from '../location/location.service';
+import {Education, EducationService} from '../education/education.service';
+import {Experience, ExperienceService} from '../experience/experience.service';
+import {Compensation, CompensationService} from '../compensation/compensation.service';
+import {Availability, AvailabilityService} from '../availability/availability.service';
+
+interface WorkerDTO {
+  id?: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password?: string;
+  dateOfBirth?: string;
+  aboutYou?: string;
+  locationId?: number;
+  educationId?: number;
+  experienceId?: number;
+  compensationId?: number;
+  availabilityId?: number;
+  professionIds?: number[];
+  skillIds?: number[];
+  jobTypeIds?: number[];
+}
 
 @Component({
->>>>>>> Stashed changes
   selector: 'app-edit-worker-profile',
   templateUrl: './edit-worker-profile.html',
+  styleUrls: ['./edit-worker-profile.css'],
   imports: [
-    FooterComponent,
+    CommonModule,
+    FormsModule,
     HeaderComponent,
-    RouterLink
+    FooterComponent
   ],
-<<<<<<< Updated upstream
-  templateUrl: './edit-worker-profile.html',
-  styleUrl: './edit-worker-profile.css',
-})
-export class EditWorkerProfile {
-
-=======
-  styleUrls: ['./edit-worker-profile.css']
+  standalone: true,
+  encapsulation: ViewEncapsulation.None
 })
 export class EditWorkerProfile implements OnInit {
   worker: any = {};
@@ -48,7 +51,7 @@ export class EditWorkerProfile implements OnInit {
 
   professions: Profession[] = [];
   skills: Skills[] = [];
-  jobType: JobType[] = [];
+  jobTypes: JobType[] = [];
   locations: Location[] = [];
   education: Education[] = [];
   experience: Experience[] = [];
@@ -76,14 +79,14 @@ export class EditWorkerProfile implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.loadData();
+    this.loadDropdownData();
     this.loadWorker();
   }
 
-  loadData() {
+  loadDropdownData() {
     this.professionService.getProfessions().subscribe(data => this.professions = data);
     this.skillsService.getSkills().subscribe(data => this.skills = data);
-    this.jobTypeService.getJobType().subscribe(data => this.jobType = data);
+    this.jobTypeService.getJobType().subscribe(data => this.jobTypes = data);
     this.locationService.getLocations().subscribe(data => this.locations = data);
     this.educationService.getEducation().subscribe(data => this.education = data);
     this.experienceService.getExperience().subscribe(data => this.experience = data);
@@ -92,17 +95,43 @@ export class EditWorkerProfile implements OnInit {
   }
 
   loadWorker() {
-    this.http.get('http://localhost:8080/worker/1').subscribe((res: any) => {
-      this.worker = res;
-      this.selectedProfessions = res.professions?.map((p: any) => p.id) || [];
-      this.selectedSkills = res.skills?.map((s: any) => s.id) || [];
-      this.selectedJobTypes = res.jobTypes?.map((j: any) => j.id) || [];
-    });
-  }
+    const workerId = localStorage.getItem('workerId');
+    if (!workerId) {
+      console.error('No logged-in worker ID found');
+      return;
+    }
 
-  get selectedProfessionObjects() { return this.professions.filter(p => this.selectedProfessions.includes(p.id)); }
-  get selectedSkillObjects() { return this.skills.filter(s => this.selectedSkills.includes(s.id)); }
-  get selectedJobTypeObjects() { return this.jobType.filter(j => this.selectedJobTypes.includes(j.id)); }
+    this.http.get(`http://localhost:8080/worker/find/${workerId}`).subscribe(
+      (res: any) => {
+        this.worker = res;
+
+        if (this.worker.dateOfBirth) {
+          this.worker.dateOfBirth = this.worker.dateOfBirth.split('T')[0];
+        }
+
+        this.worker.locationId = res.location?.id;
+        this.worker.educationId = res.education?.id;
+        this.worker.experienceId = res.experience?.id;
+        this.worker.compensationId = res.compensation?.id;
+        this.worker.availabilityId = res.availability?.id;
+
+        // Preselect multi-select IDs
+        this.selectedProfessions = res.professions?.map((p: any) => p.id) || [];
+        this.selectedSkills = res.skills?.map((s: any) => s.id) || [];
+        this.selectedJobTypes = res.jobTypes?.map((j: any) => j.id) || [];
+      },
+      err => console.error('Error loading worker:', err)
+    );
+  }
+  get selectedProfessionObjects() {
+    return this.professions.filter(p => this.selectedProfessions.includes(p.id));
+  }
+  get selectedSkillObjects() {
+    return this.skills.filter(s => this.selectedSkills.includes(s.id));
+  }
+  get selectedJobTypeObjects() {
+    return this.jobTypes.filter(j => this.selectedJobTypes.includes(j.id));
+  }
 
   toggleProfessionsDropdown(event: MouseEvent) { event.stopPropagation(); this.professionsDropdownOpen = !this.professionsDropdownOpen; }
   toggleSkillsDropdown(event: MouseEvent) { event.stopPropagation(); this.skillsDropdownOpen = !this.skillsDropdownOpen; }
@@ -121,11 +150,23 @@ export class EditWorkerProfile implements OnInit {
 
   saveChanges() {
     const formData = new FormData();
-    const workerData: WorkerDTO = { ...this.worker, professionIds: this.selectedProfessions, skillIds: this.selectedSkills, jobTypeIds: this.selectedJobTypes };
+
+    const workerData: WorkerDTO = {
+      ...this.worker,
+      professionIds: this.selectedProfessions,
+      skillIds: this.selectedSkills,
+      jobTypeIds: this.selectedJobTypes,
+      locationId: this.worker.locationId,
+      educationId: this.worker.educationId,
+      experienceId: this.worker.experienceId,
+      compensationId: this.worker.compensationId,
+      availabilityId: this.worker.availabilityId
+    };
+
     formData.append('worker', JSON.stringify(workerData));
     if (this.selectedPhoto) formData.append('photo', this.selectedPhoto);
 
-    this.http.put(`http://localhost:8080/worker/${this.worker.id}`, formData).subscribe(() => alert('Profile updated!'));
+    this.http.put(`http://localhost:8080/worker/${this.worker.id}`, formData)
+      .subscribe(() => alert('Profile updated successfully!'));
   }
->>>>>>> Stashed changes
 }

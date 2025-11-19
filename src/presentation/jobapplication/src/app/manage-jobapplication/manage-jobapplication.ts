@@ -16,11 +16,11 @@ import {Location, LocationService} from '../location/location.service';
 @Component({
   selector: 'app-manage-jobapplication',
   standalone: true,
-  imports: [FooterComponent, FormsModule, HeaderComponent, CommonModule, FormsModule, HttpClientModule],
+  imports: [ FormsModule,  CommonModule, FormsModule, HttpClientModule],
   templateUrl: './manage-jobapplication.html',
   styleUrl: './manage-jobapplication.css',
 })
-export class ManageJobapplication implements OnInit{
+export class ManageJobapplication {}/*implements OnInit{
   jobs: Employer[] = [];
   selectedJob: Employer | null = null;
   formModel:Employer = this.createEmptyEmployer();
@@ -240,3 +240,4 @@ export class ManageJobapplication implements OnInit{
     };
   }
 }
+*/

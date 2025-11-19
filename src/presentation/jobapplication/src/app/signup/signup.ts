@@ -233,8 +233,13 @@ export class Signup implements OnInit {
     }
 
     this.workerService.addWorker(formData).subscribe({
-      next: () => {
+      next: (createdWorker: any) => {
         alert('Worker registered successfully!');
+
+        localStorage.setItem('workerId', createdWorker.id.toString());
+
+        this.router.navigate(['/worker-profile']);
+
         this.resetForm();
       },
       error: (err) => {

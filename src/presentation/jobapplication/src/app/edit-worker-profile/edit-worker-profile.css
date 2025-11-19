@@ -43,6 +43,15 @@ body{
   border:1px solid var(--border);
 }
 
+.avatar__img img {
+  width: 108px;
+  height: 108px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto;
+}
+
 .name{
   margin:14px 0 6px;
   font-size:clamp(1.4rem,1vw + 1rem,2rem);
@@ -177,7 +186,64 @@ select {
     font-size:15px;
     transition:.2s;
     background:#fff;
+}
 
+.multi-select{
+  border:1px solid var(--border);
+  border-radius: 10px;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  min-height: 40px;
+  font-size:15px;
+  transition:.2s;
+}
+
+.multi-select__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.multi-select__arrow {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.multi-select__panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 220px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  z-index: 1000;
+}
+
+.multi-select__option {
+  width: 100%;
+  text-align: left;
+  padding: 8px 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.multi-select__option:hover {
+  background-color: #f3f4f6;
+}
+
+.multi-select__option--selected {
+  background-color: #e5f2ff;
+}
+
+.chip {
+  display: inline-flex; align-items: center; padding: .35rem .65rem; border-radius: 999px; font-weight: 700; font-size: .92rem; background: #eef5ff; border: 1px solid #cfe0ff; color: #2662c9; margin: 2px; cursor: pointer;
 }
 
 textarea{
@@ -193,11 +259,6 @@ textarea{ resize:vertical }
   margin-top:14px; cursor:pointer;
 }
 
-.chips{ display:flex; flex-wrap:wrap; gap:8px }
-.chip{
-  display:inline-flex; align-items:center; padding:.35rem .65rem; border-radius:999px;
-  font-weight:700; font-size:.92rem; background:#eef5ff; border:1px solid #cfe0ff; color:#2662c9;
-}
 
 @media (max-width:1100px){
   .wrap{ grid-template-columns:1fr }

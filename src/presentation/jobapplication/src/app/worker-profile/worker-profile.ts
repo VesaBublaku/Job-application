@@ -1,144 +1,70 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { WorkerDTO, WorkerProfileService, Worker as WorkerModel } from './worker-profile.service';
+import { CommonModule } from '@angular/common';
+import { HeaderComponent } from '../header/header';
+import { FooterComponent } from '../footer/footer';
+import { WorkerProfileService} from './worker-profile.service';
+import { Worker } from '../signup/signup.service';
 import {RouterLink} from '@angular/router';
-import {HeaderComponent} from '../header/header';
-import {FooterComponent} from '../footer/footer';
+
+export interface Profession { id: number; profession: string; }
+export interface Skill { id: number; skill: string; }
+export interface JobType { id: number; type: string; }
+export interface Location { id: number; name: string; }
+export interface Education { id: number; name: string; }
+export interface Experience { id: number; name: string; }
+export interface Compensation { id: number; type: string; }
+export interface Availability { id: number; type: string; }
 
 @Component({
   selector: 'app-workerprofile',
   templateUrl: './worker-profile.html',
-  imports: [
-    RouterLink,
-    HeaderComponent,
-    FooterComponent
-  ],
-  styleUrls: ['./worker-profile.css']
+  styleUrls: ['./worker-profile.css'],
+  standalone: true,
+  imports: [CommonModule, HeaderComponent, FooterComponent, RouterLink]
 })
 export class WorkerProfile implements OnInit {
+  workerId: number = 0;
 
-  worker!: WorkerModel;
-  selectedPhoto: File | null = null;
-  workerId = 0;
+  worker: Worker = {
+    id: 0,
+    firstName: '',
+    lastName: '',
+    photo: '',
+    dateOfBirth: '',
+    aboutYou: '',
+    email: '',
+    location: { id: 0, name: '' },
+    professions: [],
+    education: { id: 0, education: '' },
+    experience: { id: 0, experience: '' },
+    jobTypes: [],
+    skills: [],
+    compensation: { id: 0, compensation: '' },
+    availability: { id: 0, availability: '' }
+  };
 
   constructor(private workerService: WorkerProfileService) {}
 
-  ngOnInit() {
-    this.loadWorker();
-  }
+  ngOnInit(): void {
+    const storedId = localStorage.getItem('workerId');
+    this.workerId = storedId ? Number(storedId) : 0;
 
-  loadWorker() {
-    this.workerService.getWorkerById(this.workerId).subscribe(w => this.worker = w);
-  }
-
-  onPhotoSelected(event: any) {
-    this.selectedPhoto = event.target.files[0];
-  }
-
-  saveChanges(form: NgForm) {
-    const workerDTO: WorkerDTO = {
-      firstName: form.value.first,
-      lastName: form.value.last,
-      dateOfBirth: form.value.dob,
-      email: form.value.email,
-      aboutYou: form.value.about,
-      password: form.value.password,
-      locationId: form.value.location,
-      educationId: form.value.education,
-      experienceId: form.value.experience,
-      compensationId: form.value.compensation,
-      availabilityId: form.value.availability,
-      professionIds: [form.value.profession],
-      jobTypeIds: [form.value.jobtype],
-      skillIds: [form.value.skills]
-    };
-
-    this.workerService.updateWorker(this.workerId, workerDTO, this.selectedPhoto ?? undefined)
-      .subscribe(res => {
-        alert('Profile updated successfully!');
-        this.loadWorker();
-      });
-  }
-
-  deleteWorker() {
-    if (confirm('Are you sure you want to delete your profile?')) {
-      this.workerService.deleteWorker(this.workerId).subscribe(() => {
-        alert('Worker deleted');
-      });
+    if (this.workerId > 0) {
+      this.loadWorker();
     }
   }
-}
 
-import { Component, OnInit } from '@angular/core';
-import { NgForm, CommonModule } from '@angular/forms'; // CommonModule duhet per *ngFor dhe *ngIf
-import { WorkerDTO, WorkerProfileService, Worker as WorkerModel } from './worker-profile.service';
-import {RouterLink} from '@angular/router';
-import {HeaderComponent} from '../header/header';
-import {FooterComponent} from '../footer/footer';
-
-@Component({
-  selector: 'app-workerprofile',
-  templateUrl: './worker-profile.html',
-  // Shto CommonModule ne imports per te perdorur *ngFor, *ngIf
-  imports: [
-    RouterLink,
-    HeaderComponent,
-    FooterComponent,
-    CommonModule
-  ],
-  styleUrls: ['./worker-profile.css']
-})
-export class WorkerProfile implements OnInit {
-
-  worker!: WorkerModel;
-  selectedPhoto: File | null = null;
-  // Kjo duhet te zevendesohet me ID e punetorit aktual
-  workerId = 1; 
-
-  constructor(private workerService: WorkerProfileService) {}
-
-  ngOnInit() {
-    this.loadWorker();
-  }
-
-  loadWorker() {
-    this.workerService.getWorkerById(this.workerId).subscribe(w => this.worker = w);
-  }
-
-  onPhotoSelected(event: any) {
-    this.selectedPhoto = event.target.files[0];
-  }
-
-  saveChanges(form: NgForm) {
-    const workerDTO: WorkerDTO = {
-      firstName: form.value.first,
-      lastName: form.value.last,
-      dateOfBirth: form.value.dob,
-      email: form.value.email,
-      aboutYou: form.value.about,
-      password: form.value.password,
-      locationId: form.value.location,
-      educationId: form.value.education,
-      experienceId: form.value.experience,
-      compensationId: form.value.compensation,
-      availabilityId: form.value.availability,
-      professionIds: [form.value.profession],
-      jobTypeIds: [form.value.jobtype],
-      skillIds: [form.value.skills]
-    };
-
-    this.workerService.updateWorker(this.workerId, workerDTO, this.selectedPhoto ?? undefined)
-      .subscribe(res => {
-        alert('Profile updated successfully!');
-        this.loadWorker();
-      });
-  }
-
-  deleteWorker() {
-    if (confirm('Are you sure you want to delete your profile?')) {
-      this.workerService.deleteWorker(this.workerId).subscribe(() => {
-        alert('Worker deleted');
-      });
-    }
+  loadWorker(): void {
+    this.workerService.getWorkerById(this.workerId).subscribe({
+      next: (w) => {
+        this.worker = {
+          ...w,
+          professions: w.professions || [],
+          skills: w.skills || [],
+          jobTypes: w.jobTypes || []
+        };
+      },
+      error: (err) => console.error('Failed to load worker', err)
+    });
   }
 }
