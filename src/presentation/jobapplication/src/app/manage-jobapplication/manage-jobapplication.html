@@ -1,4 +1,4 @@
-<!--<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -22,7 +22,7 @@
   <section class="list">
     <article class="row" *ngFor="let job of jobs">
       <div class="logo">
-        <img src="'http://localhost:8080/images/' + job.companyLogo" alt="Logo">
+        <img [src]="'http://localhost:8080/uploads/' + job.companyLogo" alt="Logo">
       </div>
 
       <div class="content">
@@ -74,7 +74,7 @@
 
           <label class="field">
             <span>Industry</span>
-            <select [(ngModel)]="formModel.industry?.id" name="industryId" required>
+            <select [(ngModel)]="formModel.industry.id" name="industryId" required>
               <option *ngFor="let i of industries" [value]="i.id">{{ i.name }}</option>
             </select>
           </label>
@@ -91,21 +91,21 @@
 
             <label class="field">
               <span>Experience</span>
-              <select [(ngModel)]="formModel.experience?.id" name="experienceId" required>
+              <select [(ngModel)]="formModel.experience.id" name="experienceId" required>
                 <option *ngFor="let e of experiences" [value]="e.id">{{ e.experience }}</option>
               </select>
             </label>
 
             <label class="field">
               <span>Availability</span>
-              <select [(ngModel)]="formModel.availability?.id" name="availabilityId" required>
+              <select [(ngModel)]="formModel.availability.id" name="availabilityId" required>
                 <option *ngFor="let a of availabilities" [value]="a.id">{{ a.availability }}</option>
               </select>
             </label>
 
             <label class="field">
               <span>Compensation</span>
-              <select [(ngModel)]="formModel.compensation?.id" name="compensationId" required>
+              <select [(ngModel)]="formModel.compensation.id" name="compensationId" required>
                 <option *ngFor="let c of compensations" [value]="c.id">{{ c.compensation }}</option>
               </select>
             </label>
@@ -117,15 +117,24 @@
 
             <label class="field">
               <span>Job types</span>
-              <select  formControlName="jobTypes">
-                <option *ngFor="let jt of jobTypes" [ngValue]="jt.jobType">{{ jt.jobType }}</option>
-              </select>
+              <div class="multi-select" (click)="toggleJobTypesDropdown($event)">
+                <div class="multi-select__chips">
+                  <span class="chip" *ngFor="let jt of selectedJobTypeObjects" (click)="removeJobType(jt); $event.stopPropagation()">{{ jt.jobType }} ✕</span>
+                  <span class="placeholder" *ngIf="selectedJobTypeObjects.length === 0">Please select</span>
+                </div>
+                <span class="multi-select__arrow">▾</span>
+              </div>
+              <div class="multi-select__panel" *ngIf="jobTypesDropdownOpen">
+                <button *ngFor="let jt of jobTypes" type="button" class="multi-select__option" [class.multi-select__option--selected]="isSelected(jt)" (click)="toggleJobType(jt); $event.stopPropagation()">
+                  {{ jt.jobType }}
+                </button>
+              </div>
             </label>
 
             <label class="field">
               <span>Location</span>
-              <select [(ngModel)]="formModel.location?.id" name="locationId">
-                <option *ngFor="let l of locations" [ngValue]="l.id">{{ l.name }}</option>
+              <select [(ngModel)]="formModel.location.id" name="locationId">
+                <option *ngFor="let l of locations" [value]="l.id">{{ l.name }}</option>
               </select>
             </label>
           </div>
@@ -142,7 +151,7 @@
 
     <div class="modal-backdrop" *ngIf="showDeleteModal">
       <div class="modal">
-        <p>Are you sure you want to delete<br><strong> {{selectedJob?.companyName}}</strong>?</p>
+        <p>Are you sure you want to delete<strong> {{selectedJob?.companyName}}</strong>?</p>
         <div class="modal__actions">
           <button class="btn btn--danger" type="button" (click)="confirmDelete()">Delete</button>
           <button class="btn" type="button" (click)="closeModal()">Cancel</button>
@@ -152,4 +161,4 @@
 <app-footer></app-footer>
 </body>
 </html>
--->
+

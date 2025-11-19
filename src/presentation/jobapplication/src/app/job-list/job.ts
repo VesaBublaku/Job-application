@@ -7,13 +7,34 @@ export interface Employer {
   email: string;
   password: string;
 
-  location: { id?: number; name?: string; } | null;
-  numberOfEmployees: { id?: number; numberOfEmployees?: string; } | null;
-  industry: { id?: number; name?: string; } | null;
-  employerType: { id?: number; type?: string; } | null;
-  experience: { id?: number; experience?: string; } | null;
-  availability: { id?: number; availability?: string; } | null;
-  compensation: { id?: number; compensation?: string; } | null;
+  location: {
+    id: number;
+    name: string;
+  };
+  numberOfEmployees: {
+    id: number;
+    numberOfEmployees: string;
+  };
+  industry: {
+    id: number;
+    name: string;
+  };
+  employerType: {
+    id: number;
+    type: string;
+  };
+  experience: {
+    id: number;
+    experience: string;
+  };
+  availability: {
+    id: number;
+    availability: string;
+  };
+  compensation: {
+    id: number;
+    compensation: string;
+  };
   jobTypes: {
     jobType: string;
   }[];

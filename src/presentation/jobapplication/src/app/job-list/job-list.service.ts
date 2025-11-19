@@ -10,13 +10,11 @@ export class JobListService {
 
   constructor(private http : HttpClient) {}
 
-  addJob(employer: Employer, logo?: File): Observable<any> {
-
+  addJob(dto: any, logo?: File): Observable<any> {
     const formData = new FormData();
-    formData.append("employer", new Blob([JSON.stringify(employer)], { type: "application/json" }));
-
-    if(logo) {
-      formData.append('logo', logo);
+    formData.append("employer", new Blob([JSON.stringify(dto)], { type: "application/json" }));
+    if (logo instanceof File && logo.size > 0) {
+      formData.append("logo", logo);
     }
 
     return this.http.post<Employer>(`${this.apibaseUrl}/add`, formData);
@@ -30,8 +28,14 @@ export class JobListService {
     return this.http.get<Employer>(`${this.apibaseUrl}/find/${id}`);
   }
 
-  updateJob(id: number, employer: Employer): Observable<Employer> {
-    return this.http.put<Employer>(`${this.apibaseUrl}/update?jobId=${id}`, employer);
+  updateJob(id: number, dto: any, logo?: File): Observable<any> {
+    const formData = new FormData();
+    formData.append("employer", new Blob([JSON.stringify(dto)], { type: "application/json" }));
+    if (logo instanceof File && logo.size > 0) {
+      formData.append("logo", logo);
+    }
+
+    return this.http.put<Employer>(`${this.apibaseUrl}/update/${id}`, formData);
   }
 
   deleteJob(id: number): Observable<void> {

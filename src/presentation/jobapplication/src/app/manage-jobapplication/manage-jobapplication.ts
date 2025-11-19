@@ -16,13 +16,14 @@ import {Location, LocationService} from '../location/location.service';
 @Component({
   selector: 'app-manage-jobapplication',
   standalone: true,
-  imports: [ FormsModule,  CommonModule, FormsModule, HttpClientModule],
+  imports: [ HeaderComponent, FooterComponent, FormsModule,  CommonModule, FormsModule, HttpClientModule],
   templateUrl: './manage-jobapplication.html',
   styleUrl: './manage-jobapplication.css',
 })
-export class ManageJobapplication {}/*implements OnInit{
+export class ManageJobapplication implements OnInit{
   jobs: Employer[] = [];
   selectedJob: Employer | null = null;
+
   formModel:Employer = this.createEmptyEmployer();
   jobTypesInput = '';
   selectedLogoFile: File | undefined;
@@ -32,15 +33,22 @@ export class ManageJobapplication {}/*implements OnInit{
   compensations: Compensation[] = [];
   jobTypes: JobType[] = [];
   locations: Location[] = [];
-
+  selectedJobTypeObjects: { id: number | null; jobType: string }[] = [];
   showAddEditModal = false;
   showDeleteModal = false;
   isEditMode = false;
+  jobTypesDropdownOpen = false;
 
   constructor(private jobService: JobListService, private industryService: IndustryService, private experienceService: ExperienceService, private availabilityService: AvailabilityService, private compensationService: CompensationService, private jobTypeService: JobTypeService, private locationService: LocationService) {}
 
   ngOnInit() {
     this.loadJobs();
+    this.getIndustries();
+    this.getExperiences();
+    this.getAvailabilities();
+    this.getCompensations();
+    this.getJobTypes();
+    this.getLocations();
   }
 
   onLogoSelected(event: any) {
@@ -109,6 +117,37 @@ export class ManageJobapplication {}/*implements OnInit{
     });
   }
 
+  toggleJobTypesDropdown(event: any): void {
+    this.jobTypesDropdownOpen = !this.jobTypesDropdownOpen;
+  }
+
+  isSelected(jt: JobType): boolean {
+    return this.selectedJobTypeObjects.some(s => s.id === jt.id);
+  }
+
+  toggleJobType(jt: JobType): void {
+    this.selectedJobTypeObjects = this.selectedJobTypeObjects.filter(
+      s => s.jobType && s.jobType.trim() !== ""
+    );
+
+    if (this.isSelected(jt)) {
+      this.selectedJobTypeObjects =
+        this.selectedJobTypeObjects.filter(s => s.id !== jt.id);
+    } else {
+      this.selectedJobTypeObjects.push({ id: jt.id, jobType: jt.jobType });
+    }
+    this.formModel.jobTypes = [...this.selectedJobTypeObjects];
+  }
+
+  removeJobType(jt: { id: number | null }): void {
+    this.selectedJobTypeObjects = this.selectedJobTypeObjects.filter(
+      s => s.jobType && s.jobType.trim() !== "");
+
+    this.selectedJobTypeObjects =
+      this.selectedJobTypeObjects.filter(s => s.id !== jt.id);
+    this.formModel.jobTypes = [...this.selectedJobTypeObjects];
+  }
+
   getLocations(): void {
     this.locationService.getLocations().subscribe({
       next: (list: Location[]) => {
@@ -123,31 +162,33 @@ export class ManageJobapplication {}/*implements OnInit{
   openAddModal(): void {
     this.isEditMode = false;
     this.formModel = this.createEmptyEmployer();
+    this.selectedLogoFile = undefined;
     this.selectedJob = null;
-    this.jobTypesInput = '';
+    this.selectedJobTypeObjects = [];
+    this.jobTypesDropdownOpen = false;
     this.showAddEditModal = true;
   }
 
   openEditModal(job: Employer): void {
     this.isEditMode = true;
+    this.selectedLogoFile = undefined;
     this.selectedJob = job;
 
     this.formModel = {
       ...job,
-      location: {...job.location},
-      numberOfEmployees: {...job.numberOfEmployees},
-      industry: {...job.industry},
-      employerType: {...job.employerType},
-      experience: {...job.experience},
-      availability: {...job.availability},
-      compensation: {...job.compensation},
-      jobTypes: job.jobTypes ? job.jobTypes.map(jt => ({...jt})) : [],
+      location: job.location ?? { id: null, name: '' },
+      numberOfEmployees: job.numberOfEmployees ?? { id: null, numberOfEmployees: '' },
+      industry: job.industry ?? { id: null, name: '' },
+      employerType: job.employerType ?? { id: null, type: '' },
+      experience: job.experience ?? { id: null, experience: '' },
+      availability: job.availability ?? { id: null, availability: '' },
+      compensation: job.compensation ?? { id: null, compensation: '' },
+      jobTypes: job.jobTypes ? job.jobTypes.map(jt => ({id: (jt as any).id ?? null, jobType: (jt as any).jobType,})) : [],
     };
 
-    this.jobTypesInput = (job.jobTypes || [])
-      .map(jt => jt.jobType)
-      .join(', ');
-
+    this.selectedJobTypeObjects = job.jobTypes ? job.jobTypes.map(jt => ({id: (jt as any).id ?? null, jobType: (jt as any).jobType,})) : [];
+    this.formModel.jobTypes = [...this.selectedJobTypeObjects];
+    this.jobTypesInput = this.formModel.jobTypes.map(j => j.jobType).join(', ');
     this.showAddEditModal = true;
   }
 
@@ -163,16 +204,9 @@ export class ManageJobapplication {}/*implements OnInit{
   }
 
   saveJob(): void {
-    console.log("SAVE JOB FIRED!");
-    this.formModel.jobTypes = this.jobTypesInput
-      .split(',')
-      .map(x => x.trim())
-      .filter(x => x.length > 0)
-      .map(name => ({jobType: name}));
 
     const dto = {
       companyName: this.formModel.companyName,
-      companyLogo: this.formModel.companyLogo,
       yearOfFounding: this.formModel.yearOfFounding,
       aboutCompany: this.formModel.aboutCompany,
       email: this.formModel.email,
@@ -190,16 +224,18 @@ export class ManageJobapplication {}/*implements OnInit{
     };
 
     if(this.isEditMode && this.selectedJob) {
-      this.jobService.updateJob(this.selectedJob.id, this.formModel).subscribe({
+      this.jobService.updateJob(this.selectedJob.id, dto, this.selectedLogoFile).subscribe({
           next: () => {
+            this.selectedLogoFile = undefined;
             this.loadJobs();
             this.closeModal();
           },
           error: err => console.error('Error updating job', err),
         });
     } else {
-      this.jobService.addJob(this.formModel, this.selectedLogoFile).subscribe({
+      this.jobService.addJob(dto, this.selectedLogoFile).subscribe({
         next:() => {
+          this.selectedLogoFile = undefined;
           this.loadJobs();
           this.closeModal();
         },
@@ -229,15 +265,15 @@ export class ManageJobapplication {}/*implements OnInit{
       aboutCompany: '',
       email: '',
       password: '',
-      location: null,
-      industry: null,
-      experience: null,
-      availability: null,
-      compensation: null,
-      numberOfEmployees: null,
-      employerType: null,
+      location: { id: 0, name: '' },
+      numberOfEmployees: { id: 0, numberOfEmployees: '' },
+      industry: { id: 0, name: '' },
+      employerType: { id: 0, type: '' },
+      experience: { id: 0, experience: '' },
+      availability: { id: 0, availability: '' },
+      compensation: { id: 0, compensation: '' },
       jobTypes:[],
     };
   }
 }
-*/
+

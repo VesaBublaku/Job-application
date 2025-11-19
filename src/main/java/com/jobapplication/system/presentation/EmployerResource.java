@@ -2,6 +2,7 @@ package com.jobapplication.system.presentation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jobapplication.system.application.EmployerService;
+import com.jobapplication.system.domain.Availability;
 import com.jobapplication.system.domain.Employer;
 import com.jobapplication.system.domain.EmployerDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4201")
+@CrossOrigin(origins = {"http://localhost:4201", "http://localhost:4200"})
 @RestController
 @RequestMapping("/employers")
 public class EmployerResource {
-
     private final EmployerService employerService;
 
     @Autowired
@@ -43,24 +43,40 @@ public class EmployerResource {
         }
     }
 
-    @PutMapping("/update/{id}")
-    public Employer updateEmployer(@PathVariable Long id, @RequestBody Employer employer) {
-        return employerService.updateEmployer(id, employer);
+    @PutMapping( "/update/{id}")
+    public ResponseEntity<?> updateEmployer(
+            @PathVariable("id") Long id,
+            @RequestPart("employer") String employerJson,
+            @RequestPart(value = "logo", required = false) MultipartFile logo
+    ) {
+        try {
+            EmployerDTO dto = objectMapper.readValue(employerJson, EmployerDTO.class);
+            Employer updated = employerService.updateEmployer(id, dto, logo);
+            return ResponseEntity.ok(updated);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error updating employer: " + e.getMessage());
+        }
     }
+
 
     @GetMapping("/all")
-    public List<Employer> getAll() {
-        return employerService.findAllEmployers();
+    public ResponseEntity<List<Employer>> getAll() {
+        List<Employer> employers = employerService.findAllEmployers();
+        return  new ResponseEntity<>(employers, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public Employer getById(@PathVariable Long id) {
-        return employerService.findEmployerById(id);
+    @GetMapping("/find/{id}")
+    public ResponseEntity<Employer> getEmployerById(@PathVariable("id") Long id) {
+        Employer employer = employerService.findEmployerById(id);
+        return new ResponseEntity<>(employer, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteEmployer(@PathVariable("id") Long id) {
         employerService.deleteEmployer(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
 

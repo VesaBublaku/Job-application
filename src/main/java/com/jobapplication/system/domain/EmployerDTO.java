@@ -2,6 +2,8 @@ package com.jobapplication.system.domain;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class EmployerDTO {
 
@@ -19,4 +21,5 @@ public class EmployerDTO {
     private Long compensationId;
     private Long numberOfEmployeesId;
     private Long employerTypeId;
+    private List<JobTypeDTO> jobTypes;
 }
