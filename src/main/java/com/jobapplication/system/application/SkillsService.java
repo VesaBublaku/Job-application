@@ -42,4 +42,11 @@ public class SkillsService {
         }
         skillsRepo.deleteById(id);
     }
+
+    @Transactional
+    public List<Skills> findAllByIds(List<Long> ids) {
+        if (ids == null || ids.isEmpty()) return List.of();
+        return skillsRepo.findAllById(ids);
+    }
+
 }

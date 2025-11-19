@@ -43,4 +43,11 @@ public class JobTypeService {
         jobTypeRepo.deleteById(id);
     }
 
+    @Transactional
+    public List<JobType> findAllByIds(List<Long> ids) {
+        if (ids == null || ids.isEmpty()) return List.of();
+        return jobTypeRepo.findAllById(ids);
+    }
+
+
 }

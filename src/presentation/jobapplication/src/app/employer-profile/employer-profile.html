@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Profile • HireBasis</title>
-  <link rel="stylesheet" href="employer-profile.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
 </head>
@@ -16,21 +15,22 @@
   <aside class="left">
     <section class="card profile-card">
       <div class="avatar">
-        <div class="avatar__img" aria-hidden="true"></div>
+        <div class="avatar__img" aria-hidden="true">
+          <img *ngIf="employer?.companyLogo" [src]="'http://localhost:8080/uploads/' + employer?.companyLogo" alt="Company Logo">
+        </div>
       </div>
 
-      <h1 class="name">Buckaroo</h1>
+      <h1 class="name">{{ employer?.companyName || 'No Name'}}</h1>
 
       <div class="loc">
         <i class="fa-solid fa-location-dot"></i>
-        <span>Kosovo - Pristina</span>
+        <span>{{ employer?.location?.name || 'Location not set' }}</span>
       </div>
 
       <div class="section">
         <h3 class="section__title">Applicants</h3>
         <p class="muted">You have no application for any jobs yet.</p>
       </div>
-
 
     </section>
   </aside>
@@ -47,43 +47,61 @@
 
       <div class="row">
         <div class="label">Bio</div>
-        <div class="value muted">No info provided</div>
+        <div class="value muted">{{ employer?.aboutCompany || 'No info provided' }}</div>
       </div>
       <div class="divider"></div>
 
       <div class="row">
         <div class="label">Location</div>
-        <div class="value strong">Prishtine</div>
+        <div class="value strong">{{ employer?.location?.name || 'No info provided' }}</div>
       </div>
       <div class="divider"></div>
 
       <div class="row">
         <div class="label">Number of Employees</div>
-        <div class="value strong">100</div>
+        <div class="value strong">{{ employer?.numberOfEmployees?.numberOfEmployees || 'No info provided' }}</div>
       </div>
       <div class="divider"></div>
 
       <div class="row">
         <div class="label">Industry</div>
-        <div class="value strong">Finance</div>
+        <div class="value strong">{{ employer?.industry?.name || 'No info provided' }}</div>
       </div>
       <div class="divider"></div>
 
       <div class="row">
         <div class="label">Employer Type</div>
-        <div class="value strong">Private</div>
+        <div class="value strong">{{ employer?.employerType?.type || 'No info provided' }}</div>
+      </div>
+      <div class="divider"></div>
+
+      <div class="row">
+        <div class="label">Availability</div>
+        <div class="value strong">{{ employer?.availability?.availability || 'No info provided' }}</div>
+      </div>
+      <div class="divider"></div>
+
+      <div class="row">
+        <div class="label">Compensation</div>
+        <div class="value strong">{{ employer?.compensation?.compensation || 'No info provided' }}</div>
+      </div>
+      <div class="divider"></div>
+
+      <div class="row">
+        <div class="label">Availability</div>
+        <div class="value strong">{{ employer?.experience?.experience || 'No info provided' }}</div>
       </div>
       <div class="divider"></div>
 
       <div class="row">
         <div class="label">Number of Employees</div>
-        <div class="value strong">100</div>
+        <div class="value strong">{{ employer?.numberOfEmployees?.numberOfEmployees || 'No info provided' }}</div>
       </div>
       <div class="divider"></div>
 
       <div class="row">
         <div class="label">Year of founding</div>
-        <div class="value strong">2000</div>
+        <div class="value strong">{{ employer?.yearOfFounding || 'No info provided' }}</div>
       </div>
     </div>
   </section>

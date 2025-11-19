@@ -12,6 +12,9 @@ export interface EmployerDTO {
   numberOfEmployeesId: number | null;
   industryId: number | null;
   employerTypeId: number | null;
+  experienceId: number | null,
+  availabilityId: number | null,
+  compensationId: number | null
 }
 
 @Injectable({

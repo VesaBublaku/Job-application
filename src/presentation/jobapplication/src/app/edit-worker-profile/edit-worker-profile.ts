@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, HostListener, OnInit, ViewEncapsulation} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
@@ -13,6 +13,7 @@ import {Education, EducationService} from '../education/education.service';
 import {Experience, ExperienceService} from '../experience/experience.service';
 import {Compensation, CompensationService} from '../compensation/compensation.service';
 import {Availability, AvailabilityService} from '../availability/availability.service';
+import {Router, RouterLink} from '@angular/router';
 
 interface WorkerDTO {
   id?: number;
@@ -40,7 +41,7 @@ interface WorkerDTO {
     CommonModule,
     FormsModule,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
   ],
   standalone: true,
   encapsulation: ViewEncapsulation.None
@@ -66,6 +67,7 @@ export class EditWorkerProfile implements OnInit {
   skillsDropdownOpen = false;
   jobTypesDropdownOpen = false;
 
+
   constructor(
     private http: HttpClient,
     private professionService: ProfessionService,
@@ -75,13 +77,25 @@ export class EditWorkerProfile implements OnInit {
     private educationService: EducationService,
     private experienceService: ExperienceService,
     private compensationService: CompensationService,
-    private availabilityService: AvailabilityService
+    private availabilityService: AvailabilityService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
     this.loadDropdownData();
     this.loadWorker();
   }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.multi-select') && !target.closest('.multi-select__panel')) {
+      this.professionsDropdownOpen = false;
+      this.skillsDropdownOpen = false;
+      this.jobTypesDropdownOpen = false;
+    }
+  }
+
 
   loadDropdownData() {
     this.professionService.getProfessions().subscribe(data => this.professions = data);
@@ -115,7 +129,6 @@ export class EditWorkerProfile implements OnInit {
         this.worker.compensationId = res.compensation?.id;
         this.worker.availabilityId = res.availability?.id;
 
-        // Preselect multi-select IDs
         this.selectedProfessions = res.professions?.map((p: any) => p.id) || [];
         this.selectedSkills = res.skills?.map((s: any) => s.id) || [];
         this.selectedJobTypes = res.jobTypes?.map((j: any) => j.id) || [];
@@ -133,40 +146,110 @@ export class EditWorkerProfile implements OnInit {
     return this.jobTypes.filter(j => this.selectedJobTypes.includes(j.id));
   }
 
-  toggleProfessionsDropdown(event: MouseEvent) { event.stopPropagation(); this.professionsDropdownOpen = !this.professionsDropdownOpen; }
-  toggleSkillsDropdown(event: MouseEvent) { event.stopPropagation(); this.skillsDropdownOpen = !this.skillsDropdownOpen; }
-  toggleJobTypesDropdown(event: MouseEvent) { event.stopPropagation(); this.jobTypesDropdownOpen = !this.jobTypesDropdownOpen; }
+  toggleProfessionsDropdown(event?: MouseEvent) {
+    event?.stopPropagation();
+    this.professionsDropdownOpen = !this.professionsDropdownOpen;
+  }
 
-  toggleProfession(id: number) { this.selectedProfessions = this.selectedProfessions.includes(id) ? this.selectedProfessions.filter(p => p !== id) : [...this.selectedProfessions, id]; }
-  removeProfession(id: number) { this.selectedProfessions = this.selectedProfessions.filter(p => p !== id); }
+  toggleSkillsDropdown(event?: MouseEvent) {
+    event?.stopPropagation();
+    this.skillsDropdownOpen = !this.skillsDropdownOpen;
+  }
 
-  toggleSkill(id: number) { this.selectedSkills = this.selectedSkills.includes(id) ? this.selectedSkills.filter(s => s !== id) : [...this.selectedSkills, id]; }
-  removeSkill(id: number) { this.selectedSkills = this.selectedSkills.filter(s => s !== id); }
+  toggleJobTypesDropdown(event?: MouseEvent) {
+    event?.stopPropagation();
+    this.jobTypesDropdownOpen = !this.jobTypesDropdownOpen;
+  }
 
-  toggleJobType(id: number) { this.selectedJobTypes = this.selectedJobTypes.includes(id) ? this.selectedJobTypes.filter(j => j !== id) : [...this.selectedJobTypes, id]; }
-  removeJobType(id: number) { this.selectedJobTypes = this.selectedJobTypes.filter(j => j !== id); }
+
+  toggleProfession(id: number) {
+    this.selectedProfessions = this.selectedProfessions.includes(id)
+      ? this.selectedProfessions.filter(p => p !== id)
+      : [...this.selectedProfessions, id];
+    this.worker.professionIds = this.selectedProfessions;
+  }
+  removeProfession(id: number) {
+    this.selectedProfessions = this.selectedProfessions.filter(p => p !== id);
+    this.worker.professionIds = this.selectedProfessions;
+  }
+
+  toggleSkill(id: number) {
+    this.selectedSkills = this.selectedSkills.includes(id)
+      ? this.selectedSkills.filter(s => s !== id)
+      : [...this.selectedSkills, id];
+    this.worker.skillIds = this.selectedSkills;
+  }
+  removeSkill(id: number) {
+    this.selectedSkills = this.selectedSkills.filter(s => s !== id);
+    this.worker.skillIds = this.selectedSkills;
+  }
+
+  toggleJobType(id: number) {
+    this.selectedJobTypes = this.selectedJobTypes.includes(id)
+      ? this.selectedJobTypes.filter(j => j !== id)
+      : [...this.selectedJobTypes, id];
+    this.worker.jobTypeIds = this.selectedJobTypes;
+  }
+  removeJobType(id: number) {
+    this.selectedJobTypes = this.selectedJobTypes.filter(j => j !== id);
+    this.worker.jobTypeIds = this.selectedJobTypes;
+  }
 
   onPhotoSelected(event: any) { this.selectedPhoto = event.target.files[0]; }
 
   saveChanges() {
     const formData = new FormData();
 
-    const workerData: WorkerDTO = {
-      ...this.worker,
-      professionIds: this.selectedProfessions,
-      skillIds: this.selectedSkills,
-      jobTypeIds: this.selectedJobTypes,
+    const workerData = {
+      firstName: this.worker.firstName,
+      lastName: this.worker.lastName,
+      aboutYou: this.worker.aboutYou,
+      email: this.worker.email,
+      dateOfBirth: this.worker.dateOfBirth,
       locationId: this.worker.locationId,
       educationId: this.worker.educationId,
       experienceId: this.worker.experienceId,
       compensationId: this.worker.compensationId,
-      availabilityId: this.worker.availabilityId
+      availabilityId: this.worker.availabilityId,
+      professionIds: this.selectedProfessions,
+      jobTypeIds: this.selectedJobTypes,
+      skillIds: this.selectedSkills
     };
 
-    formData.append('worker', JSON.stringify(workerData));
-    if (this.selectedPhoto) formData.append('photo', this.selectedPhoto);
+    formData.append("worker", new Blob([JSON.stringify(workerData)], { type: "application/json" }));
 
-    this.http.put(`http://localhost:8080/worker/${this.worker.id}`, formData)
-      .subscribe(() => alert('Profile updated successfully!'));
+    if (this.selectedPhoto) {
+      formData.append("photo", this.selectedPhoto);
+    }
+
+    this.http.put(`http://localhost:8080/worker/update/${this.worker.id}`, formData)
+      .subscribe({
+        next: () => {
+          alert("Profile updated successfully!");
+          this.router.navigate(['/worker-profile']);
+        },
+        error: (err) => console.error("Update failed", err)
+      });
+
   }
+
+  deleteWorker() {
+    if (!confirm("Are you sure you want to deactivate your profile? This cannot be undone!")) {
+      return;
+    }
+
+    this.http.delete(`http://localhost:8080/worker/delete/${this.worker.id}`)
+      .subscribe({
+        next: () => {
+          alert("Your profile has been deleted.");
+          window.location.href = "/home";
+        },
+        error: (err) => {
+          console.error(err);
+          alert("Failed to delete profile.");
+        }
+      });
+  }
+
+
 }

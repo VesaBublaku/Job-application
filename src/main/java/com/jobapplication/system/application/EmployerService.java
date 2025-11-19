@@ -23,11 +23,17 @@ public class EmployerService {
     private final NumberOfEmployeesRepo numberOfEmployeesRepo;
     private final IndustryRepo industryRepo;
     private final EmployerTypeRepo employerTypeRepo;
+<<<<<<< HEAD
     private final ExperienceRepo experienceRepo;
     private final AvailabilityRepo availabilityRepo;
     private final CompensationRepo compensationRepo;
     private final JobTypeRepo jobTypeRepo;
 
+=======
+    private final ExperienceService experienceService;
+    private final AvailabilityService availabilityService;
+    private final CompensationService compensationService;
+>>>>>>> 5344bf1aeb04c073805bf138f7b99f632d897da0
 
     public EmployerService(
             EmployerRepo employerRepo,
@@ -35,20 +41,30 @@ public class EmployerService {
             NumberOfEmployeesRepo numberOfEmployeesRepo,
             IndustryRepo industryRepo,
             EmployerTypeRepo employerTypeRepo,
+<<<<<<< HEAD
             ExperienceRepo experienceRepo,
             AvailabilityRepo availabilityRepo,
             CompensationRepo compensationRepo,
             JobTypeRepo jobTypeRepo
     ) {
+=======
+            ExperienceService experienceService, AvailabilityService availabilityService, CompensationService compensationService) {
+>>>>>>> 5344bf1aeb04c073805bf138f7b99f632d897da0
         this.employerRepo = employerRepo;
         this.locationRepo = locationRepo;
         this.numberOfEmployeesRepo = numberOfEmployeesRepo;
         this.industryRepo = industryRepo;
         this.employerTypeRepo = employerTypeRepo;
+<<<<<<< HEAD
         this.experienceRepo = experienceRepo;
         this.availabilityRepo = availabilityRepo;
         this.compensationRepo = compensationRepo;
         this.jobTypeRepo = jobTypeRepo;
+=======
+        this.experienceService = experienceService;
+        this.availabilityService = availabilityService;
+        this.compensationService = compensationService;
+>>>>>>> 5344bf1aeb04c073805bf138f7b99f632d897da0
     }
 
     public Employer addEmployer(EmployerDTO dto, MultipartFile logo) {
@@ -64,7 +80,11 @@ public class EmployerService {
                 employer.setPassword(hashPassword(dto.getPassword()));
             }
 
+<<<<<<< HEAD
             if (dto.getLocationId() != null && dto.getLocationId() > 0)
+=======
+            if (dto.getLocationId() != null)
+>>>>>>> 5344bf1aeb04c073805bf138f7b99f632d897da0
                 employer.setLocation(locationRepo.findById(dto.getLocationId()).orElse(null));
 
             if (dto.getIndustryId() != null && dto.getIndustryId() > 0)
@@ -84,6 +104,13 @@ public class EmployerService {
 
             if (dto.getEmployerTypeId() != null && dto.getEmployerTypeId() > 0)
                 employer.setEmployerType(employerTypeRepo.findById(dto.getEmployerTypeId()).orElse(null));
+            if (dto.getExperienceId() != null)
+                employer.setExperience(experienceService.findExperienceById(dto.getExperienceId()));
+            if (dto.getAvailabilityId() != null)
+                employer.setAvailability(availabilityService.findAvailabilityById(dto.getAvailabilityId()));
+            if (dto.getCompensationId() != null)
+                employer.setCompensation(compensationService.findCompensationById(dto.getCompensationId()));
+
 
             if (dto.getJobTypes() != null) {
                 List<JobType> types = dto.getJobTypes().stream()
@@ -103,8 +130,12 @@ public class EmployerService {
         }
     }
 
+<<<<<<< HEAD
 
     public Employer updateEmployer(Long id, EmployerDTO dto, MultipartFile logo) {
+=======
+    public Employer updateEmployer(Long id, Employer updated) {
+>>>>>>> 5344bf1aeb04c073805bf138f7b99f632d897da0
         Employer employer = employerRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Employer not found"));
 
@@ -171,22 +202,26 @@ public class EmployerService {
         employerRepo.deleteById(id);
     }
 
-    private String savePhoto(MultipartFile file) {
+    public String savePhoto(MultipartFile file) {
         try {
             String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
             Path uploadDir = Paths.get(System.getProperty("user.dir"), "uploads");
 
             Files.createDirectories(uploadDir);
 
+<<<<<<< HEAD
             Path filePath = uploadDir.resolve(fileName);
 
             Files.write(filePath, file.getBytes());
 
+=======
+>>>>>>> 5344bf1aeb04c073805bf138f7b99f632d897da0
             return fileName;
         } catch (Exception e) {
             throw new RuntimeException("Failed to save file", e);
         }
     }
+
 
     private String hashPassword(String password) {
         try{

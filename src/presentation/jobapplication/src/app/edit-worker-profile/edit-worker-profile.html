@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Edit Profile • HireBasis</title>
-  <link rel="stylesheet" href="./edit-worker-profile.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 
@@ -61,14 +60,16 @@
             <label>Email <span class="req">*</span></label>
             <input type="email" [(ngModel)]="worker.email" name="email" required>
           </div>
-
-
         </form>
+
+        <button class="btn" (click)="deleteWorker()" style="background-color: red">
+          <i class="fa-solid fa-trash"></i>
+          Deactivate profile
+        </button>
       </div>
 
       <div class="panel" data-panel="t2">
         <form>
-
           <div class="form-row">
             <label>First Name <span class="req">*</span></label>
             <input type="text" [(ngModel)]="worker.firstName" name="firstName" required>
@@ -94,96 +95,45 @@
           </div>
 
           <div class="form-row">
-            <label>Experience</label>
-            <select [(ngModel)]="worker.experienceId" name="experienceId">
-              <option *ngFor="let ex of experience" [value]="ex.id">
-                {{ ex.experience }}
-              </option>
-            </select>
-
-          </div>
-
-          <div class="form-row">
             <label>Date of Birth</label>
             <input type="date" [(ngModel)]="worker.dateOfBirth" name="dateOfBirth">
           </div>
-
-          <div class="form-row">
-            <label>About You</label>
-            <textarea [(ngModel)]="worker.aboutYou" name="aboutYou"></textarea>
-          </div>
-
         </form>
+
+        <button class="btn" (click)="saveChanges()">
+          <i class="fa-regular fa-floppy-disk"></i>
+          Save Data
+        </button>
       </div>
 
       <div class="panel" data-panel="t3">
         <form>
-
           <div class="form-row">
-            <label>Professions</label>
-
+            <label class="label">Professions <span class="req">*</span></label>
             <div class="multi-select" (click)="toggleProfessionsDropdown($event)">
-              <span class="chip"
-                    *ngFor="let p of selectedProfessionObjects"
-                    (click)="removeProfession(p.id); $event.stopPropagation()">
-                {{ p.profession }} ✕
-              </span>
-
-              <span *ngIf="selectedProfessions.length === 0">Select professions</span>
+              <div class="multi-select__chips">
+          <span
+            class="chip"
+            *ngFor="let pro of selectedProfessionObjects"
+            (click)="removeProfession(pro.id); $event.stopPropagation()"
+          >
+            {{ pro.profession }} ✕
+          </span>
+                <span class="placeholder" *ngIf="selectedProfessions.length === 0">
+            Please select
+          </span>
+              </div>
+              <span class="multi-select__arrow">▾</span>
             </div>
-
-            <div class="multi-select__panel" *ngIf="professionsDropdownOpen">
-              <button type="button"
-                      *ngFor="let p of professions"
-                      [class.selected]="selectedProfessions.includes(p.id)"
-                      (click)="toggleProfession(p.id)">
-                {{ p.profession }}
-              </button>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <label>Skills</label>
-
-            <div class="multi-select" (click)="toggleSkillsDropdown($event)">
-              <span class="chip"
-                    *ngFor="let s of selectedSkillObjects"
-                    (click)="removeSkill(s.id); $event.stopPropagation()">
-                {{ s.skill }} ✕
-              </span>
-
-              <span *ngIf="selectedSkills.length === 0">Select skills</span>
-            </div>
-
-            <div class="multi-select__panel" *ngIf="skillsDropdownOpen">
-              <button type="button"
-                      *ngFor="let s of skills"
-                      [class.selected]="selectedSkills.includes(s.id)"
-                      (click)="toggleSkill(s.id)">
-                {{ s.skill }}
-              </button>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <label>Job Types</label>
-
-            <div class="multi-select" (click)="toggleJobTypesDropdown($event)">
-              <span class="chip"
-                    *ngFor="let jt of selectedJobTypeObjects"
-                    (click)="removeJobType(jt.id); $event.stopPropagation()">
-                {{ jt.jobType }} ✕
-              </span>
-
-              <span *ngIf="selectedJobTypes.length === 0">Select job types</span>
-            </div>
-
-            <div class="multi-select__panel" *ngIf="jobTypesDropdownOpen">
-              <button type="button"
-                      *ngFor="let jt of jobTypes"
-                      [class.selected]="selectedJobTypes.includes(jt.id)"
-                      (click)="toggleJobType(jt.id)">
-                {{ jt.jobType }}
+            <div class="multi-select__panel" [hidden]="!professionsDropdownOpen">
+              <button
+                type="button"
+                class="multi-select__option"
+                *ngFor="let pro of professions"
+                [class.multi-select__option--selected]="selectedProfessions.includes(pro.id)"
+                (click)="toggleProfession(pro.id); $event.stopPropagation()"
+              >
+                {{ pro.profession }}
               </button>
             </div>
           </div>
@@ -197,7 +147,102 @@
             </select>
           </div>
 
+          <div class="form-row">
+            <label>Experience</label>
+            <select [(ngModel)]="worker.experienceId" name="experienceId">
+              <option *ngFor="let ex of experience" [value]="ex.id">
+                {{ ex.experience }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label class="label">Skills <span class="req">*</span></label>
+            <div class="multi-select" (click)="toggleSkillsDropdown($event)">
+              <div class="multi-select__chips">
+          <span
+            class="chip"
+            *ngFor="let skill of selectedSkillObjects"
+            (click)="removeSkill(skill.id); $event.stopPropagation()"
+          >
+            {{ skill.skill }} ✕
+          </span>
+                <span class="placeholder" *ngIf="selectedSkills.length === 0">
+            Please select
+          </span>
+              </div>
+              <span class="multi-select__arrow">▾</span>
+            </div>
+            <div class="multi-select__panel" [hidden]="!skillsDropdownOpen">
+              <button
+                type="button"
+                class="multi-select__option"
+                *ngFor="let skill of skills"
+                [class.multi-select__option--selected]="selectedSkills.includes(skill.id)"
+                (click)="toggleSkill(skill.id); $event.stopPropagation()"
+              >
+                {{ skill.skill }}
+              </button>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label class="label">Job Type <span class="req">*</span></label>
+            <div class="multi-select" (click)="toggleJobTypesDropdown($event)">
+              <div class="multi-select__chips">
+          <span
+            class="chip"
+            *ngFor="let jt of selectedJobTypeObjects"
+            (click)="removeJobType(jt.id); $event.stopPropagation()"
+          >
+            {{ jt.jobType }} ✕
+          </span>
+                <span class="placeholder" *ngIf="selectedJobTypes.length === 0">
+            Please select
+          </span>
+              </div>
+              <span class="multi-select__arrow">▾</span>
+            </div>
+            <div class="multi-select__panel" [hidden]="!jobTypesDropdownOpen">
+              <button
+                type="button"
+                class="multi-select__option"
+                *ngFor="let jt of jobTypes"
+                [class.multi-select__option--selected]="selectedJobTypes.includes(jt.id)"
+                (click)="toggleJobType(jt.id); $event.stopPropagation()">
+                {{ jt.jobType }}
+              </button>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label>Compensation</label>
+            <select [(ngModel)]="worker.compensationId" name="compensationId">
+              <option *ngFor="let c of compensation" [value]="c.id">
+                {{ c.compensation }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label>Availability</label>
+            <select [(ngModel)]="worker.availabilityId" name="availabilityId">
+              <option *ngFor="let a of availability" [value]="a.id">
+                {{ a.availability }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label>About You</label>
+            <textarea [(ngModel)]="worker.aboutYou" name="aboutYou"></textarea>
+          </div>
+
         </form>
+        <button class="btn" (click)="saveChanges()">
+          <i class="fa-regular fa-floppy-disk"></i>
+          Save Data
+        </button>
       </div>
 
 

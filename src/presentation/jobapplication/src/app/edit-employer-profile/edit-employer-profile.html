@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Edit Profile • HireBasis</title>
-  <link rel="stylesheet" href="edit-employer-profile.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
@@ -15,22 +14,17 @@
   <aside class="left">
     <section class="card profile-card">
       <div class="avatar">
-        <div class="avatar__img" aria-hidden="true"></div>
+        <div class="avatar__img" aria-hidden="true">
+          <img *ngIf="employer?.companyLogo" [src]="'http://localhost:8080/uploads/' + employer.companyLogo" alt="Company Logo">
+        </div>
       </div>
 
-      <h1 class="name">Buckaroo</h1>
+      <h1 class="name">{{ employer.companyName }}</h1>
 
       <div class="loc">
         <i class="fa-solid fa-location-dot"></i>
-        <span>Kosovo - Pristina</span>
+        <span>{{ employerLocationName }}</span>
       </div>
-
-      <div class="section">
-        <h3 class="section__title">Applicants</h3>
-        <p class="muted">You have no application for any jobs yet.</p>
-      </div>
-
-
     </section>
   </aside>
 
@@ -38,8 +32,8 @@
     <div class="head">
       <h2>Edit Profile</h2>
       <button class="btn btn--ghost" [routerLink]="'/employer-profile'">
-        <i class="fa-solid fa-backward"></i>
-        Go back</button>
+        <i class="fa-solid fa-backward"></i> Go back
+      </button>
     </div>
 
     <div class="tabs card">
@@ -48,82 +42,111 @@
       <input type="radio" name="tab" id="t3">
 
       <nav class="tablist">
-        <label class="tab" for="t1">
-          <span class="ico"></span> Account
-        </label>
-        <label class="tab" for="t2">
-          <span class="ico"></span> Company Info
-        </label>
-        <label class="tab" for="t3">
-          <span class="ico"></span> Job Application
-        </label>
+        <label class="tab" for="t1">Account</label>
+        <label class="tab" for="t2">Company Info</label>
+        <label class="tab" for="t3">Job Application</label>
       </nav>
+
 
       <div class="panel" data-panel="t1">
         <div class="form-row">
           <label>Email <span class="req">*</span></label>
-          <input id="email" type="text" class="input" placeholder="Email" required>
+          <input type="email" class="input" [(ngModel)]="employer.email">
         </div>
 
-        <button class="link-danger">
-          <i class="fa-solid fa-trash"></i>
-          Deactivate Account</button>
+        <button class="link-danger" (click)="deleteEmployer()">
+          <i class="fa-solid fa-trash"></i> Deactivate Account
+        </button>
       </div>
 
       <div class="panel" data-panel="t2">
-
         <div class="form-row">
           <label>Company Name <span class="req">*</span></label>
-          <input type="text" class="input" >
+          <input type="text" class="input" [(ngModel)]="employer.companyName">
         </div>
 
         <div class="form-row">
           <label>Company Logo</label>
-          <input type="file" placeholder="Upload your picture">
+          <input type="file" (change)="onLogoSelected($event)">
         </div>
 
         <div class="form-row">
-          <label>Location(city/town) <span class="req">*</span></label>
-          <select>
-            <option>Prishtine</option>
+          <label>Location</label>
+          <select [(ngModel)]="employer.locationId" name="locationId">
+            <option *ngFor="let loc of location" [value]="loc.id">
+              {{ loc.name }}
+            </option>
           </select>
         </div>
 
         <div class="form-row">
-          <label>Number of Employees <span class="req">*</span></label>
-          <select>
-            <option>ONE</option>
+          <label>Number Of Employees</label>
+          <select [(ngModel)]="employer.numberOfEmployeesId" name="numberOfEmployeesId">
+            <option *ngFor="let number of numberOfEmployees" [value]="number.id">
+              {{ number.numberOfEmployees }}
+            </option>
           </select>
         </div>
 
         <div class="form-row">
-          <label>Industry<span class="req">*</span></label>
-          <select>
-            <option>ONE</option>
+          <label>Industry</label>
+          <select [(ngModel)]="employer.industryId" name="industryId">
+            <option *ngFor="let industry of industry" [value]="industry.id">
+              {{ industry.name }}
+            </option>
           </select>
         </div>
 
         <div class="form-row">
-          <label>Employer Type<span class="req">*</span></label>
-          <select>
-            <option>ONE</option>
+          <label>Employer Type</label>
+          <select [(ngModel)]="employer.employerTypeId" name="employerTypeId">
+            <option *ngFor="let type of employerType" [value]="type.id">
+              {{ type.type }}
+            </option>
           </select>
         </div>
 
         <div class="form-row">
-          <label>Year of founding<span class="req">*</span></label>
-          <input type="text" class="input" >
+          <label>Year of Founding</label>
+          <input type="text" class="input" [(ngModel)]="employer.yearOfFounding">
         </div>
 
         <div class="form-row">
-          <label>About you <span class="muted">(Optional)</span></label>
-          <textarea rows="6" placeholder="Your current goals, qualifications, etc."></textarea>
+          <label>About Company</label>
+          <textarea rows="6" [(ngModel)]="employer.aboutCompany"></textarea>
         </div>
 
-        <div>
-          <button class="btn" type="submit">Save</button>
+        <div class="form-row">
+          <label>Experience</label>
+          <select [(ngModel)]="employer.experienceId" name="experienceId">
+            <option *ngFor="let exp of experiences" [value]="exp.id">
+              {{ exp.experience }}
+            </option>
+          </select>
         </div>
 
+        <div class="form-row">
+          <label>Availability</label>
+          <select [(ngModel)]="employer.availabilityId" name="availabilityId">
+            <option *ngFor="let av of availability" [value]="av.id">
+              {{ av.availability }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label>Compensation</label>
+          <select [(ngModel)]="employer.compensationId" name="compensationId">
+            <option *ngFor="let comp of compensation" [value]="comp.id">
+              {{ comp.compensation }}
+            </option>
+          </select>
+        </div>
+
+        <button class="btn" (click)="saveChanges()">
+          <i class="fa-regular fa-floppy-disk"></i>
+          Save Data
+        </button>
       </div>
 
       <div class="panel" data-panel="t3">

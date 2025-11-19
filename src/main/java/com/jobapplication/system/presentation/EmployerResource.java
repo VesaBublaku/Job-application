@@ -1,12 +1,17 @@
 package com.jobapplication.system.presentation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+<<<<<<< HEAD
 import com.jobapplication.system.application.EmployerService;
 import com.jobapplication.system.domain.Availability;
+=======
+import com.jobapplication.system.application.*;
+>>>>>>> 5344bf1aeb04c073805bf138f7b99f632d897da0
 import com.jobapplication.system.domain.Employer;
 import com.jobapplication.system.domain.EmployerDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +26,20 @@ public class EmployerResource {
 
     @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    private EmployerTypeService employerTypeService;
+    @Autowired
+    private NumberOfEmployeesService numberOfEmployeesService;
+    @Autowired
+    private CompensationService compensationService;
+    @Autowired
+    private AvailabilityService availabilityService;
+    @Autowired
+    private ExperienceService experienceService;
+    @Autowired
+    private IndustryService industryService;
+    @Autowired
+    private LocationService locationService;
 
     public EmployerResource(EmployerService employerService) {
         this.employerService = employerService;
@@ -43,16 +62,64 @@ public class EmployerResource {
         }
     }
 
+<<<<<<< HEAD
     @PutMapping( "/update/{id}")
     public ResponseEntity<?> updateEmployer(
             @PathVariable("id") Long id,
+=======
+    @PutMapping(value = "/update/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> updateEmployer(
+            @PathVariable Long id,
+>>>>>>> 5344bf1aeb04c073805bf138f7b99f632d897da0
             @RequestPart("employer") String employerJson,
             @RequestPart(value = "logo", required = false) MultipartFile logo
     ) {
         try {
+<<<<<<< HEAD
             EmployerDTO dto = objectMapper.readValue(employerJson, EmployerDTO.class);
             Employer updated = employerService.updateEmployer(id, dto, logo);
             return ResponseEntity.ok(updated);
+=======
+            EmployerDTO employerDTO = objectMapper.readValue(employerJson, EmployerDTO.class);
+
+            Employer employer = employerService.findEmployerById(id);
+
+            employer.setCompanyName(employerDTO.getCompanyName());
+            employer.setEmail(employerDTO.getEmail());
+            employer.setYearOfFounding(employerDTO.getYearOfFounding());
+            employer.setAboutCompany(employerDTO.getAboutCompany());
+
+            if (employerDTO.getLocationId() != null) {
+                employer.setLocation(locationService.findLocationById(employerDTO.getLocationId()));
+            }
+            if (employerDTO.getIndustryId() != null) {
+                employer.setIndustry(industryService.findIndustryById(employerDTO.getIndustryId()));
+            }
+            if (employerDTO.getExperienceId() != null) {
+                employer.setExperience(experienceService.findExperienceById(employerDTO.getExperienceId()));
+            }
+            if (employerDTO.getAvailabilityId() != null) {
+                employer.setAvailability(availabilityService.findAvailabilityById(employerDTO.getAvailabilityId()));
+            }
+            if (employerDTO.getCompensationId() != null) {
+                employer.setCompensation(compensationService.findCompensationById(employerDTO.getCompensationId()));
+            }
+            if (employerDTO.getNumberOfEmployeesId() != null) {
+                employer.setNumberOfEmployees(numberOfEmployeesService.findNumberOfEmployeesById(employerDTO.getNumberOfEmployeesId()));
+            }
+            if (employerDTO.getEmployerTypeId() != null) {
+                employer.setEmployerType(employerTypeService.findEmployerTypeById(employerDTO.getEmployerTypeId()));
+            }
+
+            if (logo != null) {
+                String logoName = employerService.savePhoto(logo);
+                employer.setCompanyLogo(logoName);
+            }
+
+            employerService.updateEmployer(id, employer);
+
+            return ResponseEntity.ok(employer);
+>>>>>>> 5344bf1aeb04c073805bf138f7b99f632d897da0
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -68,9 +135,14 @@ public class EmployerResource {
     }
 
     @GetMapping("/find/{id}")
+<<<<<<< HEAD
     public ResponseEntity<Employer> getEmployerById(@PathVariable("id") Long id) {
         Employer employer = employerService.findEmployerById(id);
         return new ResponseEntity<>(employer, HttpStatus.OK);
+=======
+    public Employer getById(@PathVariable Long id) {
+        return employerService.findEmployerById(id);
+>>>>>>> 5344bf1aeb04c073805bf138f7b99f632d897da0
     }
 
     @DeleteMapping("/delete/{id}")

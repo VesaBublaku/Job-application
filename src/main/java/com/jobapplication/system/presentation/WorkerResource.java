@@ -1,7 +1,7 @@
 package com.jobapplication.system.presentation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jobapplication.system.application.WorkerService;
+import com.jobapplication.system.application.*;
 import com.jobapplication.system.domain.Worker;
 import com.jobapplication.system.domain.WorkerDTO;
 import com.jobapplication.system.infrastructure.*;
@@ -50,6 +50,22 @@ public class WorkerResource {
 
     @Autowired
     private SkillsRepo skillsRepo;
+    @Autowired
+    private LocationService locationService;
+    @Autowired
+    private EducationService educationService;
+    @Autowired
+    private ExperienceService experienceService;
+    @Autowired
+    private CompensationService compensationService;
+    @Autowired
+    private AvailabilityService availabilityService;
+    @Autowired
+    private ProfessionService professionService;
+    @Autowired
+    private SkillsService skillsService;
+    @Autowired
+    private JobTypeService jobTypeService;
 
 
     public WorkerResource(WorkerService workerService, WorkerRepo workerRepo) {
@@ -109,14 +125,39 @@ public class WorkerResource {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Worker> updateWorker(
+    public ResponseEntity<?> updateWorker(
             @PathVariable Long id,
             @RequestPart("worker") WorkerDTO workerDTO,
-            @RequestPart(value = "photo", required = false) MultipartFile photo) {
+            @RequestPart(value = "photo", required = false) MultipartFile photo
+    ) {
+        Worker worker = workerService.findWorkerById(id);
 
-        Worker updatedWorker = workerService.updateWorker(id,workerDTO, photo);
-        return new ResponseEntity<>(updatedWorker, HttpStatus.OK);
+        worker.setFirstName(workerDTO.getFirstName());
+        worker.setLastName(workerDTO.getLastName());
+        worker.setEmail(workerDTO.getEmail());
+        worker.setDateOfBirth(workerDTO.getDateOfBirth());
+        worker.setAboutYou(workerDTO.getAboutYou());
+
+        worker.setLocation(locationService.findLocationById(workerDTO.getLocationId()));
+        worker.setEducation(educationService.findEducationByID(workerDTO.getEducationId()));
+        worker.setExperience(experienceService.findExperienceById(workerDTO.getExperienceId()));
+        worker.setCompensation(compensationService.findCompensationById(workerDTO.getCompensationId()));
+        worker.setAvailability(availabilityService.findAvailabilityById(workerDTO.getAvailabilityId()));
+
+        worker.setProfessions(professionService.findAllByIds(workerDTO.getProfessionIds()));
+        worker.setSkills(skillsService.findAllByIds(workerDTO.getSkillIds()));
+        worker.setJobTypes(jobTypeService.findAllByIds(workerDTO.getJobTypeIds()));
+
+        if (photo != null) {
+            String photoName = workerService.savePhoto(photo);
+            worker.setPhoto(photoName);
+        }
+
+        workerService.updateWorker(worker.getId(), workerDTO, photo);
+
+        return ResponseEntity.ok(worker);
     }
+
 
     @GetMapping("/all")
     public ResponseEntity<List<Worker>> getAllWorkers() {
@@ -130,7 +171,6 @@ public class WorkerResource {
         return new ResponseEntity<>(worker, HttpStatus.OK);
     }
 
-    // Delete a worker
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteWorker(@PathVariable Long id) {
         workerService.deleteWorker(id);

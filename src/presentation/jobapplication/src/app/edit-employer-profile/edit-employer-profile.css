@@ -31,16 +31,24 @@ body{
 
 .left{ padding:18px }
 
-.avatar{
-  display:flex;
+.avatar{ display:flex;
   align-items:center;
-  gap:16px;
-}
-.avatar__img{
-  width:108px; height:108px;
+  gap:16px; }
+
+.avatar__img{ width:108px;
+  height:108px;
   border-radius:999px;
   background:linear-gradient(180deg,#f1f5fb,#e7edf6);
   border:1px solid var(--border);
+}
+
+.avatar__img img {
+  width: 108px;
+  height: 108px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto;
 }
 
 .name{
