@@ -43,4 +43,11 @@ public class ProfessionService {
         }
         professionRepo.deleteById(id);
     }
+
+    @Transactional
+    public List<Profession> findAllByIds(List<Long> ids) {
+        if (ids == null || ids.isEmpty()) return List.of();
+        return professionRepo.findAllById(ids);
+    }
+
 }

@@ -166,7 +166,7 @@ public class WorkerService {
         }
     }
 
-    private String savePhoto(MultipartFile photo) {
+    public String savePhoto(MultipartFile photo) {
         try {
             String fileName = System.currentTimeMillis() + "_" + photo.getOriginalFilename();
             Path path = Paths.get("uploads/" + fileName);

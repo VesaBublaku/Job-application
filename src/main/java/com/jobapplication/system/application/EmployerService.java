@@ -20,19 +20,25 @@ public class EmployerService {
     private final NumberOfEmployeesRepo numberOfEmployeesRepo;
     private final IndustryRepo industryRepo;
     private final EmployerTypeRepo employerTypeRepo;
+    private final ExperienceService experienceService;
+    private final AvailabilityService availabilityService;
+    private final CompensationService compensationService;
 
     public EmployerService(
             EmployerRepo employerRepo,
             LocationRepo locationRepo,
             NumberOfEmployeesRepo numberOfEmployeesRepo,
             IndustryRepo industryRepo,
-            EmployerTypeRepo employerTypeRepo
-    ) {
+            EmployerTypeRepo employerTypeRepo,
+            ExperienceService experienceService, AvailabilityService availabilityService, CompensationService compensationService) {
         this.employerRepo = employerRepo;
         this.locationRepo = locationRepo;
         this.numberOfEmployeesRepo = numberOfEmployeesRepo;
         this.industryRepo = industryRepo;
         this.employerTypeRepo = employerTypeRepo;
+        this.experienceService = experienceService;
+        this.availabilityService = availabilityService;
+        this.compensationService = compensationService;
     }
 
     public Employer addEmployer(EmployerDTO dto, MultipartFile logo) {
@@ -46,14 +52,6 @@ public class EmployerService {
                 employer.setPassword(hashPassword(dto.getPassword()));
             }
 
-        System.out.println("=== EMPLOYER DTO RECEIVED ===");
-        System.out.println("companyName: " + dto.getCompanyName());
-        System.out.println("locationId: " + dto.getLocationId());
-        System.out.println("industryId: " + dto.getIndustryId());
-        System.out.println("employeesId: " + dto.getNumberOfEmployeesId());
-        System.out.println("employerTypeId: " + dto.getEmployerTypeId());
-        System.out.println("================================");
-
             if (dto.getLocationId() != null)
                 employer.setLocation(locationRepo.findById(dto.getLocationId()).orElse(null));
             if (dto.getNumberOfEmployeesId() != null)
@@ -62,6 +60,13 @@ public class EmployerService {
                 employer.setIndustry(industryRepo.findById(dto.getIndustryId()).orElse(null));
             if (dto.getEmployerTypeId() != null)
                 employer.setEmployerType(employerTypeRepo.findById(dto.getEmployerTypeId()).orElse(null));
+            if (dto.getExperienceId() != null)
+                employer.setExperience(experienceService.findExperienceById(dto.getExperienceId()));
+            if (dto.getAvailabilityId() != null)
+                employer.setAvailability(availabilityService.findAvailabilityById(dto.getAvailabilityId()));
+            if (dto.getCompensationId() != null)
+                employer.setCompensation(compensationService.findCompensationById(dto.getCompensationId()));
+
 
             if (logo != null && !logo.isEmpty())
                 employer.setCompanyLogo(savePhoto(logo));
@@ -72,7 +77,6 @@ public class EmployerService {
             throw e;
         }
     }
-
 
     public Employer updateEmployer(Long id, Employer updated) {
         Employer employer = employerRepo.findById(id)
@@ -118,7 +122,7 @@ public class EmployerService {
         employerRepo.deleteById(id);
     }
 
-    private String savePhoto(MultipartFile file) {
+    public String savePhoto(MultipartFile file) {
         try {
             String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
             java.nio.file.Path path = java.nio.file.Paths.get("uploads/" + fileName);
@@ -126,11 +130,12 @@ public class EmployerService {
             java.nio.file.Files.createDirectories(path.getParent());
             java.nio.file.Files.write(path, file.getBytes());
 
-            return path.toString();
+            return fileName;
         } catch (Exception e) {
             throw new RuntimeException("Failed to save file", e);
         }
     }
+
 
     private String hashPassword(String password) {
         try{

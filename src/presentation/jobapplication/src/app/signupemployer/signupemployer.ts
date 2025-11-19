@@ -11,6 +11,11 @@ import { SignupEmployerService, EmployerDTO } from './signupemployer.service';
 import { LocationService, Location as JobLocation } from '../location/location.service';
 import { HeaderComponent } from '../header/header';
 import { FooterComponent } from '../footer/footer';
+import { Availability } from '../availability/availability.service';
+import { Compensation } from '../compensation/compensation.service';
+import {Experience, ExperienceService} from '../experience/experience.service';
+import {AvailabilityService} from '../availability/availability.service';
+import {CompensationService} from '../compensation/compensation.service';
 
 @Component({
   standalone: true,
@@ -33,7 +38,10 @@ export class SignupEmployer implements OnInit {
     locationId: null,
     numberOfEmployeesId: null,
     industryId: null,
-    employerTypeId: null
+    employerTypeId: null,
+    experienceId: null,
+    availabilityId: null,
+    compensationId:null,
   };
 
   logoFile?: File;
@@ -42,6 +50,10 @@ export class SignupEmployer implements OnInit {
   numberOfEmployees: NumberOfEmployees[] = [];
   industry: Industry[] = [];
   employerTypes: EmployerType[] = [];
+  availability: Availability[] = [];
+  compensation: Compensation[] = [];
+  experience: Experience[]= [];
+
 
   constructor(
     private employerService: SignupEmployerService,
@@ -49,6 +61,9 @@ export class SignupEmployer implements OnInit {
     private numberOfEmployeesService: NumberOfEmployeesService,
     private industryService: IndustryService,
     private employerTypeService: EmployerTypeService,
+    private availabilityService: AvailabilityService,
+    private compensationService: CompensationService,
+    private experienceService: ExperienceService,
     private router: Router
   ) {}
 
@@ -70,6 +85,21 @@ export class SignupEmployer implements OnInit {
     this.industryService.getAll().subscribe({
       next: res => this.industry = res,
       error: err => console.error('Industry error:', err)
+    });
+
+    this.availabilityService.getAvailability().subscribe({
+      next: res => this.availability = res,
+      error: err => console.error('Availability error:', err)
+    });
+
+    this.compensationService.getCompensation().subscribe({
+      next: res => this.compensation = res,
+      error: err => console.error('Compensation error:', err)
+    });
+
+    this.experienceService.getExperience().subscribe({
+      next: res => this.experience = res,
+      error: err => console.error('Compensation error:', err)
     });
 
     this.employerTypeService.getAll().subscribe({
@@ -111,28 +141,45 @@ export class SignupEmployer implements OnInit {
       return;
     }
 
-    const dto: EmployerDTO = { ...this.employerModel };
+    const dto: EmployerDTO = {...this.employerModel};
 
     const formData = new FormData();
 
-    formData.append('employer', new Blob([JSON.stringify(dto)], { type: 'application/json' }));
+    formData.append('employer', new Blob([JSON.stringify(dto)], {type: 'application/json'}));
 
     if (this.logoFile) {
       formData.append('logo', this.logoFile, this.logoFile.name);
     }
 
     this.employerService.addEmployer(formData).subscribe({
-      next: res => {
-        console.log('Employer created', res);
+      next: (createdEmployer: any) => {
         alert('Employer registered successfully!');
-        this.router.navigate(['/home']);
+
+        localStorage.setItem('employerId', createdEmployer.id.toString());
+
+        this.router.navigate(['/employer-profile']);
+
+        this.logoFile = undefined;
+        this.employerModel = {
+          companyName: '',
+          yearOfFounding: '',
+          aboutCompany: '',
+          email: '',
+          password: '',
+          locationId: null,
+          numberOfEmployeesId: null,
+          industryId: null,
+          employerTypeId: null,
+          experienceId: null,
+          availabilityId: null,
+          compensationId:null
+        };
       },
-      error: err => {
-        console.error('Failed to register employer', err);
-        alert('Failed to register employer. Check console for details.');
+      error: (err) => {
+        console.error(err);
+        alert('Failed to register employer. Please check your data.');
       }
     });
+
   }
-
-
 }

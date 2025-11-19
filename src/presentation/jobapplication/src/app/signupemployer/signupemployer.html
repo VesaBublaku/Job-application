@@ -74,6 +74,26 @@
         </div>
 
         <div class="field field--full">
+          <label class="label" for="compensation">Compensation<span class="req">*</span></label>
+          <div class="input-append">
+            <select id="compensation" class="input select" name="compensationId"
+                    [(ngModel)]="employerModel.compensationId" required>
+              <option *ngFor="let comp of compensation" [value]="comp.id">{{ comp.compensation }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field field--full">
+          <label class="label" for="experience">Experience<span class="req">*</span></label>
+          <div class="input-append">
+            <select id="experience" class="input select" name="experienceId"
+                    [(ngModel)]="employerModel.experienceId" required>
+              <option *ngFor="let ex of experience" [value]="ex.id">{{ ex.experience }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field field--full">
           <label class="label" for="industry">Industry<span class="req">*</span></label>
           <div class="input-append">
             <select id="industry" class="input select" name="industryId" [(ngModel)]="employerModel.industryId" required>
@@ -87,6 +107,16 @@
           <div class="input-append">
             <select id="employeetype" class="input select" name="employerTypeId" [(ngModel)]="employerModel.employerTypeId">
               <option *ngFor="let type of employerTypes" [value]="type.id">{{ type.type }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field field--full">
+          <label class="label" for="availability">Availability<span class="req">*</span></label>
+          <div class="input-append">
+            <select id="availability" class="input select" name="availabilityId"
+                    [(ngModel)]="employerModel.availabilityId" required>
+              <option *ngFor="let avail of availability" [value]="avail.id">{{ avail.availability }}</option>
             </select>
           </div>
         </div>

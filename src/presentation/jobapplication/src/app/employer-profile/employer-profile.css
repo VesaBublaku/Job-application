@@ -46,6 +46,15 @@ body{
   border:1px solid var(--border);
 }
 
+.avatar__img img {
+  width: 108px;
+  height: 108px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto;
+}
+
 .name{
   margin:14px 0 6px;
   font-size:clamp(1.4rem,1vw + 1rem,2rem);
