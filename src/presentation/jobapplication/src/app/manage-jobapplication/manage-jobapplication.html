@@ -60,113 +60,108 @@
   </section>
 </div>
 
-    <div class="modal-backdrop" *ngIf="showAddEditModal">
-      <div class="modal">
-        <h2 class="job-form__title">{{isEditMode ? 'Edit Job' : 'Add Job'}}</h2>
+<div class="modal-backdrop" *ngIf="showAddEditModal">
+  <div class="modal">
+    <h2 class="job-form__title">{{isEditMode ? 'Edit Job' : 'Add Job'}}</h2>
 
-        <form (ngSubmit)="saveJob()" #jobForm="ngForm">
-          <div class="job-form__grid">
+    <form (ngSubmit)="saveJob()" #jobForm="ngForm">
+      <div class="job-form__grid">
 
-          <label class="field">
-            <span>Logo</span>
-            <input type="file" (change)="onLogoSelected($event)" />
-          </label>
+        <label class="field">
+          <span>Logo</span>
+          <input type="file" (change)="onLogoSelected($event)" />
+        </label>
 
-          <label class="field">
-            <span>Industry</span>
-            <select [(ngModel)]="formModel.industry.id" name="industryId" required>
-              <option *ngFor="let i of industries" [value]="i.id">{{ i.name }}</option>
-            </select>
-          </label>
+        <label class="field">
+          <span>Industry</span>
+          <select [(ngModel)]="formModel.industry.id" name="industryId" required>
+            <option *ngFor="let i of industries" [value]="i.id">{{ i.name }}</option>
+          </select>
+        </label>
 
-          <label class="field">
-            <span>Company name</span>
-            <input type="text" [(ngModel)]="formModel.companyName" name="companyName" required/>
-          </label>
+        <label class="field">
+          <span>Company name</span>
+          <input type="text" [(ngModel)]="formModel.companyName" name="companyName" required/>
+        </label>
 
-          <label class="field">
-            <span>Email</span>
-            <input type="email" [(ngModel)]="formModel.email" name="email" required/>
-          </label>
+        <label class="field">
+          <span>Email</span>
+          <input type="email" [(ngModel)]="formModel.email" name="email" required/>
+        </label>
 
-            <label class="field">
-              <span>Experience</span>
-              <select [(ngModel)]="formModel.experience.id" name="experienceId" required>
-                <option *ngFor="let e of experiences" [value]="e.id">{{ e.experience }}</option>
-              </select>
-            </label>
+        <label class="field">
+          <span>Experience</span>
+          <select [(ngModel)]="formModel.experience.id" name="experienceId" required>
+            <option *ngFor="let e of experiences" [value]="e.id">{{ e.experience }}</option>
+          </select>
+        </label>
 
-            <label class="field">
-              <span>Availability</span>
-              <select [(ngModel)]="formModel.availability.id" name="availabilityId" required>
-                <option *ngFor="let a of availabilities" [value]="a.id">{{ a.availability }}</option>
-              </select>
-            </label>
+        <label class="field">
+          <span>Availability</span>
+          <select [(ngModel)]="formModel.availability.id" name="availabilityId" required>
+            <option *ngFor="let a of availabilities" [value]="a.id">{{ a.availability }}</option>
+          </select>
+        </label>
 
-            <label class="field">
-              <span>Compensation</span>
-              <select [(ngModel)]="formModel.compensation.id" name="compensationId" required>
-                <option *ngFor="let c of compensations" [value]="c.id">{{ c.compensation }}</option>
-              </select>
-            </label>
+        <label class="field">
+          <span>Compensation</span>
+          <select [(ngModel)]="formModel.compensation.id" name="compensationId" required>
+            <option *ngFor="let c of compensations" [value]="c.id">{{ c.compensation }}</option>
+          </select>
+        </label>
 
-          <label class="field">
-            <span>Year of founding</span>
-            <input type="date" [(ngModel)]="formModel.yearOfFounding" name="yearOfFounding"/>
-          </label>
+        <label class="field">
+          <span>Year of founding</span>
+          <input type="date" [(ngModel)]="formModel.yearOfFounding" name="yearOfFounding"/>
+        </label>
 
-            <label class="field">
-              <span>Job types</span>
-              <div class="multi-select" (click)="toggleDropdown()">
-                <div class="multi-select__chips">
-                  <span class="chip"
-                    *ngFor="let jt of selectedJobTypeObjects"
-                   (click)="removeJobType(jt.id); $event.stopPropagation()">{{ jt.jobType }} ✕</span>
-
-                  <span *ngIf="selectedJobTypes.length === 0" class="placeholder">Please select</span>
-                </div>
-                <span class="multi-select__arrow">▾</span>
-              </div>
-
-              <div class="multi-select__panel" *ngIf="jobTypesDropdownOpen">
-                <button type="button"
-                        class="multi-select__option"
-                        *ngFor="let jt of jobTypes"
-                        [class.multi-select__option--selected]="selectedJobTypes.includes(jt.id)"
-                        (click)="toggleJobType(jt.id)">
-                  {{ jt.jobType }}
-                </button>
-              </div>
-            </label>
-
-            <label class="field">
-              <span>Location</span>
-              <select [(ngModel)]="formModel.location.id" name="locationId">
-                <option *ngFor="let l of locations" [value]="l.id">{{ l.name }}</option>
-              </select>
-            </label>
+        <label class="field">
+          <span>Job types</span>
+          <div class="multi-select" (click)="toggleJobTypesDropdown($event)">
+            <div class="multi-select__chips">
+              <span class="chip" *ngFor="let jt of selectedJobTypeObjects" (click)="removeJobType(jt); $event.stopPropagation()">{{ jt.jobType }} ✕</span>
+              <span class="placeholder" *ngIf="selectedJobTypeObjects.length === 0">Please select</span>
+            </div>
+            <span class="multi-select__arrow" (click)="$event.stopPropagation()">
+              <svg width="12" height="12" viewBox="0 0 24 24">
+                <path d="M7 10l5 5 5-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
           </div>
-
-          <div class="modal__actions">
-            <button type="submit" class="btn btn-primary">
-              {{ isEditMode ? 'Save changes' : 'Add job'}}
+          <div class="multi-select__panel" *ngIf="jobTypesDropdownOpen">
+            <button *ngFor="let jt of jobTypes" type="button" class="multi-select__option" [class.multi-select__option--selected]="isSelected(jt)" (click)="toggleJobType(jt); $event.stopPropagation()">
+              {{ jt.jobType }}
             </button>
-            <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
           </div>
-          </form>
-      </div>
-    </div>
+        </label>
 
-    <div class="modal-backdrop" *ngIf="showDeleteModal">
-      <div class="modal">
-        <p>Are you sure you want to delete<strong> {{selectedJob?.companyName}}</strong>?</p>
-        <div class="modal__actions">
-          <button class="btn btn--danger" type="button" (click)="confirmDelete()">Delete</button>
-          <button class="btn" type="button" (click)="closeModal()">Cancel</button>
-        </div>
+        <label class="field">
+          <span>Location</span>
+          <select [(ngModel)]="formModel.location.id" name="locationId">
+            <option *ngFor="let l of locations" [value]="l.id">{{ l.name }}</option>
+          </select>
+        </label>
       </div>
+
+      <div class="modal__actions">
+        <button type="submit" class="btn btn-primary">
+          {{ isEditMode ? 'Save changes' : 'Add job'}}
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-backdrop" *ngIf="showDeleteModal">
+  <div class="modal">
+    <p>Are you sure you want to delete<strong> {{selectedJob?.companyName}}</strong>?</p>
+    <div class="modal__actions">
+      <button class="btn btn--danger" type="button" (click)="confirmDelete()">Delete</button>
+      <button class="btn" type="button" (click)="closeModal()">Cancel</button>
     </div>
+  </div>
+</div>
 <app-footer></app-footer>
 </body>
 </html>
-

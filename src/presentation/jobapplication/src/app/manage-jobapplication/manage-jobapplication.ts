@@ -25,6 +25,7 @@ export class ManageJobapplication implements OnInit{
   selectedJob: Employer | null = null;
 
   formModel:Employer = this.createEmptyEmployer();
+  jobTypesInput = '';
   selectedLogoFile: File | undefined;
   industries: Industry[] = [];
   experiences: Experience[] = [];
@@ -32,8 +33,7 @@ export class ManageJobapplication implements OnInit{
   compensations: Compensation[] = [];
   jobTypes: JobType[] = [];
   locations: Location[] = [];
-  selectedJobTypes: number[] =[];
-
+  selectedJobTypeObjects: JobType[] = [];
   showAddEditModal = false;
   showDeleteModal = false;
   isEditMode = false;
@@ -49,10 +49,6 @@ export class ManageJobapplication implements OnInit{
     this.getCompensations();
     this.getJobTypes();
     this.getLocations();
-
-    document.addEventListener("click", () => {
-      this.jobTypesDropdownOpen = false;
-    });
   }
 
   onLogoSelected(event: any) {
@@ -121,27 +117,35 @@ export class ManageJobapplication implements OnInit{
     });
   }
 
-  toggleDropdown() {
+  toggleJobTypesDropdown(event: any): void {
     this.jobTypesDropdownOpen = !this.jobTypesDropdownOpen;
   }
 
-  toggleJobType(id: number) {
-    if (this.selectedJobTypes.includes(id)) {
-      this.selectedJobTypes = this.selectedJobTypes.filter(x => x !== id);
+  isSelected(jt: JobType): boolean {
+    return this.selectedJobTypeObjects.some(s => s.id === jt.id);
+  }
+
+  toggleJobType(jt: JobType): void {
+    this.selectedJobTypeObjects = this.selectedJobTypeObjects.filter(
+      s => s.jobType && s.jobType.trim() !== ""
+    );
+
+    if (this.isSelected(jt)) {
+      this.selectedJobTypeObjects =
+        this.selectedJobTypeObjects.filter(s => s.id !== jt.id);
     } else {
-      this.selectedJobTypes = [...this.selectedJobTypes, id];
+      this.selectedJobTypeObjects.push({ id: jt.id, jobType: jt.jobType });
     }
-
-    this.formModel.jobTypes = this.selectedJobTypeObjects;
+    this.formModel.jobTypes = [...this.selectedJobTypeObjects];
   }
 
-  removeJobType(id: number) {
-    this.selectedJobTypes = this.selectedJobTypes.filter(x => x !== id);
-    this.formModel.jobTypes = this.selectedJobTypeObjects;
-  }
+  removeJobType(jt: { id: number | null }): void {
+    this.selectedJobTypeObjects = this.selectedJobTypeObjects.filter(
+      s => s.jobType && s.jobType.trim() !== "");
 
-  get selectedJobTypeObjects(): JobType[] {
-    return this.jobTypes.filter(j => this.selectedJobTypes.includes(j.id));
+    this.selectedJobTypeObjects =
+      this.selectedJobTypeObjects.filter(s => s.id !== jt.id);
+    this.formModel.jobTypes = [...this.selectedJobTypeObjects];
   }
 
   getLocations(): void {
@@ -160,7 +164,7 @@ export class ManageJobapplication implements OnInit{
     this.formModel = this.createEmptyEmployer();
     this.selectedLogoFile = undefined;
     this.selectedJob = null;
-    this.selectedJobTypes = [];
+    this.selectedJobTypeObjects = [];
     this.jobTypesDropdownOpen = false;
     this.showAddEditModal = true;
   }
@@ -179,17 +183,16 @@ export class ManageJobapplication implements OnInit{
       experience: job.experience ?? { id: null, experience: '' },
       availability: job.availability ?? { id: null, availability: '' },
       compensation: job.compensation ?? { id: null, compensation: '' },
-      jobTypes: job.jobTypes
+      jobTypes: job.jobTypes ? job.jobTypes.map(jt => ({id: (jt as any).id ?? null, jobType: (jt as any).jobType,})) : [],
     };
 
-    this.selectedJobTypes = job.jobTypes ? job.jobTypes.map(j => j.id) : [];
-    this.formModel.jobTypes = [...job.jobTypes];
-    this.jobTypesDropdownOpen = false;
-
+    this.selectedJobTypeObjects = job.jobTypes ? job.jobTypes.map(jt => ({id: (jt as any).id ?? null, jobType: (jt as any).jobType,})) : [];
+    this.formModel.jobTypes = [...this.selectedJobTypeObjects];
+    this.jobTypesInput = this.formModel.jobTypes.map(j => j.jobType).join(', ');
     this.showAddEditModal = true;
   }
 
-openDeleteModal(job: Employer): void {
+  openDeleteModal(job: Employer): void {
     this.selectedJob = job;
     this.showDeleteModal = true;
   }
@@ -216,18 +219,19 @@ openDeleteModal(job: Employer): void {
       compensationId: this.formModel.compensation?.id || null,
       numberOfEmployeesId: this.formModel.numberOfEmployees?.id || null,
       employerTypeId: this.formModel.employerType?.id || null,
-      jobTypes: this.selectedJobTypes.map(id => ({ id }))
+
+      jobTypes: this.formModel.jobTypes.map(j => ({id: j.id, jobType: j.jobType}))
     };
 
     if(this.isEditMode && this.selectedJob) {
       this.jobService.updateJob(this.selectedJob.id, dto, this.selectedLogoFile).subscribe({
-          next: () => {
-            this.selectedLogoFile = undefined;
-            this.loadJobs();
-            this.closeModal();
-          },
-          error: err => console.error('Error updating job', err),
-        });
+        next: () => {
+          this.selectedLogoFile = undefined;
+          this.loadJobs();
+          this.closeModal();
+        },
+        error: err => console.error('Error updating job', err),
+      });
     } else {
       this.jobService.addJob(dto, this.selectedLogoFile).subscribe({
         next:() => {
@@ -272,4 +276,3 @@ openDeleteModal(job: Employer): void {
     };
   }
 }
-

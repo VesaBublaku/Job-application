@@ -29,7 +29,7 @@ public class Employer implements Serializable {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String password;
 
     @ManyToOne

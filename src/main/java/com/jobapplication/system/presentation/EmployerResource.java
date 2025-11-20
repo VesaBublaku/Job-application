@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4201")
+@CrossOrigin(origins = "http://localhost:4201" )
 @RestController
 @RequestMapping("/employers")
 public class EmployerResource {
