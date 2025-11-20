@@ -42,6 +42,7 @@ interface WorkerDTO {
     FormsModule,
     HeaderComponent,
     FooterComponent,
+    RouterLink,
   ],
   standalone: true,
   encapsulation: ViewEncapsulation.None
@@ -250,6 +251,5 @@ export class EditWorkerProfile implements OnInit {
         }
       });
   }
-
 
 }

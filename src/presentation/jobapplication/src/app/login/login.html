@@ -40,14 +40,20 @@
                name="password" [(ngModel)]="password" required>
       </div>
     </div>
+
+    <div class="field field--full">
+      <button (click)="login()" [disabled]="loading">
+        {{ loading ? 'Logging in...' : 'Login' }}
+      </button>
+    </div>
+    <div></div>
+    <div class="divider"></div>
+
+    <div class="field field--full">
+      <button>Create an account</button>
+    </div>
+
   </form>
-
-  <div>
-    <button (click)="login()" [disabled]="loading">
-      {{ loading ? 'Logging in...' : 'Login' }}
-    </button>
-  </div>
-
 </main>
 
 <app-footer></app-footer>

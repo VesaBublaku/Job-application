@@ -39,6 +39,7 @@ body{
   align-items:center;
   gap:16px;
 }
+
 .avatar__img{
   width:108px; height:108px;
   border-radius:999px;
@@ -113,6 +114,13 @@ body{
   color:var(--muted);
   font-weight:700;
 }
+
+.value.muted {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow: hidden;
+}
+
 .value{ align-self:center }
 .strong{ font-weight:900 }
 

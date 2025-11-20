@@ -107,7 +107,7 @@ export class EditEmployerProfile implements OnInit {
   deleteEmployer() {
     if (!confirm('Are you sure you want to deactivate your profile?')) return;
 
-    this.http.delete(`http://localhost:8080/employers/${this.employer.id}`).subscribe({
+    this.http.delete(`http://localhost:8080/employers/delete/${this.employer.id}`).subscribe({
       next: () => {
         alert('Your profile has been deleted.');
         window.location.href = '/home';

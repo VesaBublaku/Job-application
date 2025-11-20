@@ -37,6 +37,9 @@
 
     <div class="head">
       <h2>Edit Profile</h2>
+      <button class="btn btn--ghost" [routerLink]="'/worker-profile'">
+        <i class="fa-solid fa-backward"></i> Go back
+      </button>
     </div>
 
     <div class="tabs card">
@@ -131,8 +134,7 @@
                 class="multi-select__option"
                 *ngFor="let pro of professions"
                 [class.multi-select__option--selected]="selectedProfessions.includes(pro.id)"
-                (click)="toggleProfession(pro.id); $event.stopPropagation()"
-              >
+                (click)="toggleProfession(pro.id); $event.stopPropagation()">
                 {{ pro.profession }}
               </button>
             </div>

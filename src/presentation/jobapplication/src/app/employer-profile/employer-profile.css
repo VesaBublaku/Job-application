@@ -122,6 +122,13 @@ body{
   color:var(--muted);
   font-weight:700;
 }
+
+.value.muted {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow: hidden;
+}
+
 .value{ align-self:center }
 .strong{ font-weight:900 }
 
@@ -131,7 +138,6 @@ body{
   margin:0 18px;
 }
 
-/* chips */
 .chips{ display:flex; flex-wrap:wrap; gap:8px }
 .chip{
   display:inline-flex;
