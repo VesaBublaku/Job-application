@@ -4,4 +4,5 @@ import com.jobapplication.system.domain.Employer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EmployerRepo extends JpaRepository<Employer, Long> {
+    Employer findByEmail(String email);
 }

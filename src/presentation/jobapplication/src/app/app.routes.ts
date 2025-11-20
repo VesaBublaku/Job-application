@@ -14,6 +14,7 @@ import { JobList } from './job-list/job-list';
 import { JobDetails } from './job-details/job-details';
 import {WorkerDetails} from './worker-details/worker-details';
 import {WorkerList} from './worker-list/worker-list';
+import {Login} from './login/login';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -31,6 +32,7 @@ export const routes: Routes = [
   { path: 'job-list', component: JobList},
   { path: 'job-details', component: JobDetails},
   { path: 'worker-list', component: WorkerList},
-  { path: 'worker-details', component: WorkerDetails}
+  { path: 'worker-details', component: WorkerDetails},
+  { path: 'login', component: Login},
 ];
 

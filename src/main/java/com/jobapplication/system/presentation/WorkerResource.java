@@ -84,7 +84,7 @@ public class WorkerResource {
             worker.setLastName(dto.getLastName());
             worker.setAboutYou(dto.getAboutYou());
             worker.setEmail(dto.getEmail());
-            worker.setPassword(dto.getPassword());
+            worker.setPassword(workerService.hashPassword(dto.getPassword()));
             worker.setDateOfBirth(dto.getDateOfBirth());
 
             if (photo != null && !photo.isEmpty()) {
@@ -147,6 +147,10 @@ public class WorkerResource {
         worker.setProfessions(professionService.findAllByIds(workerDTO.getProfessionIds()));
         worker.setSkills(skillsService.findAllByIds(workerDTO.getSkillIds()));
         worker.setJobTypes(jobTypeService.findAllByIds(workerDTO.getJobTypeIds()));
+
+        if (workerDTO.getPassword() != null) {
+            worker.setPassword(workerService.hashPassword(workerDTO.getPassword()));
+        }
 
         if (photo != null) {
             String photoName = workerService.savePhoto(photo);

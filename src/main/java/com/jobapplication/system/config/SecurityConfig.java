@@ -28,6 +28,8 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers( "/api/auth/**").permitAll()
+                        .requestMatchers("/auth/register/**").permitAll()
+                        .requestMatchers("/auth/login/**").permitAll()
                         .requestMatchers("/uploads/**").permitAll()
                         .requestMatchers("/employers/**").permitAll()
                         .requestMatchers("/availability/**").permitAll()
