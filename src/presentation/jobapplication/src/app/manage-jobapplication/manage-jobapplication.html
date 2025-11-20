@@ -115,25 +115,37 @@
           <input type="date" [(ngModel)]="formModel.yearOfFounding" name="yearOfFounding"/>
         </label>
 
-        <label class="field">
-          <span>Job types</span>
-          <div class="multi-select" (click)="toggleJobTypesDropdown($event)">
+        <div class="field">
+          <label>Job types</label>
+
+          <div class="multi-select">
             <div class="multi-select__chips">
-              <span class="chip" *ngFor="let jt of selectedJobTypeObjects" (click)="removeJobType(jt); $event.stopPropagation()">{{ jt.jobType }} ✕</span>
+              <span class="chip"
+                    *ngFor="let jt of selectedJobTypeObjects"
+                    (click)="removeJobType(jt); $event.stopPropagation()">
+                {{ jt.jobType }} ✕
+              </span>
               <span class="placeholder" *ngIf="selectedJobTypeObjects.length === 0">Please select</span>
             </div>
-            <span class="multi-select__arrow" (click)="$event.stopPropagation()">
+
+            <span class="multi-select__arrow"
+                  (click)="toggleJobTypesDropdown($event); $event.stopPropagation()">
               <svg width="12" height="12" viewBox="0 0 24 24">
                 <path d="M7 10l5 5 5-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </span>
           </div>
+
           <div class="multi-select__panel" *ngIf="jobTypesDropdownOpen">
-            <button *ngFor="let jt of jobTypes" type="button" class="multi-select__option" [class.multi-select__option--selected]="isSelected(jt)" (click)="toggleJobType(jt); $event.stopPropagation()">
+            <button *ngFor="let jt of jobTypes"
+                    type="button"
+                    class="multi-select__option"
+                    [class.multi-select__option--selected]="isSelected(jt)"
+                    (click)="toggleJobType(jt); $event.stopPropagation()">
               {{ jt.jobType }}
             </button>
           </div>
-        </label>
+        </div>
 
         <label class="field">
           <span>Location</span>
