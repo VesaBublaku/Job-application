@@ -1,3 +1,5 @@
+import {JobType} from '../jobType/jobType.service';
+
 export interface Employer {
   id: number;
   companyName: string;
@@ -35,7 +37,5 @@ export interface Employer {
     id: number;
     compensation: string;
   };
-  jobTypes: {
-    jobType: string;
-  }[];
+  jobTypes: JobType[];
 }

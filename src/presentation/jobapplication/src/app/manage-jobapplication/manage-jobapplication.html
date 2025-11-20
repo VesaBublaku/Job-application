@@ -117,15 +117,23 @@
 
             <label class="field">
               <span>Job types</span>
-              <div class="multi-select" (click)="toggleJobTypesDropdown($event)">
+              <div class="multi-select" (click)="toggleDropdown()">
                 <div class="multi-select__chips">
-                  <span class="chip" *ngFor="let jt of selectedJobTypeObjects" (click)="removeJobType(jt); $event.stopPropagation()">{{ jt.jobType }} ✕</span>
-                  <span class="placeholder" *ngIf="selectedJobTypeObjects.length === 0">Please select</span>
+                  <span class="chip"
+                    *ngFor="let jt of selectedJobTypeObjects"
+                   (click)="removeJobType(jt.id); $event.stopPropagation()">{{ jt.jobType }} ✕</span>
+
+                  <span *ngIf="selectedJobTypes.length === 0" class="placeholder">Please select</span>
                 </div>
                 <span class="multi-select__arrow">▾</span>
               </div>
+
               <div class="multi-select__panel" *ngIf="jobTypesDropdownOpen">
-                <button *ngFor="let jt of jobTypes" type="button" class="multi-select__option" [class.multi-select__option--selected]="isSelected(jt)" (click)="toggleJobType(jt); $event.stopPropagation()">
+                <button type="button"
+                        class="multi-select__option"
+                        *ngFor="let jt of jobTypes"
+                        [class.multi-select__option--selected]="selectedJobTypes.includes(jt.id)"
+                        (click)="toggleJobType(jt.id)">
                   {{ jt.jobType }}
                 </button>
               </div>

@@ -245,6 +245,7 @@ body{
 }
 
 .multi-select {
+  position: relative;
   border:1px solid var(--border);
   border-radius: 10px;
   padding: 6px 10px;
@@ -269,6 +270,7 @@ body{
 }
 
 .multi-select__panel {
+  position: absolute;
   margin-top: 4px;
   border: 1px solid #d1d5db;
   border-radius: 6px;
