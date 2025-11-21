@@ -213,7 +213,6 @@ select {
 }
 
 .multi-select__panel {
-  position: absolute;
   top: 100%;
   left: 0;
   width: 100%;
@@ -222,7 +221,7 @@ select {
   background: #fff;
   border: 1px solid var(--border);
   border-radius: 10px;
-  z-index: 1000;
+  z-index: 9999;
 }
 
 .multi-select__option {
