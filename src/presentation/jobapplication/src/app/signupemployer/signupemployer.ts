@@ -16,6 +16,7 @@ import { Compensation } from '../compensation/compensation.service';
 import {Experience, ExperienceService} from '../experience/experience.service';
 import {AvailabilityService} from '../availability/availability.service';
 import {CompensationService} from '../compensation/compensation.service';
+import {AuthService} from '../auth/auth.service';
 
 @Component({
   standalone: true,
@@ -65,7 +66,8 @@ export class SignupEmployer implements OnInit {
     private availabilityService: AvailabilityService,
     private compensationService: CompensationService,
     private experienceService: ExperienceService,
-    private router: Router
+    private router: Router,
+    private authService:AuthService
   ) {}
 
   ngOnInit(): void {
@@ -165,10 +167,12 @@ export class SignupEmployer implements OnInit {
 
     this.employerService.addEmployer(formData).subscribe({
       next: (createdEmployer: any) => {
-        alert('Employer registered successfully!');
-        localStorage.setItem('employerId', createdEmployer.id.toString());
-        this.router.navigate(['/employer-profile']);
-        this.resetForm();
+        this.employerService.getEmployerById(createdEmployer.id).subscribe((fullEmployer: any) => {
+          this.authService.setUser({ ...fullEmployer, role: 'employer' });
+
+          this.router.navigate(['/employer-profile']);
+          this.resetForm();
+        });
       },
       error: (err) => {
         console.error(err);

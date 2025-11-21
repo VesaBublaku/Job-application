@@ -4,10 +4,12 @@ import { Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from '../header/header';
 import { FooterComponent } from '../footer/footer';
+import { AuthService} from '../auth/auth.service';
+import {CommonModule} from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, ReactiveFormsModule, HeaderComponent, FooterComponent],
+  imports: [FormsModule, ReactiveFormsModule, HeaderComponent, FooterComponent,CommonModule],
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
 })
@@ -18,28 +20,33 @@ export class Login {
   loading = false;
   errorMessage = '';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   login() {
     this.loading = true;
     this.errorMessage = "";
 
-    let url = this.userType === "employer"
+    const url = this.userType === "employer"
       ? "http://localhost:8080/auth/login/employer"
       : "http://localhost:8080/auth/login/worker";
 
-    this.http.post(url, {
-      email: this.email,
-      password: this.password
-    }).subscribe({
+    this.http.post(url, { email: this.email, password: this.password }).subscribe({
       next: (response: any) => {
         this.loading = false;
-        localStorage.setItem("user", JSON.stringify(response));
-        localStorage.setItem("role", this.userType);
 
-        this.router.navigate([this.userType === "employer"
-          ? '/employer-dashboard'
-          : '/worker-dashboard']);
+        // Save user in auth service
+        this.authService.setUser({ ...response, role: this.userType });
+
+        // ✅ Save employer ID in localStorage
+        if (this.userType === "employer") {
+          localStorage.setItem('employerId', response.id.toString());
+        }
+
+        this.router.navigate([this.userType === "employer" ? '/employer-dashboard' : '/worker-dashboard']);
       },
       error: () => {
         this.loading = false;
@@ -47,4 +54,5 @@ export class Login {
       }
     });
   }
+
 }

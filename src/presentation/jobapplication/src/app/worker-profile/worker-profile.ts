@@ -5,6 +5,7 @@ import { FooterComponent } from '../footer/footer';
 import { WorkerProfileService} from './worker-profile.service';
 import { Worker } from '../signup/signup.service';
 import {RouterLink} from '@angular/router';
+import {AuthService} from '../auth/auth.service';
 
 export interface Profession { id: number; profession: string; }
 export interface Skill { id: number; skill: string; }
@@ -43,15 +44,11 @@ export class WorkerProfile implements OnInit {
     availability: { id: 0, availability: '' }
   };
 
-  constructor(private workerService: WorkerProfileService) {}
+  constructor(private workerService: WorkerProfileService,
+              private authService:AuthService) {}
 
   ngOnInit(): void {
-    const storedId = localStorage.getItem('workerId');
-    this.workerId = storedId ? Number(storedId) : 0;
-
-    if (this.workerId > 0) {
-      this.loadWorker();
-    }
+    this.worker = this.authService.getUser();
   }
 
   loadWorker(): void {

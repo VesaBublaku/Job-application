@@ -14,6 +14,7 @@ import { JobTypeService, JobType } from '../jobType/jobType.service';
 import { SkillsService, Skills } from '../skills/skills.service';
 import { CompensationService, Compensation } from '../compensation/compensation.service';
 import { AvailabilityService, Availability } from '../availability/availability.service';
+import {AuthService} from '../auth/auth.service';
 
 @Component({
   standalone: true,
@@ -74,7 +75,8 @@ export class Signup implements OnInit {
     private jobTypeService: JobTypeService,
     private skillsService: SkillsService,
     private compensationService: CompensationService,
-    private availabilityService: AvailabilityService
+    private availabilityService: AvailabilityService,
+    private authService:AuthService
   ) {}
 
   ngOnInit() {
@@ -309,17 +311,15 @@ export class Signup implements OnInit {
 
     this.workerService.addWorker(formData).subscribe({
       next: (createdWorker: any) => {
-        alert('Worker registered successfully!');
+        this.workerService.getWorkerById(createdWorker.id).subscribe(fullWorker => {
+          this.authService.setUser({...fullWorker, role: 'worker'});
 
-        localStorage.setItem('workerId', createdWorker.id.toString());
-
-        this.router.navigate(['/worker-profile']);
-
-        this.resetForm();
+          this.router.navigate(['/worker-profile']);
+        });
       },
       error: (err) => {
         console.error(err);
-        alert('Failed to register worker. Please check your data.');
+        alert('Failed to register worker.');
       }
     });
   }
