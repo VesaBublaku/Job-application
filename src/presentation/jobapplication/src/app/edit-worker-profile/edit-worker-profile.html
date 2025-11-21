@@ -128,7 +128,7 @@
               </div>
               <span class="multi-select__arrow">▾</span>
             </div>
-            <div class="multi-select__panel" [hidden]="!professionsDropdownOpen">
+            <div class="multi-select__panel" *ngIf="professionsDropdownOpen">
               <button
                 type="button"
                 class="multi-select__option"
@@ -175,7 +175,7 @@
               </div>
               <span class="multi-select__arrow">▾</span>
             </div>
-            <div class="multi-select__panel" [hidden]="!skillsDropdownOpen">
+            <div class="multi-select__panel" *ngIf="skillsDropdownOpen">
               <button
                 type="button"
                 class="multi-select__option"
@@ -205,7 +205,7 @@
               </div>
               <span class="multi-select__arrow">▾</span>
             </div>
-            <div class="multi-select__panel" [hidden]="!jobTypesDropdownOpen">
+            <div class="multi-select__panel" *ngIf="jobTypesDropdownOpen">
               <button
                 type="button"
                 class="multi-select__option"

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, NgForm} from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { HeaderComponent } from '../header/header';
@@ -197,7 +197,78 @@ export class Signup implements OnInit {
   }
 
 
-  nextStep() { if (this.currentStep < this.lastFormStepIndex) this.currentStep++; }
+  nextStep(form?: NgForm) {
+    if (this.currentStep >= this.lastFormStepIndex) return;
+
+    const valid = this.validateCurrentStep(form);
+    if (!valid) return;
+
+    this.currentStep++;
+  }
+
+  private validateCurrentStep(form?: NgForm): boolean {
+    switch (this.currentStep) {
+      case 0:
+        return this.validateStep0(form);
+      case 1:
+        return this.validateStep1();
+      case 2:
+        return this.validateStep2(form);
+      default:
+        return true;
+    }
+  }
+
+  private validateStep0(form?: NgForm): boolean {
+    const missing: string[] = [];
+
+    if (!this.workerData.firstName?.trim()) missing.push("First name");
+    if (!this.workerData.lastName?.trim()) missing.push("Last name");
+    if (!this.workerData.locationId) missing.push("Location");
+
+    if (missing.length) {
+      alert("Please complete:\n• " + missing.join("\n• "));
+      return false;
+    }
+    return true;
+  }
+
+  private validateStep1(): boolean {
+    const missing: string[] = [];
+
+    if (this.selectedProfessions.length === 0) missing.push("Profession(s)");
+    if (!this.workerData.educationId) missing.push("Education");
+    if (!this.workerData.experienceId) missing.push("Experience");
+    if (this.selectedJobTypes.length === 0) missing.push("Job type(s)");
+    if (this.selectedSkills.length === 0) missing.push("Skill(s)");
+    if (!this.workerData.compensationId) missing.push("Compensation");
+    if (!this.workerData.availabilityId) missing.push("Availability");
+
+    if (missing.length) {
+      alert("Please complete:\n• " + missing.join("\n• "));
+      return false;
+    }
+    return true;
+  }
+
+  private validateStep2(form?: NgForm): boolean {
+    const missing: string[] = [];
+
+    if (!this.workerData.email?.trim()) missing.push("Email");
+    if (!this.workerData.password?.trim()) missing.push("Password");
+
+    if (form) {
+      if (form.controls['email']?.invalid) missing.push("Valid email");
+      if (form.controls['password']?.invalid) missing.push("Valid password");
+    }
+
+    if (missing.length) {
+      alert("Please complete:\n• " + missing.join("\n• "));
+      return false;
+    }
+    return true;
+  }
+
   prevStep() { if (this.currentStep > 0) this.currentStep--; }
   isStepActive(index: number) { return index === this.currentStep && index <= this.lastFormStepIndex; }
   isStepDone(index: number) { return index < this.currentStep; }
@@ -225,7 +296,11 @@ export class Signup implements OnInit {
     console.log('Selected Professions:', this.selectedProfessions);
   }
 
-  signUp() {
+  signUp(form:NgForm) {
+    if (form.invalid) {
+      alert("Please fill in all required fields before signing up.");
+      return;
+    }
     const formData = new FormData();
     formData.append('worker', JSON.stringify(this.workerData));
     if (this.selectedPhoto) {

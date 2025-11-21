@@ -127,7 +127,6 @@ body{
   position: relative;
   background: var(--card);
   border-radius: var(--radius);
-  overflow: hidden;
 }
 
 .panel {
@@ -199,6 +198,7 @@ select {
   min-height: 40px;
   font-size:15px;
   transition:.2s;
+  position: relative;
 }
 
 .multi-select__chips {
