@@ -44,6 +44,7 @@ public class SecurityConfig {
                         .requestMatchers("/profession/**").permitAll()
                         .requestMatchers("/skills/**").permitAll()
                         .requestMatchers("/worker/**").permitAll()
+                        .requestMatchers("/application/**").permitAll()
                         .anyRequest().authenticated()
                 );
 

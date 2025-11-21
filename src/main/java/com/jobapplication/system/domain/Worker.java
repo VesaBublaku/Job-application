@@ -1,5 +1,6 @@
 package com.jobapplication.system.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -82,4 +83,8 @@ public class Worker implements Serializable {
     @JoinColumn(name = "availability_id")
     @JsonProperty("availability")
     private Availability availability;
+
+    @OneToMany(mappedBy = "worker", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<JobApplication> applications;
 }
