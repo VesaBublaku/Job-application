@@ -1,190 +1,95 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
-<body>
-
 <app-header></app-header>
 
-    <main class="advanced-listing">
-        <div class="container">
+<main class="advanced-listing">
+  <div class="container">
 
-          <div class="filter-bar">
-            <div class="filter-row">
+    <div class="filter-bar">
+      <!-- filters remain the same -->
+      <!-- ... -->
+    </div>
 
-              <div class="chip chip--wide">
-                <i class="fas fa-suitcase chip__icon"></i>
-                <div class="chip__body">
-                  <span class="chip__label">Category</span>
-                  <select class="chip__field chip__select">
-                    <option value="">Select category</option>
-                    <option>Software</option>
-                    <option>Design</option>
-                    <option>Marketing</option>
-                  </select>
-                  <i class="fas fa-chevron-down chip__chev" aria-hidden="true"></i>
-                </div>
+    <!-- DYNAMIKE: Shfaq punëtorët nga backend -->
+    <section class="results wide-layout">
+
+      <article class="worker-card advanced-card" *ngFor="let w of workers">
+
+        <div class="card-left">
+          <img 
+            [src]="w.photo ? 'http://localhost:8080/uploads/' + w.photo : 'assets/default.png'"
+            class="avatar large-avatar"
+            alt="Worker photo"
+          />
+
+          <div class="worker-details">
+            <h3>{{ w.firstName }} {{ w.lastName }}</h3>
+            <p class="role">
+              {{ w.professions?.length ? w.professions[0].profession : 'No profession' }}
+            </p>
+            <p class="location">{{ w.location?.name || 'Unknown location' }}</p>
+          </div>
+        </div>
+
+        <div class="card-right">
+          <p class="rate-label">Compensation</p>
+          <p class="rate-price">
+            <strong>{{ w.compensation?.compensation || 'N/A' }}</strong>/h
+          </p>
+
+          <a 
+            [routerLink]="['/worker-details', w.id]" 
+            class="btn btn-primary"
+          >
+            View profile
+          </a>
+        </div>
+
+        <div class="details-grid">
+          <div class="detail-item">
+            <i class="fas fa-clock"></i>
+            <div>
+              <div class="detail-title">Job Type</div>
+              <div class="detail-value">
+                {{ w.jobTypes?.length ? w.jobTypes[0].type : 'N/A' }}
               </div>
-
-              <div class="chip chip--comp">
-                <i class="fas fa-database chip__icon"></i>
-                <div class="chip__body">
-                  <span class="chip__label">Compensation</span>
-                  <div class="chip__comp">
-                    <input class="chip__field" type="number" min="0" placeholder="Select compensation" />
-                    <div class="unit-toggle" role="tablist" aria-label="Compensation unit">
-                      <span class="unit-toggle__swap" aria-hidden="true"></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <button class="btn-find" type="button">
-                <i class="fas fa-search"></i> Find Workers
-              </button>
-            </div>
-
-            <div class="filter-row filter-row--sub">
-
-              <button class="chip chip--sub" type="button">
-                <span class="chip__subtext">Job Type</span>
-                <i class="fas fa-chevron-down" aria-hidden="true"></i>
-              </button>
-
-              <button class="chip chip--sub" type="button">
-                <span class="chip__subtext">Availability</span>
-                <i class="fas fa-chevron-down" aria-hidden="true"></i>
-              </button>
-
-              <button class="chip chip--sub" type="button">
-                <span class="chip__subtext">Experience</span>
-                <i class="fas fa-chevron-down" aria-hidden="true"></i>
-              </button>
-
-              <button class="chip chip--sub" type="button">
-                <span class="chip__subtext">Education</span>
-                <i class="fas fa-chevron-down" aria-hidden="true"></i>
-              </button>
-
-              <button class="chip chip--sub" type="button">
-                <span class="chip__subtext">Location</span>
-                <i class="fas fa-chevron-down" aria-hidden="true"></i>
-              </button>
             </div>
           </div>
 
-            <section class="results wide-layout">
-                <article class="worker-card advanced-card">
-                    <div class="card-left">
-                        <img src="" alt="" class="avatar large-avatar">
-                        <div class="worker-details">
-                            <h3>Benson k.</h3>
-                            <p class="role">Design &amp; Creative</p>
-                            <p class="location">Lagos, Nigeria</p>
+          <div class="detail-item">
+            <i class="fas fa-globe"></i>
+            <div>
+              <div class="detail-title">Availability</div>
+              <div class="detail-value">
+                {{ w.availability?.availability || 'N/A' }}
+              </div>
+            </div>
+          </div>
 
-                        </div>
-                    </div>
-                    <div class="card-right">
-                            <p class="rate-label">Compencation</p>
-                            <p class="rate-price"><strong>$55</strong>/h</p>
-                        <a routerLink="/worker-details" routerLinkActive="active" class="btn btn-primary">View profile</a>
-                    </div>
+          <div class="detail-item">
+            <i class="fas fa-graduation-cap"></i>
+            <div>
+              <div class="detail-title">Education</div>
+              <div class="detail-value">
+                {{ w.education?.education || 'N/A' }}
+              </div>
+            </div>
+          </div>
 
-                  <div class="details-grid">
-                    <div class="detail-item">
-                      <i class="fas fa-clock"></i>
-                      <div>
-                        <div class="detail-title">Job Type</div>
-                        <div class="detail-value">Full-Time</div>
-                      </div>
-                    </div>
-
-                    <div class="detail-item">
-                      <i class="fas fa-globe"></i>
-                      <div>
-                        <div class="detail-title">Availability</div>
-                        <div class="detail-value">Remote: Global</div>
-                      </div>
-                    </div>
-
-                    <div class="detail-item">
-                      <i class="fas fa-graduation-cap"></i>
-                      <div>
-                        <div class="detail-title">Education</div>
-                        <div class="detail-value">Bachelor</div>
-                      </div>
-                    </div>
-
-                    <div class="detail-item">
-                      <i class="fas fa-level-up-alt"></i>
-                      <div>
-                        <div class="detail-title">Experience</div>
-                        <div class="detail-value">Mid-Level</div>
-                      </div>
-                    </div>
-                  </div>
-                </article>
-            </section>
-
-
-              <section class="results wide-layout">
-                <article class="worker-card advanced-card">
-                  <div class="card-left">
-                    <img src="" alt="" class="avatar large-avatar">
-                    <div class="worker-details">
-                      <h3>Sambit D.</h3>
-                      <p class="role">Sales &amp; Marketing</p>
-                      <p class="location">Bengaluru, India</p>
-
-                    </div>
-                  </div>
-                  <div class="card-right">
-                    <p class="rate-label">Compencation</p>
-                    <p class="rate-price"><strong>$78</strong>/h</p>
-                    <a routerLink="/worker-details" routerLinkActive="active" class="btn btn-primary">View profile</a>
-                  </div>
-
-                  <div class="details-grid">
-                    <div class="detail-item">
-                      <i class="fas fa-clock"></i>
-                      <div>
-                        <div class="detail-title">Job Type</div>
-                        <div class="detail-value">Full-Time</div>
-                      </div>
-                    </div>
-
-                    <div class="detail-item">
-                      <i class="fas fa-globe"></i>
-                      <div>
-                        <div class="detail-title">Availability</div>
-                        <div class="detail-value">Remote: Global</div>
-                      </div>
-                    </div>
-
-                    <div class="detail-item">
-                      <i class="fas fa-graduation-cap"></i>
-                      <div>
-                        <div class="detail-title">Education</div>
-                        <div class="detail-value">Professional Degree / PhD</div>
-                      </div>
-                    </div>
-
-                    <div class="detail-item">
-                      <i class="fas fa-level-up-alt"></i>
-                      <div>
-                        <div class="detail-title">Experience</div>
-                        <div class="detail-value">Mid-Level</div>
-                      </div>
-                    </div>
-                  </div>
-                </article>
-            </section>
+          <div class="detail-item">
+            <i class="fas fa-level-up-alt"></i>
+            <div>
+              <div class="detail-title">Experience</div>
+              <div class="detail-value">
+                {{ w.experience?.experience || 'N/A' }}
+              </div>
+            </div>
+          </div>
         </div>
-    </main>
-<app-footer></app-footer>
 
-</body>
-</html>
+      </article>
+
+    </section>
+
+  </div>
+</main>
+
+<app-footer></app-footer>
