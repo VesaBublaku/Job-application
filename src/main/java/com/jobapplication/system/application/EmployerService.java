@@ -198,5 +198,17 @@ public class EmployerService {
             throw new RuntimeException("Error hashing password", e);
         }
     }
+
+    public List<Employer> searchEmployers(
+            String companyName,
+            Long industryId,
+            Long compensationId,
+            Long jobTypeId,
+            Long availabilityId,
+            Long experienceId,
+            Long locationId
+    ) {
+        return employerRepo.searchEmployers(companyName, industryId, compensationId, jobTypeId, availabilityId, experienceId, locationId);
+    }
 }
 

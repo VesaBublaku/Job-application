@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@CrossOrigin(origins = {"http://localhost:4201", "http://localhost:4200"})
+@CrossOrigin(origins = "http://localhost:4201" )
 @RestController
 @RequestMapping("/employers")
 public class EmployerResource {
@@ -58,7 +58,6 @@ public class EmployerResource {
         }
     }
 
-
     @PutMapping(value = "/update/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> updateEmployer(
             @PathVariable Long id,
@@ -67,49 +66,13 @@ public class EmployerResource {
     ) {
         try {
             EmployerDTO employerDTO = objectMapper.readValue(employerJson, EmployerDTO.class);
-            Employer employer = employerService.findEmployerById(id);
-
-            employer.setCompanyName(employerDTO.getCompanyName());
-            employer.setEmail(employerDTO.getEmail());
-            employer.setYearOfFounding(employerDTO.getYearOfFounding());
-            employer.setAboutCompany(employerDTO.getAboutCompany());
-
-            if (employerDTO.getLocationId() != null) {
-                employer.setLocation(locationService.findLocationById(employerDTO.getLocationId()));
-            }
-            if (employerDTO.getIndustryId() != null) {
-                employer.setIndustry(industryService.findIndustryById(employerDTO.getIndustryId()));
-            }
-            if (employerDTO.getExperienceId() != null) {
-                employer.setExperience(experienceService.findExperienceById(employerDTO.getExperienceId()));
-            }
-            if (employerDTO.getAvailabilityId() != null) {
-                employer.setAvailability(availabilityService.findAvailabilityById(employerDTO.getAvailabilityId()));
-            }
-            if (employerDTO.getCompensationId() != null) {
-                employer.setCompensation(compensationService.findCompensationById(employerDTO.getCompensationId()));
-            }
-            if (employerDTO.getNumberOfEmployeesId() != null) {
-                employer.setNumberOfEmployees(numberOfEmployeesService.findNumberOfEmployeesById(employerDTO.getNumberOfEmployeesId()));
-            }
-            if (employerDTO.getEmployerTypeId() != null) {
-                employer.setEmployerType(employerTypeService.findEmployerTypeById(employerDTO.getEmployerTypeId()));
-            }
-
-            if (logo != null) {
-                String logoName = employerService.savePhoto(logo);
-                employer.setCompanyLogo(logoName);
-            }
-
-            employerService.updateEmployer(id, employerDTO, logo);
-            return ResponseEntity.ok(employer);
-
+            Employer updatedEmployer = employerService.updateEmployer(id, employerDTO, logo);
+            return ResponseEntity.ok(updatedEmployer);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating employer: " + e.getMessage());
         }
     }
-
 
     @GetMapping("/all")
     public ResponseEntity<List<Employer>> getAll() {
@@ -127,6 +90,20 @@ public class EmployerResource {
     public ResponseEntity<?> deleteEmployer(@PathVariable("id") Long id) {
         employerService.deleteEmployer(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Employer>> searchEmployers(
+            @RequestParam(required = false) String companyName,
+            @RequestParam(required = false) Long industryId,
+            @RequestParam(required = false) Long compensationId,
+            @RequestParam(required = false) Long jobTypeId,
+            @RequestParam(required = false) Long availabilityId,
+            @RequestParam(required = false) Long experienceId,
+            @RequestParam(required = false) Long locationId
+    ) {
+        List<Employer> employers = employerService.searchEmployers(companyName, industryId, compensationId, jobTypeId, availabilityId, experienceId, locationId);
+        return ResponseEntity.ok(employers);
     }
 }
 

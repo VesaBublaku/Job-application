@@ -14,6 +14,7 @@ import {Experience, ExperienceService} from '../experience/experience.service';
 import {Compensation, CompensationService} from '../compensation/compensation.service';
 import {Availability, AvailabilityService} from '../availability/availability.service';
 import {Router, RouterLink} from '@angular/router';
+import {AuthService} from '../auth/auth.service';
 
 interface WorkerDTO {
   id?: number;
@@ -42,6 +43,7 @@ interface WorkerDTO {
     FormsModule,
     HeaderComponent,
     FooterComponent,
+    RouterLink,
   ],
   standalone: true,
   encapsulation: ViewEncapsulation.None
@@ -79,6 +81,7 @@ export class EditWorkerProfile implements OnInit {
     private compensationService: CompensationService,
     private availabilityService: AvailabilityService,
     private router: Router,
+    private authService:AuthService
   ) {}
 
   ngOnInit() {
@@ -108,34 +111,6 @@ export class EditWorkerProfile implements OnInit {
     this.availabilityService.getAvailability().subscribe(data => this.availability = data);
   }
 
-  loadWorker() {
-    const workerId = localStorage.getItem('workerId');
-    if (!workerId) {
-      console.error('No logged-in worker ID found');
-      return;
-    }
-
-    this.http.get(`http://localhost:8080/worker/find/${workerId}`).subscribe(
-      (res: any) => {
-        this.worker = res;
-
-        if (this.worker.dateOfBirth) {
-          this.worker.dateOfBirth = this.worker.dateOfBirth.split('T')[0];
-        }
-
-        this.worker.locationId = res.location?.id;
-        this.worker.educationId = res.education?.id;
-        this.worker.experienceId = res.experience?.id;
-        this.worker.compensationId = res.compensation?.id;
-        this.worker.availabilityId = res.availability?.id;
-
-        this.selectedProfessions = res.professions?.map((p: any) => p.id) || [];
-        this.selectedSkills = res.skills?.map((s: any) => s.id) || [];
-        this.selectedJobTypes = res.jobTypes?.map((j: any) => j.id) || [];
-      },
-      err => console.error('Error loading worker:', err)
-    );
-  }
   get selectedProfessionObjects() {
     return this.professions.filter(p => this.selectedProfessions.includes(p.id));
   }
@@ -233,6 +208,34 @@ export class EditWorkerProfile implements OnInit {
 
   }
 
+  loadWorker() {
+    const workerId = localStorage.getItem('workerId');
+    if (!workerId) {
+      console.error('No logged-in worker ID found');
+      return;
+    }
+
+    this.http.get(`http://localhost:8080/worker/find/${workerId}`).subscribe(
+      (res: any) => {
+        this.worker = res;
+
+        if (this.worker.dateOfBirth) {
+          this.worker.dateOfBirth = this.worker.dateOfBirth.split('T')[0];
+        }
+        this.worker.locationId = res.location?.id;
+        this.worker.educationId = res.education?.id;
+        this.worker.experienceId = res.experience?.id;
+        this.worker.compensationId = res.compensation?.id;
+        this.worker.availabilityId = res.availability?.id;
+
+        this.selectedProfessions = res.professions?.map((p: any) => p.id) || [];
+        this.selectedSkills = res.skills?.map((s: any) => s.id) || [];
+        this.selectedJobTypes = res.jobTypes?.map((j: any) => j.id) || [];
+      },
+      err => console.error('Error loading worker:', err)
+    );
+  }
+
   deleteWorker() {
     if (!confirm("Are you sure you want to deactivate your profile? This cannot be undone!")) {
       return;
@@ -242,6 +245,8 @@ export class EditWorkerProfile implements OnInit {
       .subscribe({
         next: () => {
           alert("Your profile has been deleted.");
+          localStorage.removeItem('workerId');
+          this.authService.clearUser();
           window.location.href = "/home";
         },
         error: (err) => {
@@ -250,6 +255,5 @@ export class EditWorkerProfile implements OnInit {
         }
       });
   }
-
 
 }

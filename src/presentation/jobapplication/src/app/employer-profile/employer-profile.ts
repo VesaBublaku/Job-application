@@ -4,6 +4,7 @@ import { HeaderComponent } from "../header/header";
 import { FooterComponent } from "../footer/footer";
 import { EmployerProfileService } from './employer-profile.service';
 import { RouterLink } from '@angular/router';
+import {AuthService} from '../auth/auth.service';
 
 
 export interface Employer {
@@ -33,15 +34,11 @@ export class EmployerProfile implements OnInit {
   employerId: number = 0;
   employer: Employer | null = null;
 
-  constructor(private employerService: EmployerProfileService) {}
+  constructor(private employerService: EmployerProfileService,
+              private authService:AuthService) {}
 
   ngOnInit(): void {
-    const storedId = localStorage.getItem('employerId');
-    this.employerId = storedId ? Number(storedId) : 0;
-
-    if (this.employerId > 0) {
-      this.loadEmployer();
-    }
+    this.employer = this.authService.getUser();
   }
 
   loadEmployer(): void {

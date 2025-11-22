@@ -46,4 +46,8 @@ export class SignupService {
   addWorker(formData:FormData): Observable<Worker> {
     return this.http.post<Worker>(`${this.apiUrl}/add`, formData);
   }
+
+  getWorkerById(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/find/${id}`);
+  }
 }

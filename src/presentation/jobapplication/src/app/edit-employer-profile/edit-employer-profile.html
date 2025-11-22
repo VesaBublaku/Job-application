@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Edit Profile • HireBasis</title>
+  <title>Edit Profile</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
@@ -15,7 +15,7 @@
     <section class="card profile-card">
       <div class="avatar">
         <div class="avatar__img" aria-hidden="true">
-          <img *ngIf="employer?.companyLogo" [src]="'http://localhost:8080/uploads/' + employer.companyLogo" alt="Company Logo">
+          <img *ngIf="employer.companyLogo" [src]="'http://localhost:8080/uploads/' + employer.companyLogo" alt="Company Logo">
         </div>
       </div>
 
@@ -54,8 +54,9 @@
           <input type="email" class="input" [(ngModel)]="employer.email">
         </div>
 
-        <button class="link-danger" (click)="deleteEmployer()">
-          <i class="fa-solid fa-trash"></i> Deactivate Account
+        <button class="btn" (click)="deleteEmployer()" style="background-color: red">
+          <i class="fa-solid fa-trash"></i>
+          Deactivate profile
         </button>
       </div>
 

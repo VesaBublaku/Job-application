@@ -33,7 +33,7 @@ export class ManageJobapplication implements OnInit{
   compensations: Compensation[] = [];
   jobTypes: JobType[] = [];
   locations: Location[] = [];
-  selectedJobTypeObjects: { id: number | null; jobType: string }[] = [];
+  selectedJobTypeObjects: JobType[] = [];
   showAddEditModal = false;
   showDeleteModal = false;
   isEditMode = false;
@@ -220,18 +220,18 @@ export class ManageJobapplication implements OnInit{
       numberOfEmployeesId: this.formModel.numberOfEmployees?.id || null,
       employerTypeId: this.formModel.employerType?.id || null,
 
-      jobTypes: this.formModel.jobTypes.map(j => ({ jobType: j.jobType }))
+      jobTypes: this.formModel.jobTypes.map(j => ({id: j.id, jobType: j.jobType}))
     };
 
     if(this.isEditMode && this.selectedJob) {
       this.jobService.updateJob(this.selectedJob.id, dto, this.selectedLogoFile).subscribe({
-          next: () => {
-            this.selectedLogoFile = undefined;
-            this.loadJobs();
-            this.closeModal();
-          },
-          error: err => console.error('Error updating job', err),
-        });
+        next: () => {
+          this.selectedLogoFile = undefined;
+          this.loadJobs();
+          this.closeModal();
+        },
+        error: err => console.error('Error updating job', err),
+      });
     } else {
       this.jobService.addJob(dto, this.selectedLogoFile).subscribe({
         next:() => {
@@ -273,7 +273,7 @@ export class ManageJobapplication implements OnInit{
       availability: { id: 0, availability: '' },
       compensation: { id: 0, compensation: '' },
       jobTypes:[],
+      applications:[],
     };
   }
 }
-

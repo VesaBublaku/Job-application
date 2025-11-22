@@ -15,11 +15,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class WorkerService {
@@ -101,7 +98,7 @@ public class WorkerService {
         }
 
         if (photo != null && !photo.isEmpty()) {
-            worker.setPhoto(savePhoto(photo)); // Update photo if provided
+            worker.setPhoto(savePhoto(photo));
         }
 
         worker.setLocation(locationRepo.findById(dto.getLocationId())
@@ -154,7 +151,7 @@ public class WorkerService {
         return entities;
     }
 
-    private String hashPassword(String password) {
+    public String hashPassword(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte[] hashed = md.digest(password.getBytes(StandardCharsets.UTF_8));
@@ -176,5 +173,17 @@ public class WorkerService {
         } catch (IOException e) {
             throw new RuntimeException("Failed to save photo", e);
         }
+    }
+
+    public List<Worker> searchWorkers(
+            Long professionId,
+            Long compensationId,
+            Long jobTypeId,
+            Long availabilityId,
+            Long experienceId,
+            Long educationId,
+            Long locationId
+    ) {
+        return workerRepo.searchWorkers(professionId, compensationId, jobTypeId, availabilityId, experienceId, educationId, locationId);
     }
 }

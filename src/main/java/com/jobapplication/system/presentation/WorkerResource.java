@@ -84,7 +84,7 @@ public class WorkerResource {
             worker.setLastName(dto.getLastName());
             worker.setAboutYou(dto.getAboutYou());
             worker.setEmail(dto.getEmail());
-            worker.setPassword(dto.getPassword());
+            worker.setPassword(workerService.hashPassword(dto.getPassword()));
             worker.setDateOfBirth(dto.getDateOfBirth());
 
             if (photo != null && !photo.isEmpty()) {
@@ -148,6 +148,10 @@ public class WorkerResource {
         worker.setSkills(skillsService.findAllByIds(workerDTO.getSkillIds()));
         worker.setJobTypes(jobTypeService.findAllByIds(workerDTO.getJobTypeIds()));
 
+        if (workerDTO.getPassword() != null) {
+            worker.setPassword(workerService.hashPassword(workerDTO.getPassword()));
+        }
+
         if (photo != null) {
             String photoName = workerService.savePhoto(photo);
             worker.setPhoto(photoName);
@@ -175,5 +179,19 @@ public class WorkerResource {
     public ResponseEntity<Void> deleteWorker(@PathVariable Long id) {
         workerService.deleteWorker(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Worker>> searchWorkers(
+            @RequestParam(required = false) Long professionId,
+            @RequestParam(required = false) Long compensationId,
+            @RequestParam(required = false) Long jobTypeId,
+            @RequestParam(required = false) Long availabilityId,
+            @RequestParam(required = false) Long experienceId,
+            @RequestParam(required = false) Long educationId,
+            @RequestParam(required = false) Long locationId
+    ) {
+        List<Worker> workers = workerService.searchWorkers(professionId, compensationId, jobTypeId, availabilityId, experienceId, educationId, locationId);
+        return ResponseEntity.ok(workers);
     }
 }

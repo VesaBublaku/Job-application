@@ -1,5 +1,7 @@
 package com.jobapplication.system.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@JsonIgnoreProperties({"applications", "hibernateLazyInitializer", "handler"})
 public class Employer implements Serializable {
 
     @Id
@@ -74,5 +77,9 @@ public class Employer implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "jobType_id")
     )
     private List<JobType> jobTypes;
+
+    @OneToMany(mappedBy = "employer",  cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<JobApplication> applications;
 
 }

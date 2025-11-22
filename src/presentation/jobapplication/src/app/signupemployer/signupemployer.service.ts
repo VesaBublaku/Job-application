@@ -30,4 +30,7 @@ export class SignupEmployerService {
     return this.http.post(`${this.base}/add`, formData);
   }
 
+  getEmployerById(id: number): Observable<any> {
+    return this.http.get(`${this.base}/find/${id}`);
+  }
 }

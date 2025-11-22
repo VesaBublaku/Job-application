@@ -1,0 +1,156 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--text);
+}
+
+.page {
+  display:block;
+  align-items: center;
+  width: min(900px, 92%);
+  margin-inline: auto;
+  padding: 40px 0 60px;
+}
+
+.page__header {
+  margin-bottom: 18px;
+}
+
+.title {
+  font-weight: 800;
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  text-align: center;
+  margin: 0 0 10px;
+}
+
+.title--accent {
+  color: var(--blue);
+}
+
+.form {
+  border-radius: var(--radius);
+  padding: 18px;
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.field {
+  display: block;
+  width: 100%;
+}
+
+.field--full {
+  width: 100%;
+}
+
+.label {
+  display: block;
+  font-weight: 700;
+  color: #2d2f33;
+  margin: 0 0 6px;
+}
+
+.req {
+  color: #ef4343;
+}
+
+.input-append {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.input {
+  width: 85%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 15px;
+  transition: .2s;
+  background: #fff;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(44,128,255,.15);
+}
+
+.form button {
+  width: 85%;
+  padding: 12px 0;
+  margin-top: 15px;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--blue);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.form button:hover {
+  filter: brightness(0.95);
+}
+
+.form button:disabled {
+  background-color: #a0c4ff;
+  cursor: not-allowed;
+}
+
+.divider{
+  width: 85%;
+  height:1px;
+  background:var(--border);
+  margin:0 5px;
+}
+
+.btn-two {
+  text-decoration: none;
+  display: inline-block;
+  color: white;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  padding: 11px 18px;
+  font-weight: 700;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn--ghost {
+  background: #fff;
+  color: #111;
+  border-color: var(--border);
+}
+
+.btn--primary {
+  background: var(--blue);
+  color: #fff;
+}
+
+.btn--primary:hover {
+  filter: brightness(.95);
+}
+
+.form__actions {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  margin-top: 22px;
+}

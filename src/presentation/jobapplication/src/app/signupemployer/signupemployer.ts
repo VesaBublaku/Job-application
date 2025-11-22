@@ -16,6 +16,7 @@ import { Compensation } from '../compensation/compensation.service';
 import {Experience, ExperienceService} from '../experience/experience.service';
 import {AvailabilityService} from '../availability/availability.service';
 import {CompensationService} from '../compensation/compensation.service';
+import {AuthService} from '../auth/auth.service';
 
 @Component({
   standalone: true,
@@ -28,6 +29,7 @@ export class SignupEmployer implements OnInit {
 
   currentStep = 0;
   steps = ['Company Info', 'Profile Info', 'Welcome'];
+  lastFormStepIndex = this.steps.length - 2;
 
   employerModel: EmployerDTO = {
     companyName: '',
@@ -64,7 +66,8 @@ export class SignupEmployer implements OnInit {
     private availabilityService: AvailabilityService,
     private compensationService: CompensationService,
     private experienceService: ExperienceService,
-    private router: Router
+    private router: Router,
+    private authService:AuthService
   ) {}
 
   ngOnInit(): void {
@@ -116,9 +119,10 @@ export class SignupEmployer implements OnInit {
   }
 
   nextStep() {
-    if (this.currentStep < this.steps.length - 1) {
+    if (!this.validateCurrentStep()) return;
+    if (this.currentStep < this.lastFormStepIndex) {
       this.currentStep++;
-    } else {
+    } else if (this.currentStep === this.lastFormStepIndex) {
       this.submitEmployer();
     }
   }
@@ -127,59 +131,78 @@ export class SignupEmployer implements OnInit {
     if (this.currentStep > 0) this.currentStep--;
   }
 
-  isStepActive(index: number): boolean {
-    return this.currentStep === index;
-  }
+  isStepActive(index: number) { return index === this.currentStep; }
+  isStepDone(index: number) { return index < this.currentStep; }
 
-  isStepDone(index: number): boolean {
-    return index < this.currentStep;
+  private validateCurrentStep(): boolean {
+    const missing: string[] = [];
+
+    if (this.currentStep === 0) {
+      if (!this.employerModel.companyName) missing.push('Company Name');
+      if (!this.employerModel.locationId) missing.push('Location');
+      if (!this.employerModel.numberOfEmployeesId) missing.push('Number of Employees');
+      if (!this.employerModel.industryId) missing.push('Industry');
+      if (!this.employerModel.experienceId) missing.push('Experience');
+      if (!this.employerModel.availabilityId) missing.push('Availability');
+      if (!this.employerModel.compensationId) missing.push('Compensation');
+    }
+
+    if (this.currentStep === 1) {
+      if (!this.employerModel.email) missing.push('Email');
+      if (!this.employerModel.password) missing.push('Password');
+    }
+
+    if (missing.length) {
+      alert('Please complete:\n• ' + missing.join('\n• '));
+      return false;
+    }
+
+    return true;
   }
 
   submitEmployer() {
-    if (!this.employerModel.email || !this.employerModel.password) {
-      alert('Email and password are required');
-      return;
-    }
-
-    const dto: EmployerDTO = {...this.employerModel};
-
     const formData = new FormData();
-
-    formData.append('employer', new Blob([JSON.stringify(dto)], {type: 'application/json'}));
-
-    if (this.logoFile) {
-      formData.append('logo', this.logoFile, this.logoFile.name);
-    }
+    formData.append('employer', new Blob([JSON.stringify(this.employerModel)], { type: 'application/json' }));
+    if (this.logoFile) formData.append('logo', this.logoFile, this.logoFile.name);
 
     this.employerService.addEmployer(formData).subscribe({
       next: (createdEmployer: any) => {
-        alert('Employer registered successfully!');
+        this.employerService.getEmployerById(createdEmployer.id).subscribe((fullEmployer: any) => {
+          this.authService.setUser({ ...fullEmployer, role: 'employer' });
 
-        localStorage.setItem('employerId', createdEmployer.id.toString());
+          localStorage.setItem("employerId", fullEmployer.id.toString());
 
-        this.router.navigate(['/employer-profile']);
-
-        this.logoFile = undefined;
-        this.employerModel = {
-          companyName: '',
-          yearOfFounding: '',
-          aboutCompany: '',
-          email: '',
-          password: '',
-          locationId: null,
-          numberOfEmployeesId: null,
-          industryId: null,
-          employerTypeId: null,
-          experienceId: null,
-          availabilityId: null,
-          compensationId:null
-        };
+          this.router.navigate(['/employer-profile']);
+          this.resetForm();
+        });
       },
       error: (err) => {
         console.error(err);
-        alert('Failed to register employer. Please check your data.');
+        if (err.error?.includes('Duplicate entry')) {
+          alert('This email is already registered.');
+        } else {
+          alert('Failed to register employer. Please check your data.');
+        }
       }
     });
+  }
 
+  private resetForm() {
+    this.employerModel = {
+      companyName: '',
+      yearOfFounding: '',
+      aboutCompany: '',
+      email: '',
+      password: '',
+      locationId: null,
+      numberOfEmployeesId: null,
+      industryId: null,
+      employerTypeId: null,
+      experienceId: null,
+      availabilityId: null,
+      compensationId: null
+    };
+    this.logoFile = undefined;
+    this.currentStep = 0;
   }
 }

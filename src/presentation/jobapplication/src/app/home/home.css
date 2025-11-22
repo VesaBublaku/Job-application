@@ -232,18 +232,10 @@ img{
   gap:2.2rem;
   align-items:center;
 }
-.about-us__media{
-  min-height:320px;
+.about-us__media img{
+  max-height:700px;
 }
-.mock-mac{
-  height:340px;
-  border-radius:18px;
-  border:1px solid var(--border);
-  background:
-    radial-gradient(80px 80px at 25% 25%, rgba(0,0,0,.06), transparent 40%),
-    linear-gradient(180deg, #f8f9fb, #f1f3f7);
-  box-shadow: var(--shadow);
-}
+
 .about-us__content h3{
   font-size: clamp(1.4rem, 1.8vw, 2rem);
   margin-bottom:.6rem;

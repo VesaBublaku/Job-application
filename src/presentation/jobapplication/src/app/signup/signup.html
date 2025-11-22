@@ -28,7 +28,7 @@
     </ol>
   </header>
 
-  <form class="form" #form="ngForm">
+  <form class="form" #form="ngForm" (ngSubmit)="signUp(form)">
 
     <div class="form-step" *ngIf="isStepActive(0)">
       <section class="intro">
@@ -79,7 +79,7 @@
 
       <div class="form__actions">
         <a class="btn btn--ghost" href="/">Back to main page</a>
-        <button class="btn btn--primary" type="button" (click)="nextStep()">Continue</button>
+        <button class="btn btn--primary" type="button" (click)="nextStep(form)">Continue</button>
       </div>
     </div>
 
@@ -241,7 +241,7 @@
 
       <div class="form__actions">
         <a class="btn btn--ghost" type="button" (click)="prevStep()">Back to previous step</a>
-        <button class="btn btn--primary" type="button" (click)="nextStep()">Continue</button>
+        <button class="btn btn--primary" type="button" (click)="nextStep(form)">Continue</button>
       </div>
     </div>
 
@@ -255,21 +255,25 @@
         <div class="field field--full">
           <label class="label" for="email">Email<span class="req">*</span></label>
           <div class="input-append">
-            <input id="email" type="email" class="input" placeholder="Email" name="email" required [(ngModel)]="workerData.email">
+            <input id="email" type="text" class="input" placeholder="Email"
+                   name="email" [(ngModel)]="workerData.email"
+                   [ngModelOptions]="{standalone: true}" required>
           </div>
         </div>
 
         <div class="field field--full">
           <label class="label" for="password">Password<span class="req">*</span></label>
           <div class="input-append">
-            <input id="password" type="password" class="input" placeholder="Password" name="password" required [(ngModel)]="workerData.password">
+            <input id="password" type="password" class="input" placeholder="Password"
+                   name="email" [(ngModel)]="workerData.password"
+                   [ngModelOptions]="{standalone: true}" required>
           </div>
         </div>
       </div>
 
       <div class="form__actions">
         <a class="btn btn--ghost" type="button" (click)="prevStep()">Back to previous step</a>
-        <button class="btn btn--primary" type="button" (click)="signUp()">Sign Up</button>
+        <button class="btn btn--primary" type="submit">Sign Up</button>
       </div>
     </div>
 

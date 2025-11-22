@@ -3,6 +3,7 @@ package com.jobapplication.system.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -28,6 +29,8 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers( "/api/auth/**").permitAll()
+                        .requestMatchers("/auth/register/**").permitAll()
+                        .requestMatchers("/auth/login/**").permitAll()
                         .requestMatchers("/uploads/**").permitAll()
                         .requestMatchers("/employers/**").permitAll()
                         .requestMatchers("/availability/**").permitAll()
@@ -42,6 +45,8 @@ public class SecurityConfig {
                         .requestMatchers("/profession/**").permitAll()
                         .requestMatchers("/skills/**").permitAll()
                         .requestMatchers("/worker/**").permitAll()
+                        .requestMatchers("/application/apply").permitAll()
+                        .requestMatchers("/application/**").permitAll()
                         .anyRequest().authenticated()
                 );
 
@@ -51,9 +56,9 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cfg = new CorsConfiguration();
-        cfg.setAllowedOrigins(List.of("http://localhost:4201"));
+        cfg.setAllowedOriginPatterns(List.of("*"));
         cfg.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-        cfg.setAllowedHeaders(List.of("Content-Type", "Authorization", "Origin", "Accept", "X-Requested-With"));
+        cfg.setAllowedHeaders(List.of("*"));
         cfg.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource src = new UrlBasedCorsConfigurationSource();
