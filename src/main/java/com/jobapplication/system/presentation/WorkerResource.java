@@ -180,4 +180,18 @@ public class WorkerResource {
         workerService.deleteWorker(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Worker>> searchWorkers(
+            @RequestParam(required = false) Long professionId,
+            @RequestParam(required = false) Long compensationId,
+            @RequestParam(required = false) Long jobTypeId,
+            @RequestParam(required = false) Long availabilityId,
+            @RequestParam(required = false) Long experienceId,
+            @RequestParam(required = false) Long educationId,
+            @RequestParam(required = false) Long locationId
+    ) {
+        List<Worker> workers = workerService.searchWorkers(professionId, compensationId, jobTypeId, availabilityId, experienceId, educationId, locationId);
+        return ResponseEntity.ok(workers);
+    }
 }
