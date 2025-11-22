@@ -91,5 +91,19 @@ public class EmployerResource {
         employerService.deleteEmployer(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Employer>> searchEmployers(
+            @RequestParam(required = false) String companyName,
+            @RequestParam(required = false) Long industryId,
+            @RequestParam(required = false) Long compensationId,
+            @RequestParam(required = false) Long jobTypeId,
+            @RequestParam(required = false) Long availabilityId,
+            @RequestParam(required = false) Long experienceId,
+            @RequestParam(required = false) Long locationId
+    ) {
+        List<Employer> employers = employerService.searchEmployers(companyName, industryId, compensationId, jobTypeId, availabilityId, experienceId, locationId);
+        return ResponseEntity.ok(employers);
+    }
 }
 

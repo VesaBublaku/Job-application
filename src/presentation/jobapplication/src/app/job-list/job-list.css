@@ -47,7 +47,7 @@ a {
   padding: 28px 0 32px;
   border-radius: 0;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
-  overflow: hidden;
+  overflow: visible;
   box-sizing: border-box;
 }
 
@@ -72,6 +72,7 @@ a {
   max-width: 1400px;
   margin-top: 18px;
 }
+
 .chip {
   position: relative;
   display: flex;
@@ -118,7 +119,8 @@ a {
 }
 
 .chip__select {
-  appearance: none;
+  pointer-events: auto;
+  cursor: pointer;
   -webkit-appearance: none;
   -moz-appearance: none;
   padding-right: 18px;
@@ -126,6 +128,7 @@ a {
 
 .chip__chev {
   position: absolute;
+  pointer-events: none;
   right: 12px;
   top: 50%;
   transform: translateY(-50%);

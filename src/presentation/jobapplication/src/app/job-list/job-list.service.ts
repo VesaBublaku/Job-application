@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 
 import {Observable} from 'rxjs';
 import {Employer} from './job';
+import {HttpParams} from '@angular/common/http';
 
 @Injectable({providedIn: 'root'})
 export class JobListService {
@@ -40,5 +41,18 @@ export class JobListService {
 
   deleteJob(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apibaseUrl}/delete/${id}`);
+  }
+
+  searchEmployers(filters: any): Observable<Employer[]> {
+    let params = new HttpParams();
+
+    Object.keys(filters).forEach(key => {
+      const value = filters[key];
+      if(value !== null && value !== '' && value !== undefined) {
+        params = params.append(key, value);
+      }
+    });
+
+    return this.http.get<Employer[]>(`${this.apibaseUrl}/search`, {params});
   }
 }
