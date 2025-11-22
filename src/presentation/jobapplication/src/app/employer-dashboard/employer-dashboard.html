@@ -11,94 +11,52 @@
 
 <div class="container">
 
-  <article class="worker-card" data-status="pending">
+  <article *ngFor="let app of applications" class="worker-card" [attr.data-status]="app.status?.toLowerCase()">
     <div class="worker-card__left">
-      <img class="avatar" src="https://i.pravatar.cc/96?img=12" alt="Sambit D photo">
+      <img class="avatar" [src]="'http://localhost:8080/uploads/' + app.worker.photo">
       <div class="id">
-        <h2 class="name">Sambit D.</h2>
-        <p class="loc">Bengaluru, India</p>
+        <h2 class="name">{{app.worker.firstName}} {{app.worker.lastName}}</h2>
+        <p class="loc">{{app.worker.location.name}}</p>
         <div class="badges">
-          <span class="badge">$4–8 / hr</span>
-          <span class="badge">$8.3k–16.6k / yr</span>
+          <span class="badge">{{app.worker.compensation.compensation}}</span>
         </div>
       </div>
       <div class="occupation">
         <p class="occupation__title">Occupational fields</p>
-        <span class="occupation__tag">Sales &amp; Marketing</span>
+        <span class="occupation__tag" *ngFor="let p of app.worker.profession">{{p.profession}}</span>
       </div>
 
     </div>
 
     <div class="worker-card__right">
       <dl class="facts">
-        <div><dt>Job Type</dt><dd>Full-Time</dd></div>
-        <div><dt>Availability</dt><dd>Remote: Global, National</dd></div>
-        <div><dt>Education</dt><dd>Professional Degree / PhD</dd></div>
-        <div><dt>Experience</dt><dd>Mid-Level</dd></div>
+        <div><dt>Job Type</dt><dd><span *ngFor="let t of app.worker.jobTypes">{{ t.jobType }}</span></dd></div>
+        <div><dt>Availability</dt><dd>{{app.worker.availability.availability}}</dd></div>
+        <div><dt>Education</dt><dd>{{app.worker.education.education}}</dd></div>
+        <div><dt>Experience</dt><dd>{{app.worker.experience.experience}}</dd></div>
       </dl>
 
 
       <div class="actions">
-        <a routerLink="/worker-details" routerLinkActive="active" class="btn btn--primary" >View profile</a>
+        <a [routerLink]="['/worker-details', app.worker.id]" routerLinkActive="active" class="btn btn--primary">View profile</a>
 
-        <label class="status" [attr.data-status] = "status">
+        <label class="status" [attr.data-status] = "app.status?.toLowerCase()">
           <span>Status:</span>
-          <select class="status__select" [(ngModel)]="status">
-            <option value="pending">Pending</option>
-            <option value="accepted" selected>Accept</option>
-            <option value="rejected">Reject</option>
+          <select class="status__select" [(ngModel)]="app.status" (change)="updateStatus(app.id, app.status)">
+            <option value="PENDING">Pending</option>
+            <option value="ACCEPTED">Accept</option>
+            <option value="REJECTED">Reject</option>
           </select>
-          <span class="status__pill">{{ status === 'accepted' ? 'Accept' : (status === 'rejected' ? 'Reject' : 'Pending') }}</span>
+          <span class="status__pill">{{ app.status }}</span>
         </label>
       </div>
     </div>
   </article>
 
-
-  <article class="worker-card" data-status="accepted">
-    <div class="worker-card__left">
-      <img class="avatar" src="https://i.pravatar.cc/96?img=24" alt="Benson K photo">
-      <div class="id">
-        <h2 class="name">Benson k.</h2>
-        <p class="loc">Lagos, Nigeria</p>
-        <div class="badges">
-          <span class="badge">$8–12 / hr</span>
-          <span class="badge">$16.6k–25k / yr</span>
-        </div>
-      </div>
-      <div class="occupation">
-        <p class="occupation__title">Occupational fields</p>
-        <span class="occupation__tag">Design &amp; Creative</span>
-      </div>
-    </div>
-
-    <div class="worker-card__right">
-      <dl class="facts">
-        <div><dt>Job Type</dt><dd>Part-Time, Full-Time</dd></div>
-        <div><dt>Availability</dt><dd>Remote: Global, National</dd></div>
-        <div><dt>Education</dt><dd>Baccalaureate</dd></div>
-        <div><dt>Experience</dt><dd>Entry-Level</dd></div>
-      </dl>
-
-      <div class="actions">
-        <a routerLink="/worker-details" routerLinkActive="active" class="btn btn--primary" >View profile</a>
-
-        <label class="status" [attr.data-status] = "status">
-          <span>Status:</span>
-          <select class="status__select" [(ngModel)]="status">
-            <option value="pending">Pending</option>
-            <option value="accepted" selected>Accept</option>
-            <option value="rejected">Reject</option>
-          </select>
-          <span class="status__pill">{{ status === 'accepted' ? 'Accept' : (status === 'rejected' ? 'Reject' : 'Pending') }}</span>
-        </label>
-      </div>
-    </div>
-  </article>
 </div>
 
-
 <app-footer></app-footer>
+
 </body>
 </html>
 

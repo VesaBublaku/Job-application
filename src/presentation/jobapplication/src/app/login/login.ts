@@ -38,19 +38,17 @@ export class Login {
       next: (response: any) => {
         this.loading = false;
 
-        // Save user in auth service
         this.authService.setUser({ ...response, role: this.userType });
 
-        // ✅ Save employer ID in localStorage
         if (this.userType === "employer") {
           localStorage.setItem('employerId', response.id.toString());
+        } else {
+          localStorage.setItem('workerId', response.id.toString());
         }
 
-        this.router.navigate([this.userType === "employer" ? '/employer-dashboard' : '/worker-dashboard']);
-      },
-      error: () => {
-        this.loading = false;
-        this.errorMessage = "Invalid email or password";
+        this.router.navigate([
+          this.userType === "employer" ? '/employer-dashboard' : '/worker-dashboard'
+        ]);
       }
     });
   }

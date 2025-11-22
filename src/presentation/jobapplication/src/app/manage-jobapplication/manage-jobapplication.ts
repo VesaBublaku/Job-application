@@ -273,6 +273,7 @@ export class ManageJobapplication implements OnInit{
       availability: { id: 0, availability: '' },
       compensation: { id: 0, compensation: '' },
       jobTypes:[],
+      applications:[],
     };
   }
 }

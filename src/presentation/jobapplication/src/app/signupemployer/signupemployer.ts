@@ -170,6 +170,8 @@ export class SignupEmployer implements OnInit {
         this.employerService.getEmployerById(createdEmployer.id).subscribe((fullEmployer: any) => {
           this.authService.setUser({ ...fullEmployer, role: 'employer' });
 
+          localStorage.setItem("employerId", fullEmployer.id.toString());
+
           this.router.navigate(['/employer-profile']);
           this.resetForm();
         });

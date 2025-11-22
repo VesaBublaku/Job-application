@@ -1,78 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Job Details - Python Software Engineer</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Details - Python Software Engineer</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
 <app-header></app-header>
 
-    <div class="job-details-wrapper">
+<div class="job-details-wrapper">
 
-        <section class="details-main-card">
+  <section class="details-main-card">
 
-            <div class="details-header">
-                <div>
-                  <div class="company-logo-details"><i class="fas fa-code"></i></div>
-                    <h1>Python Software Engineer</h1>
-                </div>
-              <a href="#apply-box" class="btn-apply-mobile">Apply Now</a>
-            </div>
-
-            <div class="job-meta-details">
-                <span class="meta-item-details"><i class="fa-solid fa-coins"></i>64k - 92k euro</span>
-                <span class="meta-item-details"><i class="fa-solid fa-briefcase"></i>Industry</span>
-                <span class="meta-item-details"><i class="fas fa-clock"></i> **Full-Time**</span>
-                <span class="meta-item-details"><i class="fas fa-level-up-alt"></i> **Mid/Senior Level**</span>
-                <span class="meta-item-details"><i class="fas fa-globe"></i> **Worldwide Remote**</span>
-                <span class="meta-item-details"><i class="fas fa-calendar-alt"></i> Posted: 1 Day Ago</span>
-            </div>
-
-            <hr>
-
-            <div class="job-section">
-                <h2>Role Description</h2>
-                <p>SoftDev Solutions is seeking a motivated and experienced Python Software Engineer to join our backend development team. You will play a key role in building and maintaining our microservices architecture and critical APIs.</p>
-                <p>This role is 100% remote and offers flexible working hours, allowing you to work from anywhere in the world.</p>
-            </div>
-
-            <div class="job-section">
-                <h2>Key Responsibilities</h2>
-                <ul>
-                    <li>Develop and deploy backend services using Python, Django/Flask.</li>
-                    <li>Design and maintain databases (PostgreSQL, MongoDB).</li>
-                    <li>Write automated tests to ensure code quality.</li>
-                    <li>Collaborate with front-end and product teams to deliver new solutions.</li>
-                    <li>Optimize application performance and troubleshoot issues.</li>
-                </ul>
-            </div>
-
-            <div class="job-section">
-                <h2>Requirements and Skills</h2>
-                <ul>
-                    <li>3+ years of experience as a Backend/Full-Stack Developer.</li>
-                    <li>Deep proficiency in Python and at least one framework (Django, Flask, FastAPI).</li>
-                    <li>Experience with Git and CI/CD tools.</li>
-                    <li>Knowledge of Cloud Technologies (AWS/Azure/GCP) is a plus.</li>
-                    <li>Excellent English, written and spoken.</li>
-                </ul>
-            </div>
-
-            <div class="job-section">
-                <h2>Benefits (Perks)</h2>
-                <div class="benefits-grid">
-                    <div class="benefit-item"><i class="fas fa-laptop-code"></i> New Equipment (MacBook Pro)</div>
-                    <div class="benefit-item"><i class="fas fa-heartbeat"></i> Premium Health Insurance</div>
-                    <div class="benefit-item"><i class="fas fa-plane"></i> 4 Weeks Annual Leave</div>
-                    <div class="benefit-item"><i class="fas fa-graduation-cap"></i> Professional Development Budget</div>
-                </div>
-            </div>
-
-        </section>
+    <div class="details-header">
+      <div>
+        <div class="company-logo-details"><i class="fas fa-code"></i></div>
+        <h1>Python Software Engineer</h1>
+      </div>
+      <button class="btn-apply-mobile" (click)="applyNow()">Apply Now</button>
     </div>
+
+    <div class="job-meta-details">
+      <span class="meta-item-details"><i class="fa-solid fa-coins"></i>64k - 92k euro</span>
+      <span class="meta-item-details"><i class="fa-solid fa-briefcase"></i>Industry</span>
+      <span class="meta-item-details"><i class="fas fa-clock"></i> **Full-Time**</span>
+      <span class="meta-item-details"><i class="fas fa-level-up-alt"></i> **Mid/Senior Level**</span>
+      <span class="meta-item-details"><i class="fas fa-globe"></i> **Worldwide Remote**</span>
+    </div>
+
+    <hr>
+
+    <div class="job-section">
+      <h2>Role Description</h2>
+      <p>SoftDev Solutions is seeking a motivated and experienced Python Software Engineer to join our backend development team. You will play a key role in building and maintaining our microservices architecture and critical APIs.</p>
+      <p>This role is 100% remote and offers flexible working hours, allowing you to work from anywhere in the world.</p>
+    </div>
+
+    <div class="job-section">
+      <h2>Key Responsibilities</h2>
+      <ul>
+        <li>Develop and deploy backend services using Python, Django/Flask.</li>
+        <li>Design and maintain databases (PostgreSQL, MongoDB).</li>
+        <li>Write automated tests to ensure code quality.</li>
+        <li>Collaborate with front-end and product teams to deliver new solutions.</li>
+        <li>Optimize application performance and troubleshoot issues.</li>
+      </ul>
+    </div>
+
+    <div class="job-section">
+      <h2>Requirements and Skills</h2>
+      <ul>
+        <li>3+ years of experience as a Backend/Full-Stack Developer.</li>
+        <li>Deep proficiency in Python and at least one framework (Django, Flask, FastAPI).</li>
+        <li>Experience with Git and CI/CD tools.</li>
+        <li>Knowledge of Cloud Technologies (AWS/Azure/GCP) is a plus.</li>
+        <li>Excellent English, written and spoken.</li>
+      </ul>
+    </div>
+
+    <div class="job-section">
+      <h2>Benefits (Perks)</h2>
+      <div class="benefits-grid">
+        <div class="benefit-item"><i class="fas fa-laptop-code"></i> New Equipment (MacBook Pro)</div>
+        <div class="benefit-item"><i class="fas fa-heartbeat"></i> Premium Health Insurance</div>
+        <div class="benefit-item"><i class="fas fa-plane"></i> 4 Weeks Annual Leave</div>
+        <div class="benefit-item"><i class="fas fa-graduation-cap"></i> Professional Development Budget</div>
+      </div>
+    </div>
+
+  </section>
+</div>
 
 <app-footer></app-footer>
 </body>

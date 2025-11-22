@@ -1,16 +1,34 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HeaderComponent} from '../header/header';
 import {FooterComponent} from '../footer/footer';
+import {NgForOf} from '@angular/common';
+import {JobApplicationService} from '../job-application/job-application.service';
+import {JobApplication} from '../job-application/job-application';
 
 @Component({
   selector: 'app-worker-dashboard',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, HeaderComponent, FooterComponent, RouterLink, RouterLinkActive],
+  imports: [ReactiveFormsModule, FormsModule, HeaderComponent, FooterComponent, RouterLink, RouterLinkActive, NgForOf],
   templateUrl: './worker-dashboard.html',
   styleUrl: './worker-dashboard.css',
 })
-export class WorkerDashboard {
-  status: 'pending' | 'accepted' | 'rejected' = 'pending';
+export class WorkerDashboard implements OnInit{
+
+  applications: JobApplication[] = [];
+
+  constructor(private applicationService: JobApplicationService) {}
+
+  ngOnInit() {
+    const workerId = 1;
+    this.applicationService.getWorkerApplications(workerId).subscribe({
+      next: (apps) => {
+        this.applications = apps;
+      },
+      error: (err) => {
+        console.error("Failed to load worker applications:", err);
+      }
+    });
+  }
 }

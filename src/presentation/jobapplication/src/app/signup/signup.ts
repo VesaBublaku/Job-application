@@ -314,6 +314,7 @@ export class Signup implements OnInit {
         this.workerService.getWorkerById(createdWorker.id).subscribe(fullWorker => {
           this.authService.setUser({...fullWorker, role: 'worker'});
 
+          localStorage.setItem("workerId", fullWorker.id.toString());
           this.router.navigate(['/worker-profile']);
         });
       },

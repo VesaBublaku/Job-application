@@ -17,10 +17,7 @@ export class HeaderComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit() {
-    // Set initial state
     this.loggedIn = this.authService.isLoggedIn();
-
-    // Subscribe to login/logout changes
     this.authService.loggedIn$.subscribe((status: boolean) => {
       this.loggedIn = status;
     });
@@ -43,8 +40,10 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.authService.clearUser(); // clears localStorage and updates loggedIn$
-    this.router.navigate(['/login']); // redirect to login page
+    this.authService.clearUser();
+    localStorage.removeItem('workerId');
+    localStorage.removeItem('employerId');
+    this.router.navigate(['/login']);
   }
 
 }

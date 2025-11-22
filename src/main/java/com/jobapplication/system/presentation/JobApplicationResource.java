@@ -36,4 +36,9 @@ public class JobApplicationResource {
     public JobApplication updateStatus(@PathVariable Long id, @RequestParam String status) {
         return jobApplicationService.updateStatus(id, status);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteApplication(@PathVariable Long id) {
+        jobApplicationService.delete(id);
+    }
 }

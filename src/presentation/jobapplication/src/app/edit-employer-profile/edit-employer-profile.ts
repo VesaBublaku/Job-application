@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { HeaderComponent } from '../header/header';
 import { FooterComponent } from '../footer/footer';
+import {AuthService} from '../auth/auth.service';
 
 interface EmployerDTO {
   id?: number;
@@ -43,7 +44,8 @@ export class EditEmployerProfile implements OnInit {
   numberOfEmployees: any[] = [];
   employerType: any[] = [];
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router,
+  private authService:AuthService) {}
 
   ngOnInit() {
     this.loadDropdowns();
@@ -126,7 +128,8 @@ export class EditEmployerProfile implements OnInit {
       .subscribe({
         next: () => {
           alert('Your profile has been deleted.');
-          localStorage.removeItem('employerId'); // optional: remove stored ID
+          localStorage.removeItem('employerId');
+          this.authService.clearUser();
           window.location.href = '/home';
         },
         error: (err) => {
