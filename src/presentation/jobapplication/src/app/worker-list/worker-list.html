@@ -74,20 +74,22 @@
     </div>
 
     <section class="results wide-layout">
-      <article class="worker-card advanced-card">
+      <article *ngFor="let worker of workers" class="worker-card advanced-card">
         <div class="card-left">
-          <img src="" alt="" class="avatar large-avatar">
-          <div class="worker-details">
-            <h3>Benson k.</h3>
-            <p class="role">Design &amp; Creative</p>
-            <p class="location">Lagos, Nigeria</p>
+          <img *ngIf="worker.photo" [src]="'http://localhost:8080/uploads/' + worker.photo" alt="" class="avatar large-avatar">
+          <img *ngIf="!worker.photo" [src]="'http://localhost:8080/uploads/default-avatar.jpg'" alt="" class="avatar large-avatar">
 
+          <div class="worker-details">
+            <h3>{{ worker.firstName }} {{ worker.lastName.charAt(0) }}.</h3>
+            <p class="role">{{ worker.professions?.[0]?.profession || 'N/A' }}</p>
+            <p class="location">{{ worker.location?.name || 'Unknown' }}</p>
           </div>
         </div>
+
         <div class="card-right">
-          <p class="rate-label">Compencation</p>
-          <p class="rate-price"><strong>$55</strong>/h</p>
-          <a routerLink="/worker-details" routerLinkActive="active" class="btn btn-primary">View profile</a>
+          <p class="rate-label">Compensation</p>
+          <div class="rate-price">{{ worker.compensation?.compensation || 'N/A' }}></div>
+          <a [routerLink]="['/worker-details', worker.id]" routerLinkActive="active" class="btn btn-primary">View profile</a>
         </div>
 
         <div class="details-grid">
@@ -95,7 +97,7 @@
             <i class="fas fa-clock"></i>
             <div>
               <div class="detail-title">Job Type</div>
-              <div class="detail-value">Full-Time</div>
+              <div class="detail-value">{{ worker.jobTypes?.[0]?.jobType || 'N/A' }}</div>
             </div>
           </div>
 
@@ -103,7 +105,7 @@
             <i class="fas fa-globe"></i>
             <div>
               <div class="detail-title">Availability</div>
-              <div class="detail-value">Remote: Global</div>
+              <div class="detail-value">{{ worker.availability?.availability || 'N/A' }}</div>
             </div>
           </div>
 
@@ -111,7 +113,7 @@
             <i class="fas fa-graduation-cap"></i>
             <div>
               <div class="detail-title">Education</div>
-              <div class="detail-value">Bachelor</div>
+              <div class="detail-value">{{ worker.education?.education || 'N/A' }}</div>
             </div>
           </div>
 
@@ -119,7 +121,7 @@
             <i class="fas fa-level-up-alt"></i>
             <div>
               <div class="detail-title">Experience</div>
-              <div class="detail-value">Mid-Level</div>
+              <div class="detail-value">{{ worker.experience?.experience || 'N/A' }}</div>
             </div>
           </div>
         </div>

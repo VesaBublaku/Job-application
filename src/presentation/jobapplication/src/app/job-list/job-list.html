@@ -8,162 +8,141 @@
 
 <app-header></app-header>
 
-    <main class="main-content-wrapper">
+<main class="main-content-wrapper">
 
-      <div class="filter-bar">
-        <div class="filter-row">
-          <div class="chip chip--wide">
-            <i class="fas fa-briefcase chip__icon"></i>
-            <div class="chip__body">
-              <span class="chip__label">What</span>
-              <input [(ngModel)]="filterModel.companyName"
-                     class="chip__field"
-                     name="comapnyName" placeholder="Job title/Company">
-            </div>
-          </div>
-
-          <div class="chip chip--wide">
-            <i class="fas fa-suitcase chip__icon"></i>
-            <div class="chip__body">
-              <span class="chip__label">Industry</span>
-              <select class="chip__field chip__select" [(ngModel)]="filterModel.industryId" name="industry">
-                <option [ngValue]="null" disabled hidden>Select industry</option>
-                <option *ngFor="let i of industries" [value]="i.id">{{i.name}}</option>
-              </select>
-              <i class="fas fa-chevron-down chip__chev" aria-hidden="true"></i>
-            </div>
-          </div>
-
-          <div class="chip chip--comp">
-            <i class="fas fa-database chip__icon"></i>
-            <div class="chip__body">
-              <span class="chip__label">Compensation</span>
-              <select class="chip__field chip__select" [(ngModel)]="filterModel.compensationId" name="compensation">
-                <option [ngValue]="null" disabled hidden>$</option>
-                <option *ngFor="let c of compensations" [value]="c.id">{{c.compensation}}</option>
-              </select>
-              <i class="fas fa-chevron-down chip__chev" aria-hidden="true"></i>
-            </div>
-          </div>
-
-          <button class="btn-find" type="button" (click)="findEmployers()">
-            <i class="fas fa-search"></i> Find Jobs
-          </button>
-        </div>
-
-        <div class="filter-row filter-row--sub">
-
-          <select class="chip chip--sub" [(ngModel)]="filterModel.jobTypeId" name="jobType">
-            <option [ngValue]="null" disabled hidden>Job Type</option>
-            <option *ngFor="let jt of jobTypes" [value]="jt.id">{{jt.jobType}}</option>
-          </select>
-
-          <select class="chip chip--sub" [(ngModel)]="filterModel.availabilityId" name="availability">
-            <option [ngValue]="null" disabled hidden>Availability</option>
-            <option *ngFor="let a of availabilities" [value]="a.id">{{a.availability}}</option>
-          </select>
-
-          <select class="chip chip--sub" [(ngModel)]="filterModel.experienceId" name="experience">
-            <option [ngValue]="null" disabled hidden>Experience</option>
-            <option *ngFor="let e of experiences" [value]="e.id">{{e.experience}}</option>
-          </select>
-
-          <select class="chip chip--sub" [(ngModel)]="filterModel.locationId" name="loaction">
-            <option [ngValue]="null" disabled hidden>Location</option>
-            <option *ngFor="let l of locations" [value]="l.id">{{l.name}}</option>
-          </select>
-
+  <div class="filter-bar">
+    <div class="filter-row">
+      <div class="chip chip--wide">
+        <i class="fas fa-briefcase chip__icon"></i>
+        <div class="chip__body">
+          <span class="chip__label">What</span>
+          <input [(ngModel)]="filterModel.companyName"
+                 class="chip__field"
+                 name="companyName" placeholder="Job title/Company">
         </div>
       </div>
 
-      <section class="job-list-section">
+      <div class="chip chip--wide">
+        <i class="fas fa-suitcase chip__icon"></i>
+        <div class="chip__body">
+          <span class="chip__label">Industry</span>
+          <select class="chip__field chip__select" [(ngModel)]="filterModel.industryId" name="industry">
+            <option [ngValue]="null" disabled hidden>Select industry</option>
+            <option *ngFor="let i of industries" [value]="i.id">{{i.name}}</option>
+          </select>
+          <i class="fas fa-chevron-down chip__chev" aria-hidden="true"></i>
+        </div>
+      </div>
 
-<<<<<<< HEAD
-        <div class="list-header">
-          <div class="sort-options">
-            Sort by:
-            <select>
-              <option>Newest</option>
-              <option>Oldest</option>
-              <option>Highest Wage</option>
-              <option>Lowest Wage</option>
-            </select>
-          </div>
+      <div class="chip chip--comp">
+        <i class="fas fa-database chip__icon"></i>
+        <div class="chip__body">
+          <span class="chip__label">Compensation</span>
+          <select class="chip__field chip__select" [(ngModel)]="filterModel.compensationId" name="compensation">
+            <option [ngValue]="null" disabled hidden>$</option>
+            <option *ngFor="let c of compensations" [value]="c.id">{{c.compensation}}</option>
+          </select>
+          <i class="fas fa-chevron-down chip__chev" aria-hidden="true"></i>
+        </div>
+      </div>
+
+      <button class="btn-find" type="button" (click)="findEmployers()">
+        <i class="fas fa-search"></i> Find Jobs
+      </button>
+    </div>
+
+    <div class="filter-row filter-row--sub">
+      <select class="chip chip--sub" [(ngModel)]="filterModel.jobTypeId" name="jobType">
+        <option [ngValue]="null" disabled hidden>Job Type</option>
+        <option *ngFor="let jt of jobTypes" [value]="jt.id">{{jt.jobType}}</option>
+      </select>
+
+      <select class="chip chip--sub" [(ngModel)]="filterModel.availabilityId" name="availability">
+        <option [ngValue]="null" disabled hidden>Availability</option>
+        <option *ngFor="let a of availabilities" [value]="a.id">{{a.availability}}</option>
+      </select>
+
+      <select class="chip chip--sub" [(ngModel)]="filterModel.experienceId" name="experience">
+        <option [ngValue]="null" disabled hidden>Experience</option>
+        <option *ngFor="let e of experiences" [value]="e.id">{{e.experience}}</option>
+      </select>
+
+      <select class="chip chip--sub" [(ngModel)]="filterModel.locationId" name="location">
+        <option [ngValue]="null" disabled hidden>Location</option>
+        <option *ngFor="let l of locations" [value]="l.id">{{l.name}}</option>
+      </select>
+    </div>
+  </div>
+
+  <section class="job-list-section">
+    <div class="list-header">
+      <div class="sort-options">
+        Sort by:
+        <select [(ngModel)]="sortOption" (change)="sortEmployers()">
+          <option value="newest">Newest</option>
+          <option value="oldest">Oldest</option>
+          <option value="highestWage">Highest Wage</option>
+          <option value="lowestWage">Lowest Wage</option>
+        </select>
+      </div>
+    </div>
+
+    <div *ngFor="let job of employers" class="job-card-pro">
+
+      <div class="job-header">
+        <div class="company-logo">
+          <img *ngIf="job.companyLogo" [src]="'http://localhost:8080/uploads/' + encode(job.companyLogo)">
+          <img *ngIf="!job.companyLogo" [src]="'http://localhost:8080/uploads/default-avatar.jpg'" alt="" class="avatar large-avatar">
+          <i *ngIf="!job.companyLogo" class="fas fa-briefcase"></i>
         </div>
 
-        <div *ngFor="let job of jobs" class="job-card-pro">
-
-          <div class="job-header">
-            <div class="company-logo">
-
-              <img *ngIf="job.companyLogo"
-              [src]="'http://localhost:8080/uploads/' + encode(job.companyLogo)">
-
-              <i *ngIf="!job.companyLogo" class="fas fa-briefcase"></i>
-=======
-        <section class="job-list-section">
-            <div class="list-header">
-                <div class="sort-options">
-                    Sort by:
-                    <select [(ngModel)]="sortOption" (change)="sortEmployers()">
-                        <option value="newest">Newest</option>
-                        <option value="oldest">Oldest</option>
-                        <option value="highestWage">Highest Wage</option>
-                        <option value="lowestWage">Lowest Wage</option>
-                    </select>
-                </div>
->>>>>>> 2094fe7ba4ea7e564a7f24fba8b756fb0247a328
-            </div>
-
-            <div class="job-title-area">
-              <h3>{{ job.companyName }}</h3>
-              <p class="company-name">{{ job.companyName }}</p>
-            </div>
-
-            <div class="salary-range">
-              <i class="fas fa-dollar-sign"></i>
-              {{ job.compensation?.compensation || 'N/A' }}
-            </div>
-          </div>
-
-          <div class="job-meta">
-      <span class="meta-item">
-        <i class="fas fa-clock"></i>
-        {{ job.jobTypes?.[0]?.jobType || 'N/A' }}
-      </span>
-
-            <span class="meta-item">
-        <i class="fas fa-level-up-alt"></i>
-              {{ job.experience?.experience || 'N/A' }}
-      </span>
-
-            <span class="meta-item">
-        <i class="fas fa-globe"></i>
-              {{ job.availability?.availability || 'Unknown' }}
-      </span>
-
-            <span class="meta-item">
-        <i class="fas fa-map-marker-alt"></i>
-              {{ job.location?.name || 'Unknown' }}
-      </span>
-          </div>
-
-          <div class="job-description-short">
-            {{ job.aboutCompany }}
-          </div>
-
-          <div class="job-actions">
-            <a [routerLink]="['/job-details', job.id]"
-               class="btn-view-details">
-              View Details <i class="fas fa-chevron-right"></i>
-            </a>
-          </div>
-
+        <div class="job-title-area">
+          <h3>{{ job.companyName }}</h3>
+          <p class="company-name">{{ job.companyName }}</p>
         </div>
 
-      </section>
+        <div class="salary-range">
+          <i class="fas fa-dollar-sign"></i>
+          {{ job.compensation?.compensation || 'N/A' }}
+        </div>
+      </div>
 
-    </main>
+      <div class="job-meta">
+        <span class="meta-item">
+          <i class="fas fa-clock"></i>
+          {{ job.jobTypes?.[0]?.jobType || 'N/A' }}
+        </span>
+
+        <span class="meta-item">
+          <i class="fas fa-level-up-alt"></i>
+          {{ job.experience?.experience || 'N/A' }}
+        </span>
+
+        <span class="meta-item">
+          <i class="fas fa-globe"></i>
+          {{ job.availability?.availability || 'Unknown' }}
+        </span>
+
+        <span class="meta-item">
+          <i class="fas fa-map-marker-alt"></i>
+          {{ job.location?.name || 'Unknown' }}
+        </span>
+      </div>
+
+      <div class="job-description-short">
+        {{ job.aboutCompany }}
+      </div>
+
+      <div class="job-actions">
+        <a [routerLink]="['/job-details', job.id]" class="btn-view-details">
+          View Details <i class="fas fa-chevron-right"></i>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+</main>
 
 <app-footer></app-footer>
 

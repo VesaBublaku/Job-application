@@ -9,7 +9,7 @@
 
 <app-header></app-header>
 
-<main class="profile-main">
+<main class="profile-main" *ngIf="worker">
   <div class="container profile-grid">
 
     <section class="profile-content">
@@ -17,71 +17,68 @@
       <article class="bio-section card-like">
         <div class="profile-intro">
           <div class="avatar">
-            <div class="avatar__img" aria-hidden="true"></div>
+            <img *ngIf="worker.photo" [src]="'http://localhost:8080/uploads/' + worker.photo" alt="{{worker.firstName}}" class="avatar__img">
+            <div *ngIf="!worker.photo" class="avatar__img" aria-hidden="true"></div>
           </div>
           <div>
-            <h1>Anna Gjini</h1>
-            <p class="headline">Zhvilluese Full-Stack | Eksperte në React, Node.js & AWS</p>
-            <p class="location-profile">Prishtinë, Kosovë (Disponibël Globalisht)</p>
+            <h1>{{ worker.firstName }} {{ worker.lastName.charAt(0) }}.</h1>
+            <p class="headline">
+              {{ professionList }}
+            </p>
+            <p class="location-profile">
+              {{ worker.location?.name || 'Unknown' }}
+            </p>
           </div>
         </div>
 
         <h2>Bio</h2>
-        <p class="long-description">I am a passionate Graphics Designer and Copywriter from Nigeria with over two years of hands-on experience creating compelling visual and written content. Proficient in Canva, I specialize in designing logos, brand identities, and marketing materials that help businesses stand out. My portfolio includes collaborations with small businesses in Nigeria as well as logo designs for gamers and entrepreneurs in the United States, showcasing my ability to adapt to diverse audiences and industries.</p>
-        <p class="long-description">Currently, my objective is to work with forward-thinking companies where I can contribute my creativity, sharpen my design and copywriting skills, and expand my knowledge in the ever-evolving graphics world. I am particularly interested in opportunities that allow me to combine visual storytelling with persuasive writing, helping brands communicate effectively and build strong connections with their target markets.</p>
-        <p class="long-description">With a strong foundation in design principles, attention to detail, and a drive for continuous learning, I am confident in my ability to deliver impactful results and grow alongside innovative teams.</p>
+        <p class="long-description">{{ worker.aboutYou || 'No bio available.' }}</p>
 
       </article>
-
 
     </section>
 
     <aside class="profile-sidebar card-like">
       <div class="stat-group">
         <h5>Compensation</h5>
-        <p><strong>0-4/hr or 0-8.3k/year</strong></p>
+        <p><strong>{{ worker.compensation?.compensation || 'N/A' }}</strong></p>
       </div>
 
       <div class="stat-group">
         <h5>Professions</h5>
         <div class="skill-tags">
-          <span>Design & Creative</span>
-          <span>Writing & Translation</span>
+          <span *ngFor="let p of professionList">{{ p }}</span>
         </div>
       </div>
 
       <div class="stat-group">
         <h5>Skills</h5>
         <div class="skill-tags">
-          <span>React</span>
-          <span>Node.js</span>
-          <span>JavaScript</span>
-          <span>HTML/CSS</span>
-          <span>Express</span>
+          <span *ngFor="let s of skillList">{{ s }}</span>
         </div>
       </div>
 
       <div class="stat-group">
         <h5>Education</h5>
-        <p><strong>Secondary School</strong></p>
+        <p><strong>{{ worker.education?.education || 'N/A' }}</strong></p>
       </div>
 
       <div class="stat-group">
         <h5>Experience Level</h5>
-        <p><strong>Mid-Level</strong></p>
+        <p><strong>{{ worker.experience?.experience || 'N/A' }}</strong></p>
       </div>
 
       <div class="stat-group">
         <h5>Availability</h5>
         <div class="skill-tags">
-          <span>Remote</span>
+          <span>{{ worker.availability?.availability || 'N/A' }}</span>
         </div>
       </div>
 
       <div class="stat-group">
         <h5>Job Type</h5>
         <div class="skill-tags">
-          <span>Part-Time</span>
+          <span *ngFor="let j of jobTypeList">{{ j }}</span>
         </div>
       </div>
 
@@ -90,6 +87,7 @@
 </main>
 
 <app-footer></app-footer>
+
 
 </body>
 </html>

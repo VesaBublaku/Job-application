@@ -3,11 +3,12 @@ import { WorkerDetailsService, Worker } from './worker-details.service';
 import { HeaderComponent } from '../header/header';
 import { FooterComponent } from '../footer/footer';
 import { ActivatedRoute } from '@angular/router';
+import {CommonModule} from '@angular/common';
 
 @Component({
   standalone: true,
   selector: 'app-worker-details',
-  imports: [HeaderComponent, FooterComponent],
+  imports: [HeaderComponent, FooterComponent,CommonModule],
   templateUrl: './worker-details.html',
   styleUrls: ['./worker-details.css'],
 })
@@ -26,6 +27,18 @@ export class WorkerDetails implements OnInit {
       next: data => this.worker = data,
       error: err => console.error('Error fetching worker:', err)
     });
+  }
+
+  get professionList(): string[] {
+    return this.worker?.professions?.map(p => p.profession) || [];
+  }
+
+  get skillList(): string[] {
+    return this.worker?.skills?.map(s => s.skill) || [];
+  }
+
+  get jobTypeList(): string[] {
+    return this.worker?.jobTypes?.map(j => j.jobType) || [];
   }
 
 }

@@ -16,14 +16,14 @@
       <img class="avatar" [src]="'http://localhost:8080/uploads/' + app.worker.photo">
       <div class="id">
         <h2 class="name">{{app.worker.firstName}} {{app.worker.lastName}}</h2>
-        <p class="loc">{{app.worker.location.name}}</p>
+        <p class="loc">{{app.worker.location?.name}}</p>
         <div class="badges">
-          <span class="badge">{{app.worker.compensation.compensation}}</span>
+          <span class="badge">{{app.worker.compensation?.compensation}}</span>
         </div>
       </div>
       <div class="occupation">
         <p class="occupation__title">Occupational fields</p>
-        <span class="occupation__tag" *ngFor="let p of app.worker.profession">{{p.profession}}</span>
+        <span class="occupation__tag" *ngFor="let p of app.worker?.professions">{{p.profession}}</span>
       </div>
 
     </div>
@@ -31,9 +31,9 @@
     <div class="worker-card__right">
       <dl class="facts">
         <div><dt>Job Type</dt><dd><span *ngFor="let t of app.worker.jobTypes">{{ t.jobType }}</span></dd></div>
-        <div><dt>Availability</dt><dd>{{app.worker.availability.availability}}</dd></div>
-        <div><dt>Education</dt><dd>{{app.worker.education.education}}</dd></div>
-        <div><dt>Experience</dt><dd>{{app.worker.experience.experience}}</dd></div>
+        <div><dt>Availability</dt><dd>{{app.worker.availability?.availability}}</dd></div>
+        <div><dt>Education</dt><dd>{{app.worker.education?.education}}</dd></div>
+        <div><dt>Experience</dt><dd>{{app.worker.experience?.experience}}</dd></div>
       </dl>
 
 

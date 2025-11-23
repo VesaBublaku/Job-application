@@ -10,7 +10,7 @@ export interface Compensation { id: number; compensation: string; }
 export interface Availability { id: number; availability: string; }
 export interface Profession { id: number; profession: string; }
 export interface Skill { id: number; skill: string; }
-export interface JobType { id: number; type: string; }
+export interface JobType { id: number; jobType: string; }
 
 export interface Worker {
   id: number;

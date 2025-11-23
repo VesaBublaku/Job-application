@@ -11,13 +11,13 @@ import {Education, EducationService} from '../education/education.service';
 import {Worker, WorkerListService} from './worker-list.service';
 import {Location, LocationService} from '../location/location.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {NgForOf} from '@angular/common';
+import {CommonModule, NgForOf} from '@angular/common';
 
 
 @Component({
   standalone: true,
   selector: 'app-worker-list',
-  imports: [HeaderComponent, FooterComponent, RouterLink, ReactiveFormsModule, FormsModule, NgForOf],
+  imports: [HeaderComponent, FooterComponent, RouterLink, ReactiveFormsModule, FormsModule, CommonModule,NgForOf],
   templateUrl: './worker-list.html',
   styleUrl: './worker-list.css',
 })
@@ -59,11 +59,8 @@ export class WorkerList implements OnInit{
   loadAllWorkers() {
     this.workerService.findAll().subscribe(data => {
       this.workers = data;
-<<<<<<< HEAD
     });
-=======
-      });
->>>>>>> 2094fe7ba4ea7e564a7f24fba8b756fb0247a328
+
   }
 
   loadFilterOptions() {
