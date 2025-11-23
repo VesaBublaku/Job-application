@@ -21,7 +21,13 @@ export class WorkerDashboard implements OnInit{
   constructor(private applicationService: JobApplicationService) {}
 
   ngOnInit() {
-    const workerId = 1;
+    const workerId = Number(localStorage.getItem("workerId"));
+
+    if (!workerId) {
+      console.error("Worker not logged in.");
+      return;
+    }
+
     this.applicationService.getWorkerApplications(workerId).subscribe({
       next: (apps) => {
         this.applications = apps;

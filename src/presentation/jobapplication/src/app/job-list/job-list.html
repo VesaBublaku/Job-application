@@ -93,12 +93,11 @@
         <div class="company-logo">
           <img *ngIf="job.companyLogo" [src]="'http://localhost:8080/uploads/' + encode(job.companyLogo)">
           <img *ngIf="!job.companyLogo" [src]="'http://localhost:8080/uploads/default-avatar.jpg'" alt="" class="avatar large-avatar">
-          <i *ngIf="!job.companyLogo" class="fas fa-briefcase"></i>
         </div>
 
         <div class="job-title-area">
           <h3>{{ job.companyName }}</h3>
-          <p class="company-name">{{ job.companyName }}</p>
+          <p class="company-name">{{ job.industry.name }}</p>
         </div>
 
         <div class="salary-range">
