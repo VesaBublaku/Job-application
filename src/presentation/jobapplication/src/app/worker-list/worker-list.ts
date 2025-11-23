@@ -1,14 +1,7 @@
-<<<<<<< HEAD
-import { Component, OnInit } from '@angular/core';
-import { WorkerListService } from './worker-list.service';
-import { HeaderComponent } from '../header/header';
-import { FooterComponent } from '../footer/footer';
-import { RouterLink, RouterLinkActive } from "@angular/router";
-=======
 import {Component, OnInit} from '@angular/core';
 import {HeaderComponent} from '../header/header';
 import {FooterComponent} from '../footer/footer';
-import {RouterLink, RouterLinkActive} from "@angular/router";
+import {RouterLink} from "@angular/router";
 import {Profession, ProfessionService} from '../profession/profession.service';
 import {Compensation, CompensationService} from '../compensation/compensation.service';
 import {JobType, JobTypeService} from '../jobType/jobType.service';
@@ -19,27 +12,16 @@ import {Worker, WorkerListService} from './worker-list.service';
 import {Location, LocationService} from '../location/location.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgForOf} from '@angular/common';
->>>>>>> 4ffb7de46ebfe2f4d3b5b7555a096acc12e79cbd
+
 
 @Component({
   standalone: true,
   selector: 'app-worker-list',
-<<<<<<< HEAD
-  imports: [
-    HeaderComponent,
-    FooterComponent,
-    RouterLink,
-    RouterLinkActive
-  ],
+  imports: [HeaderComponent, FooterComponent, RouterLink, ReactiveFormsModule, FormsModule, NgForOf],
   templateUrl: './worker-list.html',
   styleUrl: './worker-list.css',
 })
-export class WorkerList implements OnInit {
-=======
-  imports: [HeaderComponent, FooterComponent, RouterLink, RouterLinkActive, ReactiveFormsModule, FormsModule, NgForOf],
-  templateUrl: './worker-list.html',
-  styleUrl: './worker-list.css',
-})
+
 export class WorkerList implements OnInit{
   workers: Worker[] = [];
   professions: Profession[] = [];
@@ -94,17 +76,5 @@ export class WorkerList implements OnInit{
     this.workerService.searchWorkers(this.filterModel).subscribe(data => {
       this.workers = data;
     })
-  }
-
->>>>>>> 4ffb7de46ebfe2f4d3b5b7555a096acc12e79cbd
-
-  workers: any[] = [];
-
-  constructor(private service: WorkerListService) {}
-
-  ngOnInit() {
-    this.service.getAllWorkers().subscribe(data => {
-      this.workers = data;
-    });
   }
 }

@@ -27,4 +27,5 @@ export class WorkerDetails implements OnInit {
       error: err => console.error('Error fetching worker:', err)
     });
   }
+
 }

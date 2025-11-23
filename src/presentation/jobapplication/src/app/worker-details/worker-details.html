@@ -1,87 +1,95 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+</head>
+<body>
+
 <app-header></app-header>
 
 <main class="profile-main">
   <div class="container profile-grid">
 
-    <!-- Show loading message if worker data is not yet loaded -->
-    <div *ngIf="!worker" class="loading-message">
-      <p>Waiting for connection to DB...</p>
-    </div>
-
-    <!-- Worker profile content -->
-    <section *ngIf="worker" class="profile-content">
+    <section class="profile-content">
 
       <article class="bio-section card-like">
         <div class="profile-intro">
           <div class="avatar">
-            <img *ngIf="worker.photo" [src]="worker.photo" alt="{{worker.firstName}} {{worker.lastName}}" class="avatar__img">
-            <div *ngIf="!worker.photo" class="avatar__img" aria-hidden="true"></div>
+            <div class="avatar__img" aria-hidden="true"></div>
           </div>
           <div>
-            <h1>{{worker.firstName}} {{worker.lastName}}</h1>
-            <p class="headline">
-              {{worker.professions.map(p => p.profession).join(', ')}}
-            </p>
-            <p class="location-profile">
-              {{worker.location?.name}} (Disponibël {{worker.availability?.availability}})
-            </p>
+            <h1>Anna Gjini</h1>
+            <p class="headline">Zhvilluese Full-Stack | Eksperte në React, Node.js & AWS</p>
+            <p class="location-profile">Prishtinë, Kosovë (Disponibël Globalisht)</p>
           </div>
         </div>
 
         <h2>Bio</h2>
-        <p class="long-description">{{worker.aboutYou}}</p>
+        <p class="long-description">I am a passionate Graphics Designer and Copywriter from Nigeria with over two years of hands-on experience creating compelling visual and written content. Proficient in Canva, I specialize in designing logos, brand identities, and marketing materials that help businesses stand out. My portfolio includes collaborations with small businesses in Nigeria as well as logo designs for gamers and entrepreneurs in the United States, showcasing my ability to adapt to diverse audiences and industries.</p>
+        <p class="long-description">Currently, my objective is to work with forward-thinking companies where I can contribute my creativity, sharpen my design and copywriting skills, and expand my knowledge in the ever-evolving graphics world. I am particularly interested in opportunities that allow me to combine visual storytelling with persuasive writing, helping brands communicate effectively and build strong connections with their target markets.</p>
+        <p class="long-description">With a strong foundation in design principles, attention to detail, and a drive for continuous learning, I am confident in my ability to deliver impactful results and grow alongside innovative teams.</p>
+
       </article>
+
 
     </section>
 
-    <!-- Sidebar with worker details -->
-    <aside *ngIf="worker" class="profile-sidebar card-like">
+    <aside class="profile-sidebar card-like">
       <div class="stat-group">
         <h5>Compensation</h5>
-        <p><strong>{{worker.compensation?.compensation}}</strong></p>
+        <p><strong>0-4/hr or 0-8.3k/year</strong></p>
       </div>
 
       <div class="stat-group">
         <h5>Professions</h5>
         <div class="skill-tags">
-          <span *ngFor="let p of worker.professions">{{p.profession}}</span>
+          <span>Design & Creative</span>
+          <span>Writing & Translation</span>
         </div>
       </div>
 
       <div class="stat-group">
         <h5>Skills</h5>
         <div class="skill-tags">
-          <span *ngFor="let s of worker.skills">{{s.skill}}</span>
+          <span>React</span>
+          <span>Node.js</span>
+          <span>JavaScript</span>
+          <span>HTML/CSS</span>
+          <span>Express</span>
         </div>
       </div>
 
       <div class="stat-group">
         <h5>Education</h5>
-        <p><strong>{{worker.education?.education}}</strong></p>
+        <p><strong>Secondary School</strong></p>
       </div>
 
       <div class="stat-group">
         <h5>Experience Level</h5>
-        <p><strong>{{worker.experience?.experience}}</strong></p>
+        <p><strong>Mid-Level</strong></p>
       </div>
 
       <div class="stat-group">
         <h5>Availability</h5>
         <div class="skill-tags">
-          <span>{{worker.availability?.availability}}</span>
+          <span>Remote</span>
         </div>
       </div>
 
       <div class="stat-group">
         <h5>Job Type</h5>
         <div class="skill-tags">
-          <span *ngFor="let j of worker.jobTypes">{{j.type}}</span>
+          <span>Part-Time</span>
         </div>
       </div>
 
     </aside>
-
   </div>
 </main>
 
 <app-footer></app-footer>
+
+</body>
+</html>

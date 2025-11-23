@@ -1,47 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
 <app-header></app-header>
 
 <main class="advanced-listing">
   <div class="container">
 
     <div class="filter-bar">
-      <!-- filters remain the same -->
-      <!-- ... -->
-    </div>
+      <div class="filter-row">
 
-<<<<<<< HEAD
-    <!-- DYNAMIKE: Shfaq punëtorët nga backend -->
-    <section class="results wide-layout">
-
-      <article class="worker-card advanced-card" *ngFor="let w of workers">
-
-        <div class="card-left">
-          <img 
-            [src]="w.photo ? 'http://localhost:8080/uploads/' + w.photo : 'assets/default.png'"
-            class="avatar large-avatar"
-            alt="Worker photo"
-          />
-
-          <div class="worker-details">
-            <h3>{{ w.firstName }} {{ w.lastName }}</h3>
-            <p class="role">
-              {{ w.professions?.length ? w.professions[0].profession : 'No profession' }}
-            </p>
-            <p class="location">{{ w.location?.name || 'Unknown location' }}</p>
+        <div class="chip chip--wide">
+          <i class="fas fa-suitcase chip__icon"></i>
+          <div class="chip__body">
+            <span class="chip__label">Category</span>
+            <select class="chip__field chip__select" [(ngModel)]="filterModel.professionId" name="profession">
+              <option [ngValue]="null" disabled hidden>Select category</option>
+              <option *ngFor="let p of professions" [value]="p.id">{{p.profession}}</option>
+            </select>
+            <i class="fas fa-chevron-down chip__chev" aria-hidden="true"></i>
           </div>
         </div>
 
-        <div class="card-right">
-          <p class="rate-label">Compensation</p>
-          <p class="rate-price">
-            <strong>{{ w.compensation?.compensation || 'N/A' }}</strong>/h
-          </p>
+        <div class="chip chip--comp">
+          <i class="fas fa-database chip__icon"></i>
+          <div class="chip__body">
+            <span class="chip__label">Compensation</span>
+            <select class="chip__field chip__select" [(ngModel)]="filterModel.compensationId" name="compensation">
+              <option [ngValue]="null" disabled hidden>$</option>
+              <option *ngFor="let c of compensations" [value]="c.id">{{c.compensation}}</option>
+            </select>
+            <i class="fas fa-chevron-down chip__chev" aria-hidden="true"></i>
+          </div>
+        </div>
 
-          <a 
-            [routerLink]="['/worker-details', w.id]" 
-            class="btn btn-primary"
-          >
-            View profile
-          </a>
+        <button class="btn-find" type="button" (click)="findWorkers()">
+          <i class="fas fa-search"></i> Find Workers
+        </button>
+      </div>
+
+      <div class="filter-row filter-row--sub">
+
+        <select class="chip chip--sub" [(ngModel)]="filterModel.jobTypeId" name="jobType">
+          <option [ngValue]="null" disabled hidden>Job Type</option>
+          <option *ngFor="let jt of jobTypes" [value]="jt.id">{{jt.jobType}}</option>
+        </select>
+
+        <select class="chip chip--sub" [(ngModel)]="filterModel.availabilityId" name="availability">
+          <option [ngValue]="null" disabled hidden>Availability</option>
+          <option *ngFor="let a of availabilities" [value]="a.id">{{a.availability}}</option>
+        </select>
+
+        <select class="chip chip--sub" [(ngModel)]="filterModel.experienceId" name="experience">
+          <option [ngValue]="null" disabled hidden>Experience</option>
+          <option *ngFor="let e of experiences" [value]="e.id">{{e.experience}}</option>
+        </select>
+
+        <select class="chip chip--sub" [(ngModel)]="filterModel.educationId" name="education">
+          <option [ngValue]="null" disabled hidden>Education</option>
+          <option *ngFor="let e of educations" [value]="e.id">{{e.education}}</option>
+        </select>
+
+        <select class="chip chip--sub" [(ngModel)]="filterModel.locationId" name="loaction">
+          <option [ngValue]="null" disabled hidden>Location</option>
+          <option *ngFor="let l of locations" [value]="l.id">{{l.name}}</option>
+        </select>
+      </div>
+    </div>
+
+    <section class="results wide-layout">
+      <article class="worker-card advanced-card">
+        <div class="card-left">
+          <img src="" alt="" class="avatar large-avatar">
+          <div class="worker-details">
+            <h3>Benson k.</h3>
+            <p class="role">Design &amp; Creative</p>
+            <p class="location">Lagos, Nigeria</p>
+
+          </div>
+        </div>
+        <div class="card-right">
+          <p class="rate-label">Compencation</p>
+          <p class="rate-price"><strong>$55</strong>/h</p>
+          <a routerLink="/worker-details" routerLinkActive="active" class="btn btn-primary">View profile</a>
         </div>
 
         <div class="details-grid">
@@ -49,66 +95,7 @@
             <i class="fas fa-clock"></i>
             <div>
               <div class="detail-title">Job Type</div>
-              <div class="detail-value">
-                {{ w.jobTypes?.length ? w.jobTypes[0].type : 'N/A' }}
-              </div>
-=======
-              <div class="chip chip--wide">
-                <i class="fas fa-suitcase chip__icon"></i>
-                <div class="chip__body">
-                  <span class="chip__label">Category</span>
-                  <select class="chip__field chip__select" [(ngModel)]="filterModel.professionId" name="profession">
-                    <option [ngValue]="null" disabled hidden>Select category</option>
-                    <option *ngFor="let p of professions" [value]="p.id">{{p.profession}}</option>
-                  </select>
-                  <i class="fas fa-chevron-down chip__chev" aria-hidden="true"></i>
-                </div>
-              </div>
-
-              <div class="chip chip--comp">
-                <i class="fas fa-database chip__icon"></i>
-                <div class="chip__body">
-                  <span class="chip__label">Compensation</span>
-                  <select class="chip__field chip__select" [(ngModel)]="filterModel.compensationId" name="compensation">
-                    <option [ngValue]="null" disabled hidden>$</option>
-                    <option *ngFor="let c of compensations" [value]="c.id">{{c.compensation}}</option>
-                  </select>
-                  <i class="fas fa-chevron-down chip__chev" aria-hidden="true"></i>
-                </div>
-              </div>
-
-              <button class="btn-find" type="button" (click)="findWorkers()">
-                <i class="fas fa-search"></i> Find Workers
-              </button>
-            </div>
-
-            <div class="filter-row filter-row--sub">
-
-              <select class="chip chip--sub" [(ngModel)]="filterModel.jobTypeId" name="jobType">
-                <option [ngValue]="null" disabled hidden>Job Type</option>
-                <option *ngFor="let jt of jobTypes" [value]="jt.id">{{jt.jobType}}</option>
-              </select>
-
-              <select class="chip chip--sub" [(ngModel)]="filterModel.availabilityId" name="availability">
-                <option [ngValue]="null" disabled hidden>Availability</option>
-                <option *ngFor="let a of availabilities" [value]="a.id">{{a.availability}}</option>
-              </select>
-
-              <select class="chip chip--sub" [(ngModel)]="filterModel.experienceId" name="experience">
-                <option [ngValue]="null" disabled hidden>Experience</option>
-                <option *ngFor="let e of experiences" [value]="e.id">{{e.experience}}</option>
-              </select>
-
-              <select class="chip chip--sub" [(ngModel)]="filterModel.educationId" name="education">
-                <option [ngValue]="null" disabled hidden>Education</option>
-                <option *ngFor="let e of educations" [value]="e.id">{{e.education}}</option>
-              </select>
-
-              <select class="chip chip--sub" [(ngModel)]="filterModel.locationId" name="loaction">
-                <option [ngValue]="null" disabled hidden>Location</option>
-                <option *ngFor="let l of locations" [value]="l.id">{{l.name}}</option>
-              </select>
->>>>>>> 4ffb7de46ebfe2f4d3b5b7555a096acc12e79cbd
+              <div class="detail-value">Full-Time</div>
             </div>
           </div>
 
@@ -116,9 +103,7 @@
             <i class="fas fa-globe"></i>
             <div>
               <div class="detail-title">Availability</div>
-              <div class="detail-value">
-                {{ w.availability?.availability || 'N/A' }}
-              </div>
+              <div class="detail-value">Remote: Global</div>
             </div>
           </div>
 
@@ -126,9 +111,7 @@
             <i class="fas fa-graduation-cap"></i>
             <div>
               <div class="detail-title">Education</div>
-              <div class="detail-value">
-                {{ w.education?.education || 'N/A' }}
-              </div>
+              <div class="detail-value">Bachelor</div>
             </div>
           </div>
 
@@ -136,18 +119,16 @@
             <i class="fas fa-level-up-alt"></i>
             <div>
               <div class="detail-title">Experience</div>
-              <div class="detail-value">
-                {{ w.experience?.experience || 'N/A' }}
-              </div>
+              <div class="detail-value">Mid-Level</div>
             </div>
           </div>
         </div>
-
       </article>
-
     </section>
 
   </div>
 </main>
-
 <app-footer></app-footer>
+
+</body>
+</html>

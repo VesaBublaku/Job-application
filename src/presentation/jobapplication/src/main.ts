@@ -15,7 +15,6 @@ bootstrapApplication(AppComponent, {
         anchorScrolling: 'enabled'
       })
     ),
-    importProvidersFrom(HttpClientModule)
-    ]
+    importProvidersFrom(HttpClientModule)]
 }).catch(err => console.error(err));
 

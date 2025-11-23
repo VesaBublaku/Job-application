@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-// Interface për strukturën e punonjësit
+
 export interface Location { id: number; name: string; }
 export interface Education { id: number; education: string; }
 export interface Experience { id: number; experience: string; }
