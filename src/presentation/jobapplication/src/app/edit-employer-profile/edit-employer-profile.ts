@@ -71,20 +71,25 @@ export class EditEmployerProfile implements OnInit {
   }
 
   saveChanges() {
+    const cleanEmployer = { ...this.employer };
+    delete cleanEmployer.password;
+
     const formData = new FormData();
-    formData.append('employer', new Blob([JSON.stringify(this.employer)], { type: 'application/json' }));
+    formData.append('employer', new Blob([JSON.stringify(cleanEmployer)], { type: 'application/json' }));
 
     if (this.selectedLogo) {
       formData.append('logo', this.selectedLogo, this.selectedLogo.name);
     }
 
-    this.http.put(`http://localhost:8080/employers/update/${this.employer.id}`, formData, { withCredentials: true }).subscribe({
-      next: () => {
-        alert('Profile updated successfully!');
-        this.router.navigate(['/employer-profile']);
-      },
-      error: err => console.error('Update failed', err)
-    });
+    this.http.put(`http://localhost:8080/employers/update/${this.employer.id}`, formData, { withCredentials: true })
+      .subscribe({
+        next: (updatedEmployer: any) => {
+          this.authService.setUser(updatedEmployer);
+          alert('Profile updated successfully!');
+          this.router.navigate(['/employer-profile']);
+        },
+        error: err => console.error('Update failed', err)
+      });
   }
 
   loadEmployer() {

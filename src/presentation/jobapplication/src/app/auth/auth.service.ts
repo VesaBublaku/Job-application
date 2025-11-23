@@ -27,4 +27,9 @@ export class AuthService {
   isLoggedIn(): boolean {
     return !!this.getUser();
   }
+
+  getWorkerId(): number | null {
+    const worker = JSON.parse(localStorage.getItem('worker') || 'null');
+    return worker?.id ?? null;
+  }
 }

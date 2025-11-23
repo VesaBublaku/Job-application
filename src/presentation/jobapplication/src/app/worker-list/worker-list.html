@@ -9,182 +9,127 @@
 
 <app-header></app-header>
 
-    <main class="advanced-listing">
-        <div class="container">
+<main class="advanced-listing">
+  <div class="container">
 
-          <div class="filter-bar">
-            <div class="filter-row">
+    <div class="filter-bar">
+      <div class="filter-row">
 
-              <div class="chip chip--wide">
-                <i class="fas fa-suitcase chip__icon"></i>
-                <div class="chip__body">
-                  <span class="chip__label">Category</span>
-                  <select class="chip__field chip__select">
-                    <option value="">Select category</option>
-                    <option>Software</option>
-                    <option>Design</option>
-                    <option>Marketing</option>
-                  </select>
-                  <i class="fas fa-chevron-down chip__chev" aria-hidden="true"></i>
-                </div>
-              </div>
+        <div class="chip chip--wide">
+          <i class="fas fa-suitcase chip__icon"></i>
+          <div class="chip__body">
+            <span class="chip__label">Category</span>
+            <select class="chip__field chip__select" [(ngModel)]="filterModel.professionId" name="profession">
+              <option [ngValue]="null" disabled hidden>Select category</option>
+              <option *ngFor="let p of professions" [value]="p.id">{{p.profession}}</option>
+            </select>
+            <i class="fas fa-chevron-down chip__chev" aria-hidden="true"></i>
+          </div>
+        </div>
 
-              <div class="chip chip--comp">
-                <i class="fas fa-database chip__icon"></i>
-                <div class="chip__body">
-                  <span class="chip__label">Compensation</span>
-                  <div class="chip__comp">
-                    <input class="chip__field" type="number" min="0" placeholder="Select compensation" />
-                    <div class="unit-toggle" role="tablist" aria-label="Compensation unit">
-                      <span class="unit-toggle__swap" aria-hidden="true"></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+        <div class="chip chip--comp">
+          <i class="fas fa-database chip__icon"></i>
+          <div class="chip__body">
+            <span class="chip__label">Compensation</span>
+            <select class="chip__field chip__select" [(ngModel)]="filterModel.compensationId" name="compensation">
+              <option [ngValue]="null" disabled hidden>$</option>
+              <option *ngFor="let c of compensations" [value]="c.id">{{c.compensation}}</option>
+            </select>
+            <i class="fas fa-chevron-down chip__chev" aria-hidden="true"></i>
+          </div>
+        </div>
 
-              <button class="btn-find" type="button">
-                <i class="fas fa-search"></i> Find Workers
-              </button>
-            </div>
+        <button class="btn-find" type="button" (click)="findWorkers()">
+          <i class="fas fa-search"></i> Find Workers
+        </button>
+      </div>
 
-            <div class="filter-row filter-row--sub">
+      <div class="filter-row filter-row--sub">
 
-              <button class="chip chip--sub" type="button">
-                <span class="chip__subtext">Job Type</span>
-                <i class="fas fa-chevron-down" aria-hidden="true"></i>
-              </button>
+        <select class="chip chip--sub" [(ngModel)]="filterModel.jobTypeId" name="jobType">
+          <option [ngValue]="null" disabled hidden>Job Type</option>
+          <option *ngFor="let jt of jobTypes" [value]="jt.id">{{jt.jobType}}</option>
+        </select>
 
-              <button class="chip chip--sub" type="button">
-                <span class="chip__subtext">Availability</span>
-                <i class="fas fa-chevron-down" aria-hidden="true"></i>
-              </button>
+        <select class="chip chip--sub" [(ngModel)]="filterModel.availabilityId" name="availability">
+          <option [ngValue]="null" disabled hidden>Availability</option>
+          <option *ngFor="let a of availabilities" [value]="a.id">{{a.availability}}</option>
+        </select>
 
-              <button class="chip chip--sub" type="button">
-                <span class="chip__subtext">Experience</span>
-                <i class="fas fa-chevron-down" aria-hidden="true"></i>
-              </button>
+        <select class="chip chip--sub" [(ngModel)]="filterModel.experienceId" name="experience">
+          <option [ngValue]="null" disabled hidden>Experience</option>
+          <option *ngFor="let e of experiences" [value]="e.id">{{e.experience}}</option>
+        </select>
 
-              <button class="chip chip--sub" type="button">
-                <span class="chip__subtext">Education</span>
-                <i class="fas fa-chevron-down" aria-hidden="true"></i>
-              </button>
+        <select class="chip chip--sub" [(ngModel)]="filterModel.educationId" name="education">
+          <option [ngValue]="null" disabled hidden>Education</option>
+          <option *ngFor="let e of educations" [value]="e.id">{{e.education}}</option>
+        </select>
 
-              <button class="chip chip--sub" type="button">
-                <span class="chip__subtext">Location</span>
-                <i class="fas fa-chevron-down" aria-hidden="true"></i>
-              </button>
+        <select class="chip chip--sub" [(ngModel)]="filterModel.locationId" name="loaction">
+          <option [ngValue]="null" disabled hidden>Location</option>
+          <option *ngFor="let l of locations" [value]="l.id">{{l.name}}</option>
+        </select>
+      </div>
+    </div>
+
+    <section class="results wide-layout">
+      <article class="worker-card advanced-card">
+        <div class="card-left">
+          <img src="" alt="" class="avatar large-avatar">
+          <div class="worker-details">
+            <h3>Benson k.</h3>
+            <p class="role">Design &amp; Creative</p>
+            <p class="location">Lagos, Nigeria</p>
+
+          </div>
+        </div>
+        <div class="card-right">
+          <p class="rate-label">Compencation</p>
+          <p class="rate-price"><strong>$55</strong>/h</p>
+          <a routerLink="/worker-details" routerLinkActive="active" class="btn btn-primary">View profile</a>
+        </div>
+
+        <div class="details-grid">
+          <div class="detail-item">
+            <i class="fas fa-clock"></i>
+            <div>
+              <div class="detail-title">Job Type</div>
+              <div class="detail-value">Full-Time</div>
             </div>
           </div>
 
-            <section class="results wide-layout">
-                <article class="worker-card advanced-card">
-                    <div class="card-left">
-                        <img src="" alt="" class="avatar large-avatar">
-                        <div class="worker-details">
-                            <h3>Benson k.</h3>
-                            <p class="role">Design &amp; Creative</p>
-                            <p class="location">Lagos, Nigeria</p>
+          <div class="detail-item">
+            <i class="fas fa-globe"></i>
+            <div>
+              <div class="detail-title">Availability</div>
+              <div class="detail-value">Remote: Global</div>
+            </div>
+          </div>
 
-                        </div>
-                    </div>
-                    <div class="card-right">
-                            <p class="rate-label">Compencation</p>
-                            <p class="rate-price"><strong>$55</strong>/h</p>
-                        <a routerLink="/worker-details" routerLinkActive="active" class="btn btn-primary">View profile</a>
-                    </div>
+          <div class="detail-item">
+            <i class="fas fa-graduation-cap"></i>
+            <div>
+              <div class="detail-title">Education</div>
+              <div class="detail-value">Bachelor</div>
+            </div>
+          </div>
 
-                  <div class="details-grid">
-                    <div class="detail-item">
-                      <i class="fas fa-clock"></i>
-                      <div>
-                        <div class="detail-title">Job Type</div>
-                        <div class="detail-value">Full-Time</div>
-                      </div>
-                    </div>
-
-                    <div class="detail-item">
-                      <i class="fas fa-globe"></i>
-                      <div>
-                        <div class="detail-title">Availability</div>
-                        <div class="detail-value">Remote: Global</div>
-                      </div>
-                    </div>
-
-                    <div class="detail-item">
-                      <i class="fas fa-graduation-cap"></i>
-                      <div>
-                        <div class="detail-title">Education</div>
-                        <div class="detail-value">Bachelor</div>
-                      </div>
-                    </div>
-
-                    <div class="detail-item">
-                      <i class="fas fa-level-up-alt"></i>
-                      <div>
-                        <div class="detail-title">Experience</div>
-                        <div class="detail-value">Mid-Level</div>
-                      </div>
-                    </div>
-                  </div>
-                </article>
-            </section>
-
-
-              <section class="results wide-layout">
-                <article class="worker-card advanced-card">
-                  <div class="card-left">
-                    <img src="" alt="" class="avatar large-avatar">
-                    <div class="worker-details">
-                      <h3>Sambit D.</h3>
-                      <p class="role">Sales &amp; Marketing</p>
-                      <p class="location">Bengaluru, India</p>
-
-                    </div>
-                  </div>
-                  <div class="card-right">
-                    <p class="rate-label">Compencation</p>
-                    <p class="rate-price"><strong>$78</strong>/h</p>
-                    <a routerLink="/worker-details" routerLinkActive="active" class="btn btn-primary">View profile</a>
-                  </div>
-
-                  <div class="details-grid">
-                    <div class="detail-item">
-                      <i class="fas fa-clock"></i>
-                      <div>
-                        <div class="detail-title">Job Type</div>
-                        <div class="detail-value">Full-Time</div>
-                      </div>
-                    </div>
-
-                    <div class="detail-item">
-                      <i class="fas fa-globe"></i>
-                      <div>
-                        <div class="detail-title">Availability</div>
-                        <div class="detail-value">Remote: Global</div>
-                      </div>
-                    </div>
-
-                    <div class="detail-item">
-                      <i class="fas fa-graduation-cap"></i>
-                      <div>
-                        <div class="detail-title">Education</div>
-                        <div class="detail-value">Professional Degree / PhD</div>
-                      </div>
-                    </div>
-
-                    <div class="detail-item">
-                      <i class="fas fa-level-up-alt"></i>
-                      <div>
-                        <div class="detail-title">Experience</div>
-                        <div class="detail-value">Mid-Level</div>
-                      </div>
-                    </div>
-                  </div>
-                </article>
-            </section>
+          <div class="detail-item">
+            <i class="fas fa-level-up-alt"></i>
+            <div>
+              <div class="detail-title">Experience</div>
+              <div class="detail-value">Mid-Level</div>
+            </div>
+          </div>
         </div>
-    </main>
+      </article>
+    </section>
+
+  </div>
+</main>
 <app-footer></app-footer>
 
 </body>
 </html>
+

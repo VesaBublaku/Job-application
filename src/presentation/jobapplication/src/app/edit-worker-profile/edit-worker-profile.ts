@@ -199,14 +199,15 @@ export class EditWorkerProfile implements OnInit {
 
     this.http.put(`http://localhost:8080/worker/update/${this.worker.id}`, formData)
       .subscribe({
-        next: () => {
+        next: (updatedWorker: any) => {
+          this.authService.setUser(updatedWorker);
           alert("Profile updated successfully!");
           this.router.navigate(['/worker-profile']);
         },
         error: (err) => console.error("Update failed", err)
       });
-
   }
+
 
   loadWorker() {
     const workerId = localStorage.getItem('workerId');

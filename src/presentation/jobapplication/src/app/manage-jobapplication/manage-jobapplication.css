@@ -116,9 +116,11 @@ body{
   overflow:hidden;
 }
 .logo img{
-  max-width:85%;
-  max-height:85%;
-  object-fit:contain;
+  width:96px;
+  height:96px;
+  border-radius: 12px;
+  background:linear-gradient(180deg,#f1f5fb,#e7edf6);
+  border:1px solid var(--border);
 }
 
 .titleline{

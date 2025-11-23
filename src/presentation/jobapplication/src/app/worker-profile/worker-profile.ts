@@ -48,7 +48,20 @@ export class WorkerProfile implements OnInit {
               private authService:AuthService) {}
 
   ngOnInit(): void {
-    this.worker = this.authService.getUser();
+    const workerId = this.authService.getUser()?.id;
+    if (!workerId) return;
+
+    this.workerService.getWorkerById(workerId).subscribe({
+      next: (w) => {
+        this.worker = {
+          ...w,
+          professions: w.professions || [],
+          skills: w.skills || [],
+          jobTypes: w.jobTypes || []
+        };
+      },
+      error: (err) => console.error('Failed to load worker', err)
+    });
   }
 
   loadWorker(): void {

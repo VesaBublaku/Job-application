@@ -2,6 +2,7 @@ import { Profession } from '../profession/profession.service';
 import { JobType } from '../jobType/jobType.service';
 import { Skill } from '../worker-profile/worker-profile';
 import { JobApplication } from '../job-application/job-application';
+import {Skills} from '../skills/skills.service';
 
 export interface Worker {
   id: number;
@@ -13,17 +14,16 @@ export interface Worker {
   email: string;
   password: string;
 
-  location: { id: number; name: string; };
+  location: { id: number; name: string } | null;
 
-  profession: Profession[];
-
-  education: { id: number; education: string; };
-  experience: { id: number; experience: string; };
+  professions: Profession[];
+  education: { id: number; education: string } | null;
+  experience: { id: number; experience: string } | null;
   jobTypes: JobType[];
-  skills: Skill[];
+  skills: Skills[];
 
-  compensation: { id: number; compensation: string; };
-  availability: { id: number; availability: string; };
+  compensation: { id: number; compensation: string } | null;
+  availability: { id: number; availability: string } | null;
 
   applications: JobApplication[];
 }

@@ -29,12 +29,18 @@ export class HeaderComponent implements OnInit {
 
   userPhotoUrl(): string {
     const user = this.authService.getUser();
-    return user?.photo ? `http://localhost:8080/uploads/${user.photo}` : 'assets/default-avatar.png';
+    if (!user) return 'http://localhost:8080/uploads/default-avatar.jpg';
+
+    const photo = user.photo || user.companyLogo;
+
+    return photo
+      ? `http://localhost:8080/uploads/${encodeURIComponent(photo)}`
+      : 'http://localhost:8080/uploads/default-avatar.jpg';
   }
 
   goToProfile() {
     const user = this.authService.getUser();
-    if (!user) return; // safety check
+    if (!user) return;
     if (user.role === 'worker') this.router.navigate(['/worker-profile']);
     else if (user.role === 'employer') this.router.navigate(['/employer-profile']);
   }

@@ -47,7 +47,7 @@ export class Login {
         }
 
         this.router.navigate([
-          this.userType === "employer" ? '/employer-dashboard' : '/worker-dashboard'
+          this.userType === "employer" ? '/employer-profile' : '/worker-profile'
         ]);
       }
     });
