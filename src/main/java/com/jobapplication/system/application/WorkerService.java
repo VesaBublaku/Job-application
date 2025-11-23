@@ -174,4 +174,16 @@ public class WorkerService {
             throw new RuntimeException("Failed to save photo", e);
         }
     }
+
+    public List<Worker> searchWorkers(
+            Long professionId,
+            Long compensationId,
+            Long jobTypeId,
+            Long availabilityId,
+            Long experienceId,
+            Long educationId,
+            Long locationId
+    ) {
+        return workerRepo.searchWorkers(professionId, compensationId, jobTypeId, availabilityId, experienceId, educationId, locationId);
+    }
 }

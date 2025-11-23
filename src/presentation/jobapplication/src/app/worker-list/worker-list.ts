@@ -59,7 +59,11 @@ export class WorkerList implements OnInit{
   loadAllWorkers() {
     this.workerService.findAll().subscribe(data => {
       this.workers = data;
+<<<<<<< HEAD
     });
+=======
+      });
+>>>>>>> 2094fe7ba4ea7e564a7f24fba8b756fb0247a328
   }
 
   loadFilterOptions() {
