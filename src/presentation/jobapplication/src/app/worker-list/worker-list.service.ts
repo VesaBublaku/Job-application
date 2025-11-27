@@ -1,26 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
-
-export interface Worker {
-  id?: number;
-  firstName: string;
-  lastName: string;
-  photo?: string;
-  aboutYou?: string;
-  email: string;
-  password?: string;
-  dateOfBirth?: string;
-
-  location?: any;
-  education?: any;
-  experience?: any;
-  compensation?: any;
-  availability?: any;
-  professions?: any[];
-  jobTypes?: any[];
-  skills?: any[];
-}
+import {Worker} from './worker';
 
 export interface WorkerDTO {
   firstName: string;
@@ -93,5 +74,9 @@ export class WorkerListService {
     });
 
     return this.http.get<Worker[]>(`${this.apiBaseUrl}/search`, { params });
+  }
+
+  getHighlightedWorkers(): Observable<Worker[]> {
+    return this.http.get<Worker[]>(`${this.apiBaseUrl}/highlighted`);
   }
 }

@@ -55,4 +55,8 @@ export class JobListService {
 
     return this.http.get<Employer[]>(`${this.apibaseUrl}/search`, {params});
   }
+
+  getRecentJobs(): Observable<Employer[]> {
+    return this.http.get<Employer[]>(`${this.apibaseUrl}/recent`);
+  }
 }

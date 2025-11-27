@@ -39,43 +39,13 @@
     <h3 id="recent-jobs-title" class="section__title">Recent <span class="pill pill--blue">Job Listings</span></h3>
 
     <div class="cards scroller" role="list">
-      <article class="card" role="listitem">
+      <article class="card" *ngFor="let job of recentJobs">
         <header class="card__header">
-          <span class="chip chip--blue">Admin &amp; Virtual Assistant</span>
+          <span class="chip chip--blue">{{ job.industry?.name }}</span>
         </header>
         <div class="card__body">
-          <h4 class="card__title">Commercial Administrator</h4>
-          <p class="card__meta">9 hours ago</p>
-        </div>
-      </article>
-
-      <article class="card" role="listitem">
-        <header class="card__header">
-          <span class="chip chip--blue">Customer Service &amp; Support</span>
-        </header>
-        <div class="card__body">
-          <h4 class="card__title">Mobile Branch Colleague</h4>
-          <p class="card__meta">9 hours ago</p>
-        </div>
-      </article>
-
-      <article class="card" role="listitem">
-        <header class="card__header">
-          <span class="chip chip--blue">Finance &amp; Accounting</span>
-        </header>
-        <div class="card__body">
-          <h4 class="card__title">Controller</h4>
-          <p class="card__meta">9 hours ago</p>
-        </div>
-      </article>
-
-      <article class="card" role="listitem">
-        <header class="card__header">
-          <span class="chip chip--blue">Information Technology (IT)</span>
-        </header>
-        <div class="card__body">
-          <h4 class="card__title">Senior DevOps Engineer</h4>
-          <p class="card__meta">9 hours ago</p>
+          <h4 class="card__title">{{job.companyName}}</h4>
+          <p class="card__meta">{{job.availability?.availability}}</p>
         </div>
       </article>
     </div>
@@ -119,57 +89,19 @@
     <h3 id="workers-title" class="section__title">Highlighted <span class="pill pill--yellow">Job Candidates</span></h3>
 
     <div class="cards cards--workers scroller" role="list">
-      <article class="worker-card" role="listitem">
+      <article class="worker-card" *ngFor="let w of highlightedWorkers">
         <div class="worker-card__top">
-          <img class="avatar" src="https://i.pravatar.cc/120?img=11" alt="Profile photo of Gabriel J." />
+          <img class="avatar" [src]=" 'https://localhost:8080/uploads/' + w.photo" alt="Profile photo" />
           <div>
-            <h4 class="worker-card__name">Gabriel J.</h4>
-            <p class="worker-card__loc">Costa Rica, San José</p>
+            <h4 class="worker-card__name">{{w.firstName}} {{w.lastName}}</h4>
+            <p class="worker-card__loc">{{w.location?.name}}</p>
           </div>
         </div>
         <div class="worker-card__skills">
-          <span class="tag">Finance &amp; AccountingNo skills listed.</span>
+          <span class="tag">{{w.professions?.[0]?.profession || 'No skills listed'}}</span>
         </div>
       </article>
 
-      <article class="worker-card" role="listitem">
-        <div class="worker-card__top">
-          <img class="avatar" src="https://i.pravatar.cc/120?img=32" alt="Profile photo of Barbara G." />
-          <div>
-            <h4 class="worker-card__name">Barbara G.</h4>
-            <p class="worker-card__loc">Argentina, Buenos Aires</p>
-          </div>
-        </div>
-        <div class="worker-card__skills">
-          <span class="tag">Customer Service &amp; Support</span>
-        </div>
-      </article>
-
-      <article class="worker-card" role="listitem">
-        <div class="worker-card__top">
-          <img class="avatar" src="https://i.pravatar.cc/120?img=15" alt="Profile photo of Josephine M." />
-          <div>
-            <h4 class="worker-card__name">Josephine M.</h4>
-            <p class="worker-card__loc">Kenya, Nairobi</p>
-          </div>
-        </div>
-        <div class="worker-card__skills">
-          <span class="tag">Content Creation for Social Networks</span>
-        </div>
-      </article>
-
-      <article class="worker-card" role="listitem">
-        <div class="worker-card__top">
-          <img class="avatar" src="https://i.pravatar.cc/120?img=41" alt="Profile photo of Octavia D." />
-          <div>
-            <h4 class="worker-card__name">Octavia D.</h4>
-            <p class="worker-card__loc">Romania, Zărnești</p>
-          </div>
-        </div>
-        <div class="worker-card__skills">
-          <span class="tag">Article Writing</span>
-        </div>
-      </article>
     </div>
 
     <div class="center">

@@ -197,6 +197,6 @@ public class WorkerResource {
 
     @GetMapping("/highlighted")
     public List<Worker> getHighlightedWorkers() {
-        return workerRepo.findTop4ByOrderByCreatedAtDesc();
+        return workerRepo.findTop4ByOrderByIdDesc();
     }
 }

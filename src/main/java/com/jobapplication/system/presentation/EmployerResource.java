@@ -111,7 +111,7 @@ public class EmployerResource {
 
     @GetMapping("/recent")
     public List<Employer> getRecentEmployers() {
-        return employerRepo.findTop4ByOrderByCreatedAtDesc();
+        return employerRepo.findTop4ByOrderByIdDesc();
     }
 }
 
