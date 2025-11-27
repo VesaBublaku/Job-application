@@ -156,8 +156,7 @@
           <label class="label" for="email">Email<span class="req">*</span></label>
           <div class="input-append">
             <input id="email" type="text" class="input" placeholder="Email"
-                   name="email" [(ngModel)]="employerModel.email"
-                   [ngModelOptions]="{standalone: true}" required>
+                   name="email" [(ngModel)]="employerModel.email" required>
           </div>
         </div>
 
@@ -165,8 +164,7 @@
           <label class="label" for="password">Password<span class="req">*</span></label>
           <div class="input-append">
             <input id="password" type="password" class="input" placeholder="Password"
-                   name="password" [(ngModel)]="employerModel.password"
-                   [ngModelOptions]="{standalone: true}" required>
+                   name="password" [(ngModel)]="employerModel.password" required>
           </div>
         </div>
 
@@ -174,7 +172,7 @@
 
       <div class="form__actions">
         <a class="btn btn--ghost" (click)="prevStep()">Back to previous step </a>
-        <button class="btn btn--primary" type="button" (click)="submitEmployer()">Sign Up</button>
+        <button class="btn btn--primary" type="button" (click)="nextStep()">Sign Up</button>
       </div>
     </div>
   </form>

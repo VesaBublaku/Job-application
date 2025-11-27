@@ -148,8 +148,20 @@ export class SignupEmployer implements OnInit {
     }
 
     if (this.currentStep === 1) {
-      if (!this.employerModel.email) missing.push('Email');
-      if (!this.employerModel.password) missing.push('Password');
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const passwordPattern = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\];:,.<>\/?]).{10,}$/;
+
+      if (!this.employerModel.email) {
+        missing.push("Email is required");
+      } else if (!emailPattern.test(this.employerModel.email)) {
+        missing.push("Email is not valid");
+      }
+
+      if (!this.employerModel.password) {
+        missing.push("Password is required");
+      } else if (!passwordPattern.test(this.employerModel.password)) {
+        missing.push("Password is not strong enough (10+ chars, 1 uppercase, 1 special char)");
+      }
     }
 
     if (missing.length) {

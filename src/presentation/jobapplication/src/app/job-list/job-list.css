@@ -37,7 +37,7 @@ a {
 }
 
 .filter-bar {
-  background-color: #1aa3ff;
+  background-color:#4aa0e6;
   width: 100vw;
   position: relative;
   left: 50%;
@@ -356,7 +356,7 @@ a {
 }
 
 .btn-view-details {
-  background-color: #1aa3ff;
+  background-color: #4aa0e6;
   color: white;
   padding: 10px 16px;
   font-weight: 600;

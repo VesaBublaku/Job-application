@@ -38,16 +38,16 @@
 
       <div class="grid">
         <div class="field">
-          <label class="label" for="first">First Name <span class="req">*</span></label>
+          <label class="label" for="firstName">First Name <span class="req">*</span></label>
           <div class="input-append">
-            <input id="first" type="text" class="input" placeholder="Your first name" name="first" [(ngModel)]="workerData.firstName" required>
+            <input id="firstName" type="text" class="input" placeholder="Your first name" name="firstName" [(ngModel)]="workerData.firstName" required>
           </div>
         </div>
 
         <div class="field">
-          <label class="label" for="last">Last Name <span class="req">*</span></label>
+          <label class="label" for="lastName">Last Name <span class="req">*</span></label>
           <div class="input-append">
-            <input id="last" type="text" class="input" placeholder="Your last name" name="last" [(ngModel)]="workerData.lastName" required >
+            <input id="lastName" type="text" class="input" placeholder="Your last name" name="lastName" [(ngModel)]="workerData.lastName" required >
           </div>
         </div>
 
@@ -225,7 +225,7 @@
           <label class="label" for="availability">Availability<span class="req">*</span></label>
           <div class="input-append">
             <select id="availability" class="input select" name="availability" [(ngModel)]="workerData.availabilityId" required>
-              <option *ngFor="let availability of availability" [value]="availability.id">{{ availability.availability }}</option>
+              <option *ngFor="let avail of availability" [value]="avail.id">{{ avail.availability }}</option>
             </select>
           </div>
         </div>
@@ -255,9 +255,9 @@
         <div class="field field--full">
           <label class="label" for="email">Email<span class="req">*</span></label>
           <div class="input-append">
-            <input id="email" type="text" class="input" placeholder="Email"
+            <input id="email" type="email" class="input" placeholder="Email"
                    name="email" [(ngModel)]="workerData.email"
-                   [ngModelOptions]="{standalone: true}" required>
+                   pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" required>
           </div>
         </div>
 
@@ -265,8 +265,8 @@
           <label class="label" for="password">Password<span class="req">*</span></label>
           <div class="input-append">
             <input id="password" type="password" class="input" placeholder="Password"
-                   name="email" [(ngModel)]="workerData.password"
-                   [ngModelOptions]="{standalone: true}" required>
+                   name="password" [(ngModel)]="workerData.password"
+                   pattern="(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\];:,.<>\/?]).*" required>
           </div>
         </div>
       </div>

@@ -256,16 +256,19 @@ export class Signup implements OnInit {
   private validateStep2(form?: NgForm): boolean {
     const missing: string[] = [];
 
-    if (!this.workerData.email?.trim()) missing.push("Email");
-    if (!this.workerData.password?.trim()) missing.push("Password");
+    const emailCtrl = form?.controls['email'];
+    const passwordCtrl = form?.controls['password'];
 
-    if (form) {
-      if (form.controls['email']?.invalid) missing.push("Valid email");
-      if (form.controls['password']?.invalid) missing.push("Valid password");
+    if (emailCtrl?.invalid) {
+      missing.push("Email is not valid");
     }
 
-    if (missing.length) {
-      alert("Please complete:\n• " + missing.join("\n• "));
+    if (passwordCtrl?.invalid) {
+      missing.push("Password is not strong enough (10+ chars, 1 uppercase, 1 special char)");
+    }
+
+    if (missing.length > 0) {
+      alert("Please fix:\n• " + missing.join("\n• "));
       return false;
     }
     return true;
@@ -299,8 +302,7 @@ export class Signup implements OnInit {
   }
 
   signUp(form:NgForm) {
-    if (form.invalid) {
-      alert("Please fill in all required fields before signing up.");
+    if (!this.validateStep2(form)) {
       return;
     }
     const formData = new FormData();
