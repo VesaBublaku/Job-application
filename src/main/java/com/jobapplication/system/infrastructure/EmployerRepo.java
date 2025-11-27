@@ -29,4 +29,6 @@ public interface EmployerRepo extends JpaRepository<Employer, Long> {
             Long experienceId,
             Long locationId
     );
+
+    List<Employer> findTop4ByOrderByCreatedAtDesc();
 }

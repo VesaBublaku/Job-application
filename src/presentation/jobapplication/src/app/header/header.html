@@ -1,30 +1,36 @@
 <header class="site-header">
   <div class="container header">
-    <a class="brand" href="">
-      <span class="logo">JA</span>
-      <span class="brandName">JopApplication</span>
-    </a>
+
+    <div class="header-left">
+      <a class="brand" href="">
+        <span class="logo">JA</span>
+        <span class="brandName">JopApplication</span>
+      </a>
+    </div>
+
 
     <nav class="main-nav" aria-label="Primary">
       <a routerLink="/job-list" routerLinkActive="active">Find Work</a>
       <a routerLink="/worker-list" routerLinkActive="active">Find Worker</a>
       <a routerLink="/about-us" routerLinkActive="active">About Us</a>
-      <a routerLink="/employer-dashboard" routerLinkActive="active">Employer dashboard</a>
-      <a routerLink="/worker-dashboard" routerLinkActive="active">Worker dashboard</a>
-      <a routerLink="/worker-profile" routerLinkActive="active">Profile</a>
-      <a routerLink="/employer-profile" routerLinkActive="active">Employer Profile</a>
-      <a routerLink="/manage-jobapplication" routerLinkActive="active">Manage job application</a>
+
+      <a *ngIf="isEmployer()" routerLink="/employer-dashboard" routerLinkActive="active">Applications</a>
+      <a *ngIf="isEmployer()" routerLink="/manage-jobapplication" routerLinkActive="active">Dashboard</a>
+
+      <a *ngIf="isWorker()" routerLink="/worker-dashboard" routerLinkActive="active">Applications</a>
     </nav>
 
-    <div *ngIf="isLoggedIn()" class="avatar-circle" (click)="goToProfile()">
-      <img [src]="userPhotoUrl()" alt="User Photo">
-    </div>`
+    <div class="header-right">
+      <div *ngIf="isLoggedIn()" class="avatar-circle" (click)="goToProfile()">
+        <img [src]="userPhotoUrl()" alt="User Photo">
+      </div>`
 
-    <a *ngIf="!isLoggedIn()" class="btn btn--small btn--outline" routerLink="/login">Sign In</a>
+      <a *ngIf="!isLoggedIn()" class="btn btn--small btn--outline" routerLink="/login">Sign In</a>
 
-    <button *ngIf="isLoggedIn()" (click)="logout()" class="btn btn--small btn--outline">
-      Logout
-    </button>
+      <button *ngIf="isLoggedIn()" (click)="logout()" class="btn btn--small btn--outline">Logout</button>
+
+    </div>
+
   </div>
 
 </header>

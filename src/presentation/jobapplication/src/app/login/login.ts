@@ -46,9 +46,7 @@ export class Login {
           localStorage.setItem('workerId', response.id.toString());
         }
 
-        this.router.navigate([
-          this.userType === "employer" ? '/employer-profile' : '/worker-profile'
-        ]);
+        this.router.navigate(['/home']);
       }
     });
   }

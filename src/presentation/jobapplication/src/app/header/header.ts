@@ -27,6 +27,16 @@ export class HeaderComponent implements OnInit {
     return this.loggedIn;
   }
 
+  isEmployer(): boolean {
+    const user = this.authService.getUser();
+    return user?.role === 'employer';
+  }
+
+  isWorker(): boolean {
+    const user = this.authService.getUser();
+    return user?.role === 'worker';
+  }
+
   userPhotoUrl(): string {
     const user = this.authService.getUser();
     if (!user) return 'http://localhost:8080/uploads/default-avatar.jpg';
@@ -49,7 +59,7 @@ export class HeaderComponent implements OnInit {
     this.authService.clearUser();
     localStorage.removeItem('workerId');
     localStorage.removeItem('employerId');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/home']);
   }
 
 }

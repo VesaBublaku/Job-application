@@ -5,6 +5,7 @@ import com.jobapplication.system.application.EmployerService;
 import com.jobapplication.system.application.*;
 import com.jobapplication.system.domain.Employer;
 import com.jobapplication.system.domain.EmployerDTO;
+import com.jobapplication.system.infrastructure.EmployerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,6 +37,8 @@ public class EmployerResource {
     private IndustryService industryService;
     @Autowired
     private LocationService locationService;
+    @Autowired
+    private EmployerRepo employerRepo;
 
     public EmployerResource(EmployerService employerService) {
         this.employerService = employerService;
@@ -104,6 +107,11 @@ public class EmployerResource {
     ) {
         List<Employer> employers = employerService.searchEmployers(companyName, industryId, compensationId, jobTypeId, availabilityId, experienceId, locationId);
         return ResponseEntity.ok(employers);
+    }
+
+    @GetMapping("/recent")
+    public List<Employer> getRecentEmployers() {
+        return employerRepo.findTop4ByOrderByCreatedAtDesc();
     }
 }
 

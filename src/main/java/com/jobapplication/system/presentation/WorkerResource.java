@@ -194,4 +194,9 @@ public class WorkerResource {
         List<Worker> workers = workerService.searchWorkers(professionId, compensationId, jobTypeId, availabilityId, experienceId, educationId, locationId);
         return ResponseEntity.ok(workers);
     }
+
+    @GetMapping("/highlighted")
+    public List<Worker> getHighlightedWorkers() {
+        return workerRepo.findTop4ByOrderByCreatedAtDesc();
+    }
 }

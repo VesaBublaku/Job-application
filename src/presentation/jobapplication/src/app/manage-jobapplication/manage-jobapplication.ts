@@ -205,6 +205,25 @@ export class ManageJobapplication implements OnInit{
 
   saveJob(): void {
 
+    const missing = [];
+
+    if(!this.formModel.industry?.id) missing.push("Industry");
+    if(!this.formModel.companyName) missing.push("Company name");
+    if(!this.formModel.email) missing.push("Email");
+    if(!this.formModel.experience?.id) missing.push("Experience");
+    if(!this.formModel.availability?.id) missing.push("Availability");
+    if(!this.formModel.compensation?.id) missing.push("Compensation");
+    if(!this.formModel.location?.id) missing.push("Location");
+
+    if(!this.selectedJobTypeObjects || this.selectedJobTypeObjects.length === 0) {
+      missing.push("Job types");
+    }
+
+    if(missing.length > 0) {
+      alert("Please fill the following required fields:\n\n" + missing.join("\n"));
+      return;
+    }
+
     const dto = {
       companyName: this.formModel.companyName,
       yearOfFounding: this.formModel.yearOfFounding,
@@ -244,6 +263,15 @@ export class ManageJobapplication implements OnInit{
     }
   }
 
+  isYearValid(): boolean {
+    if(!this.formModel.yearOfFounding) return false;
+
+    const selected = new Date(this.formModel.yearOfFounding);
+    const today = new Date();
+
+    return selected <= today;
+  }
+
   confirmDelete(): void {
     if(!this.selectedJob) return;
 
@@ -276,4 +304,5 @@ export class ManageJobapplication implements OnInit{
       applications:[],
     };
   }
+
 }
