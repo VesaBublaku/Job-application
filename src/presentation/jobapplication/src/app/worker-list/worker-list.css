@@ -32,7 +32,7 @@ main.advanced-listing {
 }
 
 .filter-bar {
-  background-color: #ffea76;
+  background-color: #ffdb58;
   width: 100vw;
   position: relative;
   left: 50%;
@@ -216,6 +216,7 @@ main.advanced-listing {
   font-size: 15px;
   color: #374151;
 }
+
 .btn {
     display: inline-block;
     padding: 10px 20px;

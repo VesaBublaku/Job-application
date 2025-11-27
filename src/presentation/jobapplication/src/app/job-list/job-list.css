@@ -183,8 +183,8 @@ a {
 }
 
 .btn-find{
-  border: 1px solid #eab308;
-  background-color:#facc15;
+  border: 1px solid #ffdb58;
+  background-color:#ffdb58;
   color: #111827;
   font-weight: 800;
   border-radius:10px;
@@ -202,7 +202,7 @@ a {
 
 .btn-find:hover {
   box-shadow: 0 6px 18px rgba(250, 204, 21, .35);
-  background-color: #facc15;
+  background-color: #ffdb58;
 }
 
 .chip--sub {
