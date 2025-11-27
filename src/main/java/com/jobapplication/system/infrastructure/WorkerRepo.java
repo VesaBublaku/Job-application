@@ -31,4 +31,5 @@ public interface WorkerRepo extends JpaRepository<Worker, Long> {
             Long locationId
     );
 
+    List<Worker> findTop4ByOrderByCreatedAtDesc();
 }

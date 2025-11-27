@@ -21,10 +21,17 @@ export class EmployerDashboard implements OnInit{
   constructor(private applicationService: JobApplicationService) {}
 
   ngOnInit() {
-    const employerId = 26;
-    this.applicationService.getEmployerApplications(employerId).subscribe(
-      apps => this.applications = apps
-    );
+    const employerId = Number(localStorage.getItem("employerId"));
+
+    if (!employerId) {
+      console.error("Employer not logged in.");
+      return;
+    }
+
+    this.applicationService.getEmployerApplications(employerId).subscribe({
+      next: apps => this.applications = apps,
+      error: err => console.error("Failed to load employer applications:", err)
+    });
   }
 
   updateStatus(appId: number | undefined, status: string | undefined) {
@@ -38,5 +45,4 @@ export class EmployerDashboard implements OnInit{
       error: (err) => console.error("Update error:", err)
     });
   }
-
 }

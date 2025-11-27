@@ -48,6 +48,7 @@ body{
   background:#fff;
   border-bottom:1px solid var(--border);
 }
+
 .container.header{
   display:flex;
   align-items:center;
@@ -76,14 +77,27 @@ body{
   letter-spacing:.2px;
 }
 
-.main-nav{
-  display:flex;
-  align-items:center;
-  gap:1.2rem;
-  font-weight:600;
+.header-left {
+  flex-shrink: 0;
 }
-.main-nav a{
-  color:#111;
+
+.main-nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  gap: 3.5rem;
+  font-weight: 600;
+}
+
+.main-nav a {
+  white-space: nowrap;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
 }
 
 .site-header a,

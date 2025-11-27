@@ -32,15 +32,15 @@
         <p class="sub">{{job.companyName}}</p>
 
         <div class="chips">
-          <span class="chip">{{job.experience?.experience}}</span>
-          <span class="chip">{{job.availability?.availability}}</span>
-          <span class="chip">{{job.compensation?.compensation}}</span>
-          <span class="chip">{{job.yearOfFounding}}</span>
+          <span class="chip" *ngIf="job.experience">{{job.experience?.experience}}</span>
+          <span class="chip" *ngIf="job.availability">{{job.availability?.availability}}</span>
+          <span class="chip" *ngIf="job.compensation">{{job.compensation?.compensation}}</span>
+          <span class="chip" *ngIf="job.yearOfFounding">{{job.yearOfFounding}}</span>
           <span class="chip" *ngFor="let jt of job.jobTypes">{{jt.jobType}}</span>
         </div>
 
-        <div class="meta">{{job.email}}</div>
-        <div class="meta">{{job.location?.name}}</div>
+        <div class="meta" *ngIf="job.email">{{job.email}}</div>
+        <div class="meta" *ngIf="job.location">{{job.location?.name}}</div>
       </div>
 
       <div class="card-actions">
@@ -86,7 +86,10 @@
 
         <label class="field">
           <span>Email</span>
-          <input type="email" [(ngModel)]="formModel.email" name="email" required/>
+          <input type="email" [(ngModel)]="formModel.email" name="email" required email #emailRef="ngModel"/>
+          <div *ngIf="emailRef.invalid && emailRef.touched">
+            <small style="color: red">Email must be valid.</small>
+          </div>
         </label>
 
         <label class="field">
@@ -112,11 +115,14 @@
 
         <label class="field">
           <span>Year of founding</span>
-          <input type="date" [(ngModel)]="formModel.yearOfFounding" name="yearOfFounding"/>
+          <input type="date" [(ngModel)]="formModel.yearOfFounding" name="yearOfFounding" #yearRef="ngModel"/>
+          <div *ngIf="yearRef.touched && !isYearValid()">
+            <small style="color:red">Year of founding cannot be in the future.</small>
+          </div>
         </label>
 
         <div class="field">
-          <label>Job types</label>
+          <label>Job types<span class="required">*</span></label>
 
           <div class="multi-select">
             <div class="multi-select__chips">
@@ -149,7 +155,7 @@
 
         <label class="field">
           <span>Location</span>
-          <select [(ngModel)]="formModel.location.id" name="locationId">
+          <select [(ngModel)]="formModel.location.id" name="locationId" required>
             <option *ngFor="let l of locations" [value]="l.id">{{ l.name }}</option>
           </select>
         </label>

@@ -27,20 +27,34 @@ export class JobDetails implements OnInit{
   }
 
   applyNow() {
-    if (!this.job) return alert("Job not loaded yet");
-    const workerId = 1;
+    if(!this.job) {
+      alert("Job not loaded yet");
+      return;
+    }
+    const workerId = Number(localStorage.getItem("workerId"));
+
+    if(!workerId) {
+      alert("You must be logged in as a worker to apply!");
+      return;
+    }
+
+    const employerId = this.job.id;
     const jobId = this.job.id;
-    const employerId = this.job.employerId;
 
     this.applicationService.apply(workerId, jobId, employerId).subscribe({
       next: () => alert("Application sent successfully!"),
-      error: (err) => alert("Failed to apply for this job.")
+      error: (err) => {
+        console.error(err);
+        alert("Failed to apply for this job.");
+      }
     });
   }
 
   loadJob(id: number): void {
     this.jobService.findById(id).subscribe({
-      next: (res) => (this.job = res),
+      next: (res) => {
+        this.job = res;
+        },
       error: (err) => console.error('Failed to load job', err)
     });
   }
