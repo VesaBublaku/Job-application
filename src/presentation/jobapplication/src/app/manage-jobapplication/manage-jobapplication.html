@@ -22,7 +22,9 @@
   <section class="list">
     <article class="row" *ngFor="let job of jobs">
       <div class="logo">
-        <img [src]="'http://localhost:8080/uploads/' + job.companyLogo" alt="Logo">
+        <img
+          [src]="job.companyLogo ? 'http://localhost:8080/uploads/' + job.companyLogo : 'http://localhost:8080/uploads/default-avatar.jpg'"
+          alt="Logo">
       </div>
 
       <div class="content">
@@ -158,6 +160,11 @@
           <select [(ngModel)]="formModel.location.id" name="locationId" required>
             <option *ngFor="let l of locations" [value]="l.id">{{ l.name }}</option>
           </select>
+        </label>
+
+        <label class="field">
+          <span>About company</span>
+          <input type="text" [(ngModel)]="formModel.aboutCompany" name="aboutCompany" required />
         </label>
       </div>
 

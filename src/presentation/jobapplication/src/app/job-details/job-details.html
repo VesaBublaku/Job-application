@@ -17,9 +17,8 @@
     <div class="details-header">
       <div>
         <img class="company-logo-details"
-             [src]="'http://localhost:8080/uploads/' + encode(job.companyLogo)"
-             alt="Company Logo">
-
+          [src]="job.companyLogo ? 'http://localhost:8080/uploads/' + job.companyLogo : 'http://localhost:8080/uploads/default-avatar.jpg'"
+          alt="Logo">
         <h1>{{ job.companyName }}</h1>
       </div>
 
