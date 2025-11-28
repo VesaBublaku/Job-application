@@ -56,9 +56,17 @@ export class ManageJobapplication implements OnInit{
   }
 
   loadJobs(): void {
-    this.jobService.findAll().subscribe({
+    const employerId = Number(localStorage.getItem("employerId"));
+    if (!employerId) return;
+
+    if (!employerId || employerId === 0) {
+      console.error("No employerId found in localStorage");
+      return;
+    }
+
+    this.jobService.getJobsByEmployer(employerId).subscribe({
       next: jobs => this.jobs = jobs,
-      error: err => console.error('Error loading jobs', err)
+      error: err => console.error('Error loading employer jobs', err)
     });
   }
 
@@ -239,7 +247,10 @@ export class ManageJobapplication implements OnInit{
       numberOfEmployeesId: this.formModel.numberOfEmployees?.id || null,
       employerTypeId: this.formModel.employerType?.id || null,
 
-      jobTypes: this.formModel.jobTypes.map(j => ({id: j.id, jobType: j.jobType}))
+      jobTypes: this.formModel.jobTypes.map(j => ({id: j.id, jobType: j.jobType})),
+      createdByEmployerId: this.isEditMode
+        ? this.selectedJob?.createdByEmployerId
+        : Number(localStorage.getItem("employerId"))
     };
 
     if(this.isEditMode && this.selectedJob) {
@@ -293,6 +304,7 @@ export class ManageJobapplication implements OnInit{
       aboutCompany: '',
       email: '',
       password: '',
+      createdByEmployerId: 0,
       location: { id: 0, name: '' },
       numberOfEmployees: { id: 0, numberOfEmployees: '' },
       industry: { id: 0, name: '' },

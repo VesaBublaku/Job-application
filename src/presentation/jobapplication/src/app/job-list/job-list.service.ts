@@ -59,4 +59,8 @@ export class JobListService {
   getRecentJobs(): Observable<Employer[]> {
     return this.http.get<Employer[]>(`${this.apibaseUrl}/recent`);
   }
+
+  getJobsByEmployer(id: number): Observable<Employer[]> {
+    return this.http.get<Employer[]>(`${this.apibaseUrl}/byEmployer/${id}`);
+  }
 }

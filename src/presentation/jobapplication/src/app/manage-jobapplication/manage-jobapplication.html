@@ -27,9 +27,9 @@
 
       <div class="content">
         <div class="titleline">
-          <h3 class="title">{{job.industry?.name}}</h3>
+          <h3 class="title">{{job.companyName}}</h3>
         </div>
-        <p class="sub">{{job.companyName}}</p>
+        <p class="sub">{{job.industry?.name}}</p>
 
         <div class="chips">
           <span class="chip" *ngIf="job.experience">{{job.experience?.experience}}</span>

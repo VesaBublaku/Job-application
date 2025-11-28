@@ -9,6 +9,7 @@ import java.util.List;
 public interface EmployerRepo extends JpaRepository<Employer, Long> {
     Employer findByEmail(String email);
     List<Employer> findTop4ByOrderByIdDesc();
+    List<Employer> findByCreatedByEmployerId(Long createdByEmployerId);
 
     @Query("""
         SELECT DISTINCT e FROM Employer e

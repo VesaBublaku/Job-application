@@ -9,6 +9,7 @@ export interface Employer {
   aboutCompany: string;
   email: string;
   password: string;
+  createdByEmployerId: number;
 
   location: { id: number; name: string; };
   numberOfEmployees: { id: number; numberOfEmployees: string; };

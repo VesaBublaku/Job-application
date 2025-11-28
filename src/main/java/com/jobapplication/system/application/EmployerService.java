@@ -59,6 +59,11 @@ public class EmployerService {
             employer.setAboutCompany(dto.getAboutCompany());
             employer.setEmail(dto.getEmail());
 
+            if (dto.getCreatedByEmployerId() == null) {
+                throw new RuntimeException("createdByEmployerId is required");
+            }
+            employer.setCreatedByEmployerId(dto.getCreatedByEmployerId());
+
             if (dto.getPassword() != null && !dto.getPassword().isEmpty()) {
                 employer.setPassword(hashPassword(dto.getPassword()));
             }
@@ -111,6 +116,10 @@ public class EmployerService {
         employer.setAboutCompany(dto.getAboutCompany());
         employer.setYearOfFounding(dto.getYearOfFounding());
         employer.setEmail(dto.getEmail());
+
+        if (dto.getCreatedByEmployerId() != null) {
+            employer.setCreatedByEmployerId(dto.getCreatedByEmployerId());
+        }
 
         if (dto.getPassword() != null && !dto.getPassword().isEmpty()) {
             employer.setPassword(hashPassword(dto.getPassword()));
@@ -209,6 +218,10 @@ public class EmployerService {
             Long locationId
     ) {
         return employerRepo.searchEmployers(companyName, industryId, compensationId, jobTypeId, availabilityId, experienceId, locationId);
+    }
+
+    public List<Employer> findByCreatedByEmployerId(Long id) {
+        return employerRepo.findByCreatedByEmployerId(id);
     }
 }
 

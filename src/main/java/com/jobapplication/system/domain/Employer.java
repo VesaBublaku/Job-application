@@ -37,6 +37,9 @@ public class Employer implements Serializable {
     @Column(nullable = true)
     private String password;
 
+    @Column(nullable = false)
+    private Long createdByEmployerId;
+
     @ManyToOne
     @JoinColumn(name = "location_id")
     @JsonProperty("location")

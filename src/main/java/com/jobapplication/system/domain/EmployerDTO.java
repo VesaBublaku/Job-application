@@ -13,6 +13,8 @@ public class EmployerDTO {
     private String aboutCompany;
     private String email;
     private String password;
+    private Long createdByEmployerId;
+
 
     private Long locationId;
     private Long industryId;

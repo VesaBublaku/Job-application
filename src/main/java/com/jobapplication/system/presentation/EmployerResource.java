@@ -113,5 +113,11 @@ public class EmployerResource {
     public List<Employer> getRecentEmployers() {
         return employerRepo.findTop4ByOrderByIdDesc();
     }
+
+    @GetMapping("/byEmployer/{id}")
+    public ResponseEntity<List<Employer>> getJobsByEmployer(@PathVariable Long id) {
+        List<Employer> jobs = employerService.findByCreatedByEmployerId(id);
+        return ResponseEntity.ok(jobs);
+    }
 }
 

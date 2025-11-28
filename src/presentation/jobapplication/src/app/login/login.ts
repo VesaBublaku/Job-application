@@ -47,6 +47,10 @@ export class Login {
         }
 
         this.router.navigate(['/home']);
+      },
+      error: (err) => {
+        this.loading = false;
+        this.errorMessage = "Invalid login!";
       }
     });
   }
