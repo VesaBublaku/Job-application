@@ -53,9 +53,8 @@
 
         <div class="field field--full">
           <label class="label" for="photo">Photo</label>
-          <div class="file">
-            <span class="file__text">Upload your photo</span>
-            <input id="photo" type="file" (change)="onPhotoSelected($event)" name="photo" class="file__input" accept="image/*">
+          <div class="input-append">
+            <input id="photo" type="file" class="input" (change)="onPhotoSelected($event)" name="photo" accept="image/*">
           </div>
         </div>
 

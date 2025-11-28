@@ -80,7 +80,7 @@
           <img *ngIf="!worker.photo" [src]="'http://localhost:8080/uploads/default-avatar.jpg'" alt="" class="avatar large-avatar">
 
           <div class="worker-details">
-            <h3>{{ worker.firstName }} {{ worker.lastName.charAt(0) }}.</h3>
+            <h3>{{ worker.firstName }} {{ worker.lastName }}</h3>
             <p class="role">{{ worker.professions?.[0]?.profession || 'N/A' }}</p>
             <p class="location">{{ worker.location?.name || 'Unknown' }}</p>
           </div>
@@ -88,7 +88,7 @@
 
         <div class="card-right">
           <p class="rate-label">Compensation</p>
-          <div class="rate-price">{{ worker.compensation?.compensation || 'N/A' }}></div>
+          <div class="rate-price">{{ worker.compensation?.compensation || 'N/A' }}</div>
           <a [routerLink]="['/worker-details', worker.id]" routerLinkActive="active" class="btn btn-primary">View profile</a>
         </div>
 

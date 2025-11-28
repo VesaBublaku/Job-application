@@ -21,9 +21,9 @@
             <div *ngIf="!worker.photo" class="avatar__img" aria-hidden="true"></div>
           </div>
           <div>
-            <h1>{{ worker.firstName }} {{ worker.lastName.charAt(0) }}.</h1>
+            <h1>{{ worker.firstName }} {{ worker.lastName }}</h1>
             <p class="headline">
-              {{ professionList }}
+              {{ professionList.join(' , ') }}
             </p>
             <p class="location-profile">
               {{ worker.location?.name || 'Unknown' }}
