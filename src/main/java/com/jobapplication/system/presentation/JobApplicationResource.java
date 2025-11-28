@@ -17,6 +17,11 @@ public class JobApplicationResource {
         this.jobApplicationService = jobApplicationService;
     }
 
+    @GetMapping("/all")
+    public List<JobApplication> getAll() {
+        return jobApplicationService.getAll();
+    }
+
     @PostMapping("/apply")
     public JobApplication apply(@RequestParam Long workerId, @RequestParam Long jobId, @RequestParam Long employerId) {
         return jobApplicationService.apply(workerId, jobId, employerId);

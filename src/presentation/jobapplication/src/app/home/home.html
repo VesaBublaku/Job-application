@@ -39,7 +39,7 @@
     <h3 id="recent-jobs-title" class="section__title">Recent <span class="pill pill--blue">Job Listings</span></h3>
 
     <div class="cards scroller" role="list">
-      <article class="card" *ngFor="let job of recentJobs">
+      <article class="card" *ngFor="let job of recentJobs" [routerLink]="['/job-details', job.id]" style="cursor: pointer;" >
         <header class="card__header">
           <span class="chip chip--blue">{{ job.industry?.name }}</span>
         </header>
@@ -89,7 +89,7 @@
     <h3 id="workers-title" class="section__title">Highlighted <span class="pill pill--yellow">Job Candidates</span></h3>
 
     <div class="cards cards--workers scroller" role="list">
-      <article class="worker-card" *ngFor="let w of highlightedWorkers">
+      <article class="worker-card" *ngFor="let w of highlightedWorkers" [routerLink]="['/worker-details', w.id]" style="cursor: pointer;">
         <div class="worker-card__top">
           <img class="avatar" [src]=" 'http://localhost:8080/uploads/' + w.photo" alt="Profile photo" />
           <div>
@@ -98,7 +98,10 @@
           </div>
         </div>
         <div class="worker-card__skills">
-          <span class="tag">{{w.professions?.[0]?.profession || 'No skills listed'}}</span>
+          <span class="tag" *ngIf="w?.professions as profs">{{ profs.length > 0 ? profs[0]?.profession : 'No skills listed' }}</span>
+          <span class="tag" *ngIf="w?.professions as profs" >
+            <ng-container *ngIf="profs.length > 1"> +{{ profs.length - 1 }}</ng-container>
+          </span>
         </div>
       </article>
 

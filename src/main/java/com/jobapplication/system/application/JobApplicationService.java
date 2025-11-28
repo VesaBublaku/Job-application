@@ -37,6 +37,10 @@ public class JobApplicationService {
         return jobApplicationRepo.save(application);
     }
 
+    public List<JobApplication> getAll() {
+        return jobApplicationRepo.findAll();
+    }
+
     public List<JobApplication> getWorkerApplications(Long workerId) {
         return jobApplicationRepo.findByWorkerId(workerId);
     }
