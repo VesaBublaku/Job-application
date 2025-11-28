@@ -27,6 +27,8 @@ public class Employer implements Serializable {
     private String companyName;
     private String companyLogo;
     private String yearOfFounding;
+
+    @Lob
     private String aboutCompany;
 
     @Column(nullable = false, unique = true)

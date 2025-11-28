@@ -91,7 +91,7 @@
     <div class="cards cards--workers scroller" role="list">
       <article class="worker-card" *ngFor="let w of highlightedWorkers">
         <div class="worker-card__top">
-          <img class="avatar" [src]=" 'https://localhost:8080/uploads/' + w.photo" alt="Profile photo" />
+          <img class="avatar" [src]=" 'http://localhost:8080/uploads/' + w.photo" alt="Profile photo" />
           <div>
             <h4 class="worker-card__name">{{w.firstName}} {{w.lastName}}</h4>
             <p class="worker-card__loc">{{w.location?.name}}</p>

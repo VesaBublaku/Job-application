@@ -29,6 +29,8 @@ public class Worker implements Serializable {
     private String lastName;
     private String photo;
     private Date dateOfBirth;
+
+    @Lob
     private String aboutYou;
 
     @Column(nullable = false, unique = true)
