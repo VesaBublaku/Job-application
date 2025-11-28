@@ -29,14 +29,14 @@ html, body {
 }
 
 .title--accent {
-  color: var(--blue);
+  color: #4aa0e6;
 }
 
 .form {
   border-radius: var(--radius);
   padding: 18px;
   width: 80%;
-  margin: 0 auto;
+  margin-left: 135px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -81,7 +81,7 @@ html, body {
 
 .input:focus {
   outline: none;
-  border-color: var(--blue);
+  border-color: #4aa0e6;
   box-shadow: 0 0 0 3px rgba(44,128,255,.15);
 }
 
@@ -91,7 +91,7 @@ html, body {
   margin-top: 15px;
   border: none;
   border-radius: 10px;
-  background-color: var(--blue);
+  background-color: #4aa0e6;
   color: #fff;
   font-size: 16px;
   font-weight: 700;
@@ -140,7 +140,7 @@ html, body {
 }
 
 .btn--primary {
-  background: var(--blue);
+  background: #4aa0e6;
   color: #fff;
 }
 
