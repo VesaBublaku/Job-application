@@ -49,6 +49,10 @@
       <button class="btn-find" type="button" (click)="findEmployers()">
         <i class="fas fa-search"></i> Find Jobs
       </button>
+
+      <button class="btn-find" type="button" (click)="clearFilters()">
+        <i class="fas fa-times"></i> Clear Filters
+      </button>
     </div>
 
     <div class="filter-row filter-row--sub">
@@ -106,11 +110,6 @@
       </div>
 
       <div class="job-meta">
-        <span class="meta-item">
-          <i class="fas fa-clock"></i>
-          {{ job.jobTypes?.[0]?.jobType || 'N/A' }}
-        </span>
-
         <span class="meta-item">
           <i class="fas fa-level-up-alt"></i>
           {{ job.experience?.experience || 'N/A' }}

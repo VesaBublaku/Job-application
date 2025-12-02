@@ -130,4 +130,18 @@ export class JobList implements OnInit {
   encode(filename: string): string {
     return encodeURIComponent(filename);
   }
+
+  clearFilters() {
+    this.filterModel = {
+      companyName: '',
+      industryId: null,
+      compensationId: null,
+      jobTypeId: null,
+      availabilityId: null,
+      experienceId: null,
+      locationId: null
+    };
+
+    this.loadAllEmployers();
+  }
 }

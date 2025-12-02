@@ -10,8 +10,10 @@ export class AuthService {
 
   constructor() {}
 
-  setUser(user: any) {
-    localStorage.setItem('user', JSON.stringify(user));
+  setUser(updatedFields: any) {
+    const currentUser = this.getUser() || {};
+    const mergedUser = { ...currentUser, ...updatedFields };
+    localStorage.setItem('user', JSON.stringify(mergedUser));
     this.loggedIn.next(true);
   }
 

@@ -79,5 +79,19 @@ export class WorkerList implements OnInit{
       this.workers = data;
     })
   }
+
+  clearFilters() {
+    this.filterModel = {
+      professionId: null,
+      compensationId: null,
+      jobTypeId: null,
+      availabilityId: null,
+      experienceId: null,
+      educationId: null,
+      locationId: null
+    };
+
+    this.loadAllWorkers();
+  }
 }
 
