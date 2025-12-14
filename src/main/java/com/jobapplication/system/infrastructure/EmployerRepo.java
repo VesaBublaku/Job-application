@@ -3,6 +3,7 @@ package com.jobapplication.system.infrastructure;
 import com.jobapplication.system.domain.Employer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -23,13 +24,22 @@ public interface EmployerRepo extends JpaRepository<Employer, Long> {
         AND (:jobTypeId IS NULL OR jt.id = :jobTypeId)
     """)
     List<Employer> searchEmployers(
-            String companyName,
-            Long industryId,
-            Long compensationId,
-            Long jobTypeId,
-            Long availabilityId,
-            Long experienceId,
-            Long locationId
+            @Param("companyName") String companyName,
+            @Param("industryId") Long industryId,
+            @Param("compensationId") Long compensationId,
+            @Param("jobTypeId") Long jobTypeId,
+            @Param("availabilityId") Long availabilityId,
+            @Param("experienceId") Long experienceId,
+            @Param("locationId") Long locationId
     );
+
+    @Query("""
+    SELECT e
+    FROM Employer e
+    WHERE e.id = :id
+       OR e.createdByEmployerId = :id
+""")
+    List<Employer> findDashboardEmployers(@Param("id") Long id);
+
 
 }

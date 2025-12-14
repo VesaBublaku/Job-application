@@ -119,5 +119,10 @@ public class EmployerResource {
         List<Employer> jobs = employerService.findByCreatedByEmployerId(id);
         return ResponseEntity.ok(jobs);
     }
+
+    @GetMapping("/dashboard/{id}")
+    public ResponseEntity<List<Employer>> getDashboard(@PathVariable Long id) {
+        return ResponseEntity.ok(employerService.getDashboardEmployers(id));
+    }
 }
 

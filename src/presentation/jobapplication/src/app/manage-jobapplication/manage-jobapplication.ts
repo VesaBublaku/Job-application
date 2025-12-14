@@ -64,9 +64,9 @@ export class ManageJobapplication implements OnInit{
       return;
     }
 
-    this.jobService.getJobsByEmployer(employerId).subscribe({
-      next: jobs => this.jobs = jobs,
-      error: err => console.error('Error loading employer jobs', err)
+    this.jobService.getDashboard(employerId).subscribe({
+      next: (jobs: Employer[]) => this.jobs = jobs,
+      error: (err) => console.error('Error loading employer jobs', err)
     });
   }
 
@@ -213,6 +213,13 @@ export class ManageJobapplication implements OnInit{
 
   saveJob(): void {
 
+    const employerId = Number(localStorage.getItem("employerId"));
+
+    if (!employerId || employerId <= 0) {
+      alert("Session expired. Please log in again.");
+      return;
+    }
+
     const missing = [];
 
     if(!this.formModel.industry?.id) missing.push("Industry");
@@ -250,7 +257,7 @@ export class ManageJobapplication implements OnInit{
       jobTypes: this.formModel.jobTypes.map(j => ({id: j.id, jobType: j.jobType})),
       createdByEmployerId: this.isEditMode
         ? this.selectedJob?.createdByEmployerId
-        : Number(localStorage.getItem("employerId"))
+        : employerId
     };
 
     if(this.isEditMode && this.selectedJob) {
@@ -304,7 +311,7 @@ export class ManageJobapplication implements OnInit{
       aboutCompany: '',
       email: '',
       password: '',
-      createdByEmployerId: 0,
+      createdByEmployerId: undefined as any,
       location: { id: 0, name: '' },
       numberOfEmployees: { id: 0, numberOfEmployees: '' },
       industry: { id: 0, name: '' },

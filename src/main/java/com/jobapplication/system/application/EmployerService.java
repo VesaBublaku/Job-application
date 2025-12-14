@@ -223,5 +223,9 @@ public class EmployerService {
     public List<Employer> findByCreatedByEmployerId(Long id) {
         return employerRepo.findByCreatedByEmployerId(id);
     }
+
+    public List<Employer> getDashboardEmployers(Long id) {
+        return employerRepo.findDashboardEmployers(id);
+    }
 }
 
