@@ -63,4 +63,8 @@ export class JobListService {
   getJobsByEmployer(id: number): Observable<Employer[]> {
     return this.http.get<Employer[]>(`${this.apibaseUrl}/byEmployer/${id}`);
   }
+
+  getEmployerById(employerId: number): Observable<Employer> {
+    return this.http.get<Employer>(`${this.apibaseUrl}/employers/${employerId}`);
+  }
 }

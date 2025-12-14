@@ -95,6 +95,11 @@
         </label>
 
         <label class="field">
+          <span>Password</span>
+          <input type="password" [(ngModel)]="formModel.password" name="password" required />
+        </label>
+
+        <label class="field">
           <span>Experience</span>
           <select [(ngModel)]="formModel.experience.id" name="experienceId" required>
             <option *ngFor="let e of experiences" [value]="e.id">{{ e.experience }}</option>
