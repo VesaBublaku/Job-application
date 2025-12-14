@@ -3,14 +3,14 @@ import {RouterLink, RouterLinkActive} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HeaderComponent} from '../header/header';
 import {FooterComponent} from '../footer/footer';
-import {NgForOf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {JobApplicationService} from '../job-application/job-application.service';
 import {JobApplication} from '../job-application/job-application';
 
 @Component({
   selector: 'app-worker-dashboard',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, HeaderComponent, FooterComponent, RouterLink, RouterLinkActive, NgForOf],
+  imports: [ReactiveFormsModule, FormsModule, HeaderComponent, FooterComponent, RouterLink, RouterLinkActive, NgForOf, NgIf],
   templateUrl: './worker-dashboard.html',
   styleUrl: './worker-dashboard.css',
 })

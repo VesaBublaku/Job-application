@@ -27,9 +27,9 @@
           <span class="chip">{{app.employer.experience?.experience}}</span>
           <span class="chip">{{app.employer.availability?.availability}}</span>
           <span class="chip">{{app.employer.compensation?.compensation}}</span>
-          <span class="chip">{{app.employer.yearOfFounding}}</span>
+          <span class="chip" *ngIf="app.employer.yearOfFounding">{{app.employer.yearOfFounding}}</span>
           <span class="chip" *ngFor="let t of app.employer.jobTypes">{{t.jobType}}</span>
-          <span class="chip">{{app.employer.employerType?.type}}</span>
+          <span class="chip" *ngIf="app.employer.employerType?.type">{{app.employer.employerType?.type}}</span>
         </div>
 
         <div class="meta">{{app.employer.location.name}}</div>
