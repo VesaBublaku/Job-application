@@ -13,7 +13,7 @@
 
   <article *ngFor="let app of applications" class="worker-card" [attr.data-status]="app.status?.toLowerCase()">
     <div class="worker-card__left">
-      <img class="avatar" [src]="'http://localhost:8080/uploads/' + app.worker.photo">
+      <img class="avatar" [src]="'http://localhost:8080/uploads/' + (app.worker?.photo || 'default-avatar.jpg')" alt="Worker avatar"/>
       <div class="id">
         <h2 class="name">{{app.worker.firstName}} {{app.worker.lastName}}</h2>
         <p class="loc">{{app.worker.location?.name}}</p>

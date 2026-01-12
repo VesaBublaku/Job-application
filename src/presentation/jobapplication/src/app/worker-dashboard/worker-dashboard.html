@@ -14,7 +14,8 @@
 
     <a *ngFor="let app of applications" [routerLink]="['/job-details', app.jobId]" routerLinkActive="active" class="row">
       <div class="logo">
-        <img [src]="'http://localhost:8080/uploads/' + app.employer.companyLogo">
+        <img *ngIf="app.employer?.companyLogo" [src]="'http://localhost:8080/uploads/' + app.employer.companyLogo" alt="Company logo" class="avatar large-avatar">
+        <img *ngIf="!app.employer?.companyLogo" [src]="'http://localhost:8080/uploads/default-avatar.jpg'" alt="Default logo" class="avatar large-avatar">
       </div>
 
       <div class="content">
