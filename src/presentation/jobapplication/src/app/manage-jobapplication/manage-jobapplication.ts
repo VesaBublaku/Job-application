@@ -244,7 +244,7 @@ export class ManageJobapplication implements OnInit{
       yearOfFounding: this.formModel.yearOfFounding,
       aboutCompany: this.formModel.aboutCompany,
       email: this.formModel.email,
-      password: this.formModel.password,
+      ...(this.formModel.password ? { password: this.formModel.password } : {}),
 
       locationId: this.formModel.location?.id || null,
       industryId: this.formModel.industry?.id || null,
@@ -255,9 +255,7 @@ export class ManageJobapplication implements OnInit{
       employerTypeId: this.formModel.employerType?.id || null,
 
       jobTypes: this.formModel.jobTypes.map(j => ({id: j.id, jobType: j.jobType})),
-      createdByEmployerId: this.isEditMode
-        ? this.selectedJob?.createdByEmployerId
-        : employerId
+      createdByEmployerId: employerId
     };
 
     if(this.isEditMode && this.selectedJob) {

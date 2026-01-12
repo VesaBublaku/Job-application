@@ -50,6 +50,7 @@ public class EmployerService {
         this.jobTypeRepo = jobTypeRepo;
     }
 
+    @Transactional
     public Employer addEmployer(EmployerDTO dto, MultipartFile logo) {
         try {
             Employer employer = new Employer();
@@ -58,11 +59,6 @@ public class EmployerService {
             employer.setYearOfFounding(dto.getYearOfFounding());
             employer.setAboutCompany(dto.getAboutCompany());
             employer.setEmail(dto.getEmail());
-
-            if (dto.getCreatedByEmployerId() == null) {
-                throw new RuntimeException("createdByEmployerId is required");
-            }
-            employer.setCreatedByEmployerId(dto.getCreatedByEmployerId());
 
             if (dto.getPassword() != null && !dto.getPassword().isEmpty()) {
                 employer.setPassword(hashPassword(dto.getPassword()));
@@ -99,7 +95,14 @@ public class EmployerService {
                 employer.setCompanyLogo(savePhoto(logo));
             }
 
-            return employerRepo.save(employer);
+            Employer saved = employerRepo.save(employer);
+            if (dto.getCreatedByEmployerId() != null) {
+                saved.setCreatedByEmployerId(dto.getCreatedByEmployerId());
+            } else {
+                saved.setCreatedByEmployerId(saved.getId());
+            }
+
+            return employerRepo.save(saved);
 
         } catch (Exception e) {
             e.printStackTrace();
