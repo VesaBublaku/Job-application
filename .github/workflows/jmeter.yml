@@ -34,7 +34,7 @@ jobs:
   
       - name: Run JMeter test
         run: |
-          ./jmeter/bin/jmeter -n -t Thread Group.jmx -l results.jtl -e -o html-report
+          ./jmeter/bin/jmeter -n -t "Thread_Group.jmx" -l results.jtl -e -o html-report
       
  
       - name: Upload HTML Report
